@@ -6,7 +6,7 @@
 ## Tensorflow installieren
 Install Python 3.5.2 and include the installed folder into Path  (```C:\Wichtige Progs\Python``` in my case)
 
-https://www.tensorflow.org/install/install_windows#installing_with_native_pip
+Install with ```pip``` according to the [docs](https://www.tensorflow.org/install/install_windows#installing_with_native_pip)
 run testCode:
 
 ```python
