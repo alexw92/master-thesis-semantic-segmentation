@@ -34,6 +34,10 @@ which isn't highlighted correctly
 
 + Python's [with statement](http://effbot.org/zone/python-with-statement.htm)
 
++ In general, in a statement such as ```Python
+class Foo(Base1, Base2):```
+Foo is being declared as a class inheriting from base classes Base1 and Base2.
+
 
 
 # Pycharm tricks
@@ -47,4 +51,5 @@ File | Settings | Keymap
 ```
 File | Settings | Editor | Show quick doc on mouse move
 ```
++ [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
 
