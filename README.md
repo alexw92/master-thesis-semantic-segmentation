@@ -40,6 +40,16 @@ Foo is being declared as a class inheriting from base classes Base1 and Base2.
 
 + [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
 
++ Print() Knowledge
+
+```Python
+>>> print('C:\some\name')  # here \n means newline!
+C:\some
+ame
+>>> print(r'C:\some\name')  # note the r before the quote
+C:\some\name
+```
+
 
 # Pycharm tricks
 
