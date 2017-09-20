@@ -38,6 +38,7 @@ which isn't highlighted correctly
 class Foo(Base1, Base2):```
 Foo is being declared as a class inheriting from base classes Base1 and Base2.
 
++ [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
 
 
 # Pycharm tricks
@@ -51,5 +52,5 @@ File | Settings | Keymap
 ```
 File | Settings | Editor | Show quick doc on mouse move
 ```
-+ [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
+
 
