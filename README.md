@@ -186,7 +186,7 @@ for n in range(2, 10):
         if n % x == 0:
             print(n, 'equals', x, '*', n//x)
             break
-     else:
+    else:
         # loop fell through without finding a factor
         print(n, 'is a prime number')
 ```
@@ -216,6 +216,8 @@ Functions:
 ```
 File | Settings | Keymap
 ```
+
++ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle.
 
 + Where to activate documentation-popup on mouse-hover
 ```
