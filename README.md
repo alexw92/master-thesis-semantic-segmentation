@@ -6,6 +6,8 @@
 ## Tensorflow installieren
 Install Python 3.5.2 and include the installed folder into Path  (```C:\Wichtige Progs\Python``` in my case)
 
+If you want to use a Nvidia Graphics card to run the the code refer to [this](http://www.heatonresearch.com/2017/01/01/tensorflow-windows-gpu.html).
+
 Install with ```pip``` according to the [docs](https://www.tensorflow.org/install/install_windows#installing_with_native_pip)
 
 run the following testCode:
