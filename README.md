@@ -350,8 +350,116 @@ Lambda expressions
 >>> pairs
 [(4, 'four'), (1, 'one'), (3, 'three'), (2, 'two')]
 ```
+Data structures:
+
+```Python
+list = []
+list.append(1)
+list.extend(list)
+list.insert(1,'newel')
+list.remove(1)
+list.pop()
+list.clear()
+list.index('newe1')
+list.count('neww1')
+list.sort()
+list.reverse()
+list.copy()
+
+Smart one-liners
+#no loop needed
+squares = list(map(lambda x: x**2, range(10))) # option 1
+squares = [x**2 for x in range(10)] # option 2
 
 
+>>> combs = []
+>>> for x in [1,2,3]:
+...     for y in [3,1,4]:
+...         if x != y:
+...             combs.append((x, y))
+
+# One-liner for nested loop
+combs = [(x,y) for x in [1,2,3] for y in [3,1,4] if x != y]
+# [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+
+[(x, x**2) for x in range(6)] # list of tuples
+
+# flatten a list
+>>> vec = [[1,2,3], [4,5,6], [7,8,9]]
+>>> [num for elem in vec for num in elem]
+# [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+# Create matrix
+matrix = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+]
+
+# transpose rows and columns
+>>> [[row[i] for row in matrix] for i in range(4)]
+[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
+
+# equivalent to
+>>> transposed = []
+>>> for i in range(4):
+...     transposed.append([row[i] for row in matrix])
+
+# best way to get this job done
+>>> list(zip(*matrix))
+[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]
+
+```
+
+Delete elements given their indices:
+
+```Python
+>>> a = [-1, 1, 66.25, 333, 333, 1234.5]
+>>> del a[0]
+>>> a
+[1, 66.25, 333, 333, 1234.5]
+>>> del a[2:4]
+>>> a
+[1, 66.25, 1234.5]
+>>> del a[:]
+>>> a
+[]
+
+# delete a variable
+del a
+```
+
+Singleton tuple:
+
+```Python
+>>> empty = ()
+>>> singleton = ('hello') # does not work len(lol) = 5
+>>> singleton = 'hello',    # <-- note trailing comma
+>>> len(empty)
+0
+>>> len(singleton)
+1
+>>> singleton
+('hello',)
+```
+
+Tuple packing:
+
+```Python
+t = 12345, 54321, 'hello!'
+x, y, z = t     # 3 variables = tuple of 3 elements
+```
+
+Sets:
+```Python
+
+```
+
+Dictionaries:
+```Python
+
+```
 
 
 # Pycharm tricks
