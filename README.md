@@ -123,8 +123,10 @@ letters[:] = []
 # len() works with lists as well
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 >>> len(letters)  # 3
+```
 
-# Nested lists
+### Nested lists
+```Python
 a = ['a', 'b', 'c']
 n = [1, 2, 3]
 x = [a, n]
@@ -158,7 +160,7 @@ else:
     print('More')
 ```
 
-for-loop
+for-loop:
 ```Python
 # Iterating over a copy in order to keep loop range
 for w in words[:]:  # Loop over a slice copy of the entire list.
@@ -322,7 +324,7 @@ def concat(*args, sep="/"):
     return sep.join(args)
 ```
 
-Unpacking argument list
+Unpacking argument list:
 
 ```Python
 >>> list(range(3, 6))            # normal call with separate arguments
@@ -331,7 +333,7 @@ Unpacking argument list
 >>> list(range(*args))            # call with arguments unpacked from a list
 [3, 4, 5]
 ```
-Lambda expressions
+Lambda expressions:
 ```Python
 # As return
 >>> def make_incrementor(n):
@@ -674,16 +676,14 @@ Example (Writing Table of Squares and Cubes):
 # The following generates the same output
 >>> for x in range(1, 11):
 ...     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
-```
 
-````Python
 str.rjust() # right-justifies
 str.ljust() # left-justifies
 str.center() # centers
 ```
 
 Usage of *format()*:
-````Python
+```Python
 print('We are the {} who say "{}!"'.format('knights', 'Ni'))
 # We are the knights who say "Ni!"
 
@@ -804,7 +804,7 @@ f.read(1)
 # Other values produce undefined behaviour
 ```
 
-Save structured data with ```json```
+Save structured data with ```json```:
 ```Python
 [doc stelle json](https://docs.python.org/3/tutorial/inputoutput.html#saving-structured-data-with-json)
 ```
