@@ -541,9 +541,274 @@ ___
 ### Modules
 [Docs](https://docs.python.org/3/tutorial/modules.html)
 
+Import a module:
 ```Python
 
+# this imports the module in file modulfib.py
+import modulfib as mf
+
+# call a modules function
+mf.fib(100)
+
+# save a modules function locally
+fib = mf.fib
+
+# return the modules name
+mf.__name__
 ```
+
+Use a module as a script:
+```Python
+# this is module fibo.py
+
+# code...
+
+# at the end of the module
+if __name__ == "__main__":
+    import sys
+    fib(int(sys.argv[1]))
+    
+# now you can run
+# python fibo.py <args> to run this code 
+# 'cause __name__ is set to __main__
+```
+Python's module search path:
++ The directory containing the input script (or the current directory when no file is specified).
++ PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).
++ The installation-dependent default.
+
+Python saves modules compiled modules in the *__pycache__* directory under the name *module.version.pyc*
+Python code is compiles platform-independent (-> Java).
+
+Standard modules:
+
+```Python
+# append a folder to PythonPath
+import sys
+sys.path.append('/ufs/guido/lib/python')
+
+# dir() function
+import fibo
+dir(fibo)
+# ['__name__', 'fib', 'fib2']
+
+# all names in sys
+dir(sys)
+
+# all names defined currently
+dir()
+
+# dir() does not list the names of built-in functions and variables.
+# getting those by using...
+import builtins
+dir(builtins)
+
+```
+
+[Packages doc](https://docs.python.org/3/tutorial/modules.html#packages)
+- Packages are folders containg modules
+- can be imported using ```PackageName.ModulName ```
+
+```Python
+# this makes the method echofilter from module echo directly available
+from sound.effects.echo import echofilter
+```
+- when using syntax like import item.subitem.subsubitem, each item except for the last must be a package
+- the last item can be a module or a package but can’t be a class or function or variable defined in the previous item.
+
+If a package’s __init__.py code defines a list named __all__, it is taken to be the list of module names that should be imported when from package import * is encountered. It is up to the package author to keep this list up-to-date when a new version of the package is released. Package authors may also decide not to support it, if they don’t see a use for importing * from their package. For example, the file sound/effects/__init__.py could contain the following code:
+
+```Python
+__all__ = ["echo", "surround", "reverse"]
+```
+Although certain modules are designed to export only names that follow certain patterns when you use import \*, it is still considered bad practice in production code.
+
+___
+### Input and Output
+
+Formatting Output:
+```Python
+# str() and repr() convert any object into a string
+# str()  -> produce human-readable text
+# repr() -> meant to generate representations which can be read by the interpreter
+>>> s = 'Hello, world.'
+>>> str(s)
+'Hello, world.'
+>>> repr(s)
+"'Hello, world.'"
+>>> str(1/7)
+'0.14285714285714285'
+>>> x = 10 * 3.25
+>>> y = 200 * 200
+>>> s = 'The value of x is ' + repr(x) + ', and y is ' + repr(y) + '...'
+>>> print(s)
+The value of x is 32.5, and y is 40000...
+>>> # The repr() of a string adds string quotes and backslashes:
+... hello = 'hello, world\n'
+>>> hellos = repr(hello)
+>>> print(hellos)
+'hello, world\n'
+>>> # The argument to repr() may be any Python object:
+... repr((x, y, ('spam', 'eggs')))
+"(32.5, 40000, ('spam', 'eggs'))"
+```
+
+Example (Writing Table of Squares and Cubes):
+```Python
+>>> for x in range(1, 11):
+...     print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')
+...     # Note use of 'end' on previous line
+...     print(repr(x*x*x).rjust(4))
+...
+ 1   1    1
+ 2   4    8
+ 3   9   27
+ 4  16   64
+ 5  25  125
+ 6  36  216
+ 7  49  343
+ 8  64  512
+ 9  81  729
+10 100 1000
+
+# The following generates the same output
+>>> for x in range(1, 11):
+...     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
+```
+
+````Python
+str.rjust() # right-justifies
+str.ljust() # left-justifies
+str.center() # centers
+```
+
+Usage of *format()*:
+````Python
+print('We are the {} who say "{}!"'.format('knights', 'Ni'))
+# We are the knights who say "Ni!"
+
+# Brackets with values (format fields)
+print('{0} and {1}'.format('spam', 'eggs'))
+# spam and eggs
+print('{1} and {0}'.format('spam', 'eggs'))
+# eggs and spam
+
+# with keyword arguments
+print('This {food} is {adjective}.'.format(food='spam', adjective='absolutely horrible'))
+# This spam is absolutely horrible.
+
+# combining both
+print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred',
+                                                       other='Georg'))
+# The story of Bill, Manfred, and Georg.
+
+# '!a' (apply ascii()), '!s' (apply str()) and '!r' (apply repr()) can be used to convert the value before it is formatted
+contents = 'eels'
+print('My hovercraft is full of {}.'.format(contents))
+# My hovercraft is full of eels.
+print('My hovercraft is full of {!r}.'.format(contents))
+# My hovercraft is full of 'eels'.
+
+# Use : to add additional format codes
+import math
+print('The value of PI is approximately {0:.3f}.'.format(math.pi))
+# The value of PI is approximately 3.142.
+
+# Use integer after the ':' for minimum character width
+table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
+for name, phone in table.items():
+    print('{0:10} ==> {1:10d}'.format(name, phone))
+# Jack       ==>       4098
+# Dcab       ==>       7678
+# Sjoerd     ==>       4127
+
+
+# Referencing by name instead of position
+table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 8637678}
+print('Jack: {0[Jack]:d}; Sjoerd: {0[Sjoerd]:d}; '
+      'Dcab: {0[Dcab]:d}'.format(table))
+# Jack: 4098; Sjoerd: 4127; Dcab: 8637678
+
+# Old-school formatting
+print('The value of PI is approximately %5.3f.' % math.pi)
+# The value of PI is approximately 3.142.
+```
+___
+### Files
+
+Reading and Writing Files:
+```Python
+# open(filename, mode) mode='r', 'w' or 'r+' ('r' if omitted)
+# append 'b' for binary mode (default is text mode)
+f = open('workfile', 'w')
+
+# Good practice: using with (ensures closing, even if exception occurs)
+with open('workfile') as f:
+     read_data = f.read()
+f.closed
+# True
+
+# Without 'with' one must close the file explicitly
+f.close()
+```
+
+Methods of File Objects:
+```Python
+# Read entire file
+f.read()
+
+# read until newline \n
+f.readline()
+
+# looping over lines of a file
+for line in f:
+    print(line, end='')
+# This is the first line of the file.
+# Second line of the file
+
+# read lines of a file into a list
+list(f)
+f.readlines()
+
+# Writing
+# f.write(string)
+f.write('This is a test\n')
+# 15  (Number of chars written)
+
+# Other types must be converted first (either to string or to a bytes object in bin mode)
+value = ('the answer', 42)
+s = str(value)  # convert the tuple to string
+f.write(s)
+
+# get the current position of the object (returns number of bytes from the beginning when in byte mode)
+f.tell()
+
+# change the file object's position with f.seek(offset, from_what)
+# from_what=0 (beginning of file, default)
+# from_what=1 (current file position)
+# from_what=2 (end of file)
+
+f = open('workfile', 'rb+')
+f.write(b'0123456789abcdef')
+# 16
+f.seek(5)      # Go to the 6th byte in the file
+# 5
+f.read(1)
+# b'5'
+f.seek(-3, 2)  # Go to the 3rd byte before the end
+# 13
+f.read(1)
+# b'd'
+
+# In text files (those opened without a b in the mode string), only seeks relative to the beginning of the file are allowed
+# Other values produce undefined behaviour
+```
+
+Save structured data with ```json```
+```Python
+[doc stelle json](https://docs.python.org/3/tutorial/inputoutput.html#saving-structured-data-with-json)
+```
+
 
 # Pycharm tricks
 
