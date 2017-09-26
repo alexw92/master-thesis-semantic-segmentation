@@ -458,7 +458,83 @@ Sets:
 
 Dictionaries:
 ```Python
+d1 = {'k': 123, 'loool':88}
+d1['abc'] = 123
+d1 #
+del d1['k']
 
+list(d1.keys())   # ['loool', 'abc']
+sorted(d1.keys()) # ['abc', 'loool']
+
+# Create dict
+dict([('sape', 4139), ('guido', 4127), ('jack', 4098)]) # with dict() constructor
+
+{x: x**2 for x in (2, 4, 6)}  # with dict comprehensions
+
+{x: x**2 for x in (2, 4, 6)}  # as keyword argument
+
+# Looping/Iterating through dict
+
+for k, v in d1.items():
+    print('key ',k,' val ',v)
+# key loool val 88
+# key abc val 123
+
+# looping through a sequence with index and val
+for i, v in enumerate(['tic', 'tac', 'toe']):
+    print(i, v)
+# 0 tic
+# 1 tac
+# 2 toe
+
+# reversed range
+for i in reversed(range(1, 10, 2)):
+    print(i)
+
+# sorted returns a new sorted list (source unaltered)
+basket = ['apple', 'orange', 'apple', 'pear', 'orange', 'banana']
+for f in sorted(set(basket)):
+    print(f)
+    
+# apple (only once 'cause set)
+# banana
+# orange (only once 'cause set)
+# pear
+
+# Change a list while looping over it? 
+# No, it is often simpler and safer to create a new list instead
+
+import math
+raw_data = [56.2, float('NaN'), 51.7, 55.3, 52.5, float('NaN'), 47.8]
+filtered_data = []
+for value in raw_data:
+    if not math.isnan(value):
+        filtered_data.append(value)
+        
+filtered_data
+[56.2, 51.7, 55.3, 52.5, 47.8]
+
+# The Boolean operators and and or are so-called short-circuit operators:
+# arguments are evaluated from left to right, evaluation stops as soon as the outcome is determined.
+# if A and C are true but B is false, A and B and C does not evaluate the expression C.
+# the return value of a short-circuit operator is the last evaluated argument (if no booleans are used)
+```
+
+Comparing sequences:
+```Python
+# Sequence objects may be compared to other objects with the same sequence type. 
+# The comparison uses lexicographical ordering
+(1, 2, 3)              < (1, 2, 4) # True, two tuples
+[1, 2, 3]              < [1, 2, 4] # True, two lists
+'ABC' < 'C' < 'Pascal' < 'Python' # True, evaluation from left to right
+(1, 2, 3, 4)           < (1, 2, 4) # true, length may differ
+(1, 2)                 < (1, 2, -1) # true
+(1, 2, 3, 4)           < (1, 2, 3) # false
+(1, 2, 3)             == (1.0, 2.0, 3.0) # true, mixed numeric types are compared according to their numeric value
+(1, 2, ('aa', 'ab'))   < (1, 2, ('abc', 'a'), 4) # true, stops at 'aa' < 'abc'
+
+# Note that comparing objects of different types with < or > is legal provided that the objects have appropriate comparison
+# methods. (for numbers it is their numerical value for instance)
 ```
 
 
