@@ -537,6 +537,13 @@ Comparing sequences:
 # methods. (for numbers it is their numerical value for instance)
 ```
 
+___
+### Modules
+[Docs](https://docs.python.org/3/tutorial/modules.html)
+
+```Python
+
+```
 
 # Pycharm tricks
 
