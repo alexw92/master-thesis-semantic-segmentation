@@ -807,8 +807,29 @@ f.read(1)
 Save structured data with ```json```:
 [doc stelle json](https://docs.python.org/3/tutorial/inputoutput.html#saving-structured-data-with-json)
 ```Python
-```
+# create json representation from python object
+import json
+json.dumps([1, 'simple', 'list'])
+# '[1, "simple", "list"]'
 
+# dump() serializes into a text file,
+json.dump(x, f) # x = object, f = opened textfile for writing
+
+# for decoding
+x = json.load(f) # f = opened textfile for reading
+# This simple serialization technique can handle lists and dictionaries
+# but serializing arbitrary class instances in JSON requires a bit of extra effort
+```
+See (pickle doc)[https://docs.python.org/3/library/pickle.html#module-pickle] for information considering the transformation of arbitrary python objects into json representation
+
+___
+### Exception handling
+
+[docs exception](https://docs.python.org/3/tutorial/errors.html)
+
+```Python
+
+```
 
 # Pycharm tricks
 
