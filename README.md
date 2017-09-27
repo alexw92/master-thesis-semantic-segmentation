@@ -827,8 +827,63 @@ ___
 
 [docs exception](https://docs.python.org/3/tutorial/errors.html)
 
+Exception throwing:
 ```Python
+for arg in sys.argv[1:]:
+    try:
+        f = open(arg, 'r')
+    except OSError:
+        print('cannot open', arg)
+    else:       # if the try clause does not raise an exception
+        print(arg, 'has', len(f.readlines()), 'lines')
+        f.close()
+```
 
+User-defined Exceptions:
+```Python
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
+class InputError(Error):
+    """Exception raised for errors in the input.
+
+    Attributes:
+        expression -- input expression in which the error occurred
+        message -- explanation of the error
+    """
+
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
+class TransitionError(Error):
+    """Raised when an operation attempts a state transition that's not
+    allowed.
+
+    Attributes:
+        previous -- state at beginning of transition
+        next -- attempted new state
+        message -- explanation of why the specific transition is not allowed
+    """
+
+    def __init__(self, previous, next, message):
+        self.previous = previous
+        self.next = next
+        self.message = message
+```
+
+Clean-up actions:
+```Python
+def divide(x, y):
+     try:
+         result = x / y
+     except ZeroDivisionError:
+         print "division by zero!"
+     else:
+         print "result is", result
+     finally:
+         print "executing finally clause"
 ```
 
 # Pycharm tricks
