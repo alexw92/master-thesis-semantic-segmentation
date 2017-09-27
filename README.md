@@ -886,6 +886,111 @@ def divide(x, y):
          print "executing finally clause"
 ```
 
+___
+### Classes
+
+Defning classes
+```Python
+class MyClass:
+    """A simple example class"""
+    i = 12345
+
+    def f(self):
+        return 'hello world'
+        
+    def __init__(self):     # invoked when creating an object (Constructor)
+        self.data = []
+
+MyClass.i       # can be accessed this way
+MyClass.f       # "        "
+x = MyClass()   # creating an object
+```
+
+Constructor with arguments:
+```Python
+class Complex:
+     def __init__(self, realpart, imagpart):
+         self.r = realpart
+         self.i = imagpart
+
+ x = Complex(3.0, -4.5)
+ x.r, x.i
+(3.0, -4.5)
+```
+
+**Important:** There is no possibility to create multiple constructors in a class in python, unlike in Java.
+But it is possible to define constructors with all arguments and give them default values.
+
+Instance Objects:
+Instance objects have two kinds of attribute names: **data attributes** and **methods**
+**Data attributes** spring into existence when they are first assigned to. No definition is necesarry!
+Example for class *MyClass*:
+```Python
+x.counter = 1
+while x.counter < 10:
+    x.counter = x.counter * 2
+print x.counter
+del x.counter
+```
+x.f is a valid **method** reference
+MyClass.f is a **function**
+
+Method objects:
+````Python
+xf = x.f  # x.f is a method object which can be stored and used later 
+while True:
+    print xf()
+```
+
+In general, calling a method with a list of n arguments is equivalent to calling the corresponding function with an argument 
+list that is created by inserting the method’s object before the first argument.
+
+```x.f()``` is exactly equivalent to ```MyClass.f(x)```.
+
+Class and Instance Variables:
+```Python
+class Dog:
+
+    kind = 'canine'         # class variable shared by all instances
+
+    def __init__(self, name):
+        self.name = name    # instance variable unique to each instance
+
+d = Dog('Fido')
+e = Dog('Buddy')
+d.kind                  # shared by all dogs
+# 'canine'
+e.kind                  # shared by all dogs
+# 'canine'
+d.name                  # unique to d
+# 'Fido'
+e.name                  # unique to e
+# 'Buddy'
+```
+
+Lists, Dicts etc should be used as instance variable, not as class variable:
+```Pyton
+class Dog:
+
+    def __init__(self, name):
+        self.name = name
+        self.tricks = []    # creates a new empty list for each dog
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+d = Dog('Fido')
+e = Dog('Buddy')
+d.add_trick('roll over')
+e.add_trick('play dead')
+d.tricks
+# ['roll over']
+e.tricks
+# ['play dead']
+```
+
+[Random remarks 9.4](https://docs.python.org/2/tutorial/classes.html#random-remarks)
+
 # Pycharm tricks
 
 + Where to change key bindings:
