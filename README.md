@@ -889,7 +889,7 @@ def divide(x, y):
 ___
 ### Classes
 
-Defning classes
+Defining classes
 ```Python
 class MyClass:
     """A simple example class"""
@@ -936,7 +936,7 @@ x.f is a valid **method** reference
 MyClass.f is a **function**
 
 Method objects:
-````Python
+```Python
 xf = x.f  # x.f is a method object which can be stored and used later 
 while True:
     print xf()
