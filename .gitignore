@@ -1,1 +1,4 @@
-Tensorflow Project/__pycache__
+# My\ allows to ignore a folder with a space in the path
+
+# ignore compiled python code
+My\ Tensorflow Project/__pycache__
