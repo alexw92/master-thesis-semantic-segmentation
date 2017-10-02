@@ -998,7 +998,7 @@ e.tricks
 File | Settings | Keymap
 ```
 
-+ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle.
++ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle Default Keybining for *Reformatting* is ```CTRL + ALT + L```.
 
 + Where to activate documentation-popup on mouse-hover
 ```
