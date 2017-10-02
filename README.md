@@ -27,6 +27,10 @@ main()
 
 ```
 
+## Save and Load models
+
+[Save and Load Link YT](https://www.youtube.com/watch?v=l4X-kZjl1gs#t=48m00s)
+
 # Python language knowledge
 
 + Why you need a ```self``` keyword in Python ? [Stackoverflow](https://stackoverflow.com/a/2725996)
