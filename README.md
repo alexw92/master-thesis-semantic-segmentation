@@ -27,6 +27,10 @@ main()
 
 ```
 
+## Save and Load models
+
+[Save and Load Link YT](https://www.youtube.com/watch?v=l4X-kZjl1gs#t=48m00s)
+
 # Python language knowledge
 
 + Why you need a ```self``` keyword in Python ? [Stackoverflow](https://stackoverflow.com/a/2725996)
@@ -998,7 +1002,7 @@ e.tricks
 File | Settings | Keymap
 ```
 
-+ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle.
++ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle Default Keybining for *Reformatting* is ```CTRL + ALT + L```.
 
 + Where to activate documentation-popup on mouse-hover
 ```
