@@ -31,20 +31,24 @@ Py3 = sys.version_info[0] == 3
 def _read_words(filename):
     with tf.gfile.GFile(filename, "r") as f:
         if Py3:
-            return f.read().replace("\n", "<eos>").split()
+            return f.read().replace("\n", "<eos>").split() # split() == split(" ")
         else:
             return f.read().decode("utf-8").replace("\n", "<eos>").split()
 
 
 def _build_vocab(filename):
     data = _read_words(filename)
-
+    # data: loyees', 'will', 'continue', 'at', 'least', '<eos>', 'roads', ...
     counter = collections.Counter(data)
+    # counter : Counter({'the': 50770, '<unk>': 45020, '<eos>': 42068, ...})
     count_pairs = sorted(counter.items(), key=lambda x: (-x[1], x[0]))
-
+    # absteigend (-1) nach häfigkeit (x[1]) sortieren; wenn gleich häufig -> lexikografisch nach wort (x[0]) sortieren
+    # count_pairs : [('the', 50770), ('<unk>', 45020), ('<eos>', 42068)
     words, _ = list(zip(*count_pairs))
+    # words: ('the', '<unk>', '<eos>', 'N', 'of',
+    # _ : (50770, 45020, 42068, 32481, 24400,
     word_to_id = dict(zip(words, range(len(words))))
-
+    # word_to_id : {'warned': 2286, 'overcome': 4529, 'countries': 672, 'hopeful': 8141,
     return word_to_id
 
 
@@ -109,7 +113,6 @@ def ptb_producer(raw_data, batch_size, num_steps, name=None):
         batch_len = data_len // batch_size
         data = tf.reshape(raw_data[0: batch_size * batch_len],
                           [batch_size, batch_len])
-        print(str(data_len))
         epoch_size = (batch_len - 1) // num_steps
         assertion = tf.assert_positive(
             epoch_size,
@@ -117,11 +120,14 @@ def ptb_producer(raw_data, batch_size, num_steps, name=None):
         with tf.control_dependencies([assertion]):
             epoch_size = tf.identity(epoch_size, name="epoch_size")
 
-        i = tf.train.range_input_producer(epoch_size, shuffle=False).dequeue()
+        i = tf.train.range_input_producer(epoch_size, shuffle=False).dequeue() # produces numbers i=0...epoch_size-1
         x = tf.strided_slice(data, [0, i * num_steps],
                              [batch_size, (i + 1) * num_steps])
+        # i=1 basize=3 num_steps=2 take data from [0, 0] to [3 , 2]
         x.set_shape([batch_size, num_steps])
         y = tf.strided_slice(data, [0, i * num_steps + 1],
                              [batch_size, (i + 1) * num_steps + 1])
+        # i=1 basize=3 num_steps=2 take data from [0, 1] to [3 , 3]
         y.set_shape([batch_size, num_steps])
+        print(y)
         return x, y
