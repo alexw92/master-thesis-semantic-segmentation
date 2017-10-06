@@ -44,7 +44,7 @@ x_train = [1, 2, 3, 4]
 y_train = [0, -1, -2, -3]
 
 # train the model
-for i in range(1000):
+for i in range(500):
     sesh.run(train, {x: x_train, y: y_train})
 
 # evaluate accuracy

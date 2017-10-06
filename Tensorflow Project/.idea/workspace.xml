@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ebc4286d-e6ad-4e05-b4fc-a2f264e0ab5f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Python_TensorFlow/TF_Experiments/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Python_TensorFlow/TF_Experiments/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Python_TensorFlow/TF_Experiments/Variables.py" afterPath="$PROJECT_DIR$/../Python_TensorFlow/TF_Experiments/Variables.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Tensorflow Project.iml" afterPath="$PROJECT_DIR$/.idea/Tensorflow Project.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lol.py" afterPath="$PROJECT_DIR$/lol.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ptb_word_lm.py" afterPath="$PROJECT_DIR$/ptb_word_lm.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reader.py" afterPath="$PROJECT_DIR$/reader.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lol.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lol.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lol.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+            <state relative-caret-position="204">
+              <caret line="12" column="63" lean-forward="false" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -29,13 +31,12 @@
       <file leaf-file-name="ptb_word_lm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ptb_word_lm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="113" column="24" lean-forward="true" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+            <state relative-caret-position="187">
+              <caret line="94" column="15" lean-forward="false" selection-start-line="94" selection-start-column="15" selection-end-line="94" selection-end-column="15" />
               <folding>
                 <element signature="e#2345#2383#0" expanded="true" />
                 <element signature="e#13044#13336#0" expanded="false" />
                 <element signature="e#13370#13670#0" expanded="false" />
-                <element signature="e#13703#14001#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -54,7 +55,7 @@
       <file leaf-file-name="reader_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reader_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
+            <state relative-caret-position="697">
               <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="34" />
               <folding>
                 <element signature="e#740#778#0" expanded="true" />
@@ -63,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reader.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="reader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="129" column="67" lean-forward="true" selection-start-line="129" selection-start-column="67" selection-end-line="129" selection-end-column="67" />
+            <state relative-caret-position="1836">
+              <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
               <folding>
                 <element signature="e#735#773#0" expanded="true" />
               </folding>
@@ -108,16 +109,16 @@
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/reader_test.py" />
         <option value="$PROJECT_DIR$/ptb_word_lm.py" />
-        <option value="$PROJECT_DIR$/lol.py" />
         <option value="$PROJECT_DIR$/reader.py" />
+        <option value="$PROJECT_DIR$/lol.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="286" />
-    <option name="y" value="13" />
+    <option name="x" value="348" />
+    <option name="y" value="335" />
     <option name="width" value="1400" />
-    <option name="height" value="1041" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -154,7 +155,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -167,11 +167,12 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Python_TensorFlow/TF_Experiments" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -185,7 +186,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ptb_word_lm">
+  <component name="RunManager" selected="Python.lol">
     <configuration name="Unittests in reader_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -307,20 +308,20 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="ptb_word_lm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="ptb_word_lm" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Wichtige Progs\Python\python.exe" />
+      <option name="SDK_HOME" value="C:\Programming\Python\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Tensorflow Project" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ptb_word_lm.py" />
-      <option name="PARAMETERS" value="--data_path=..\..\simple-examples\data --model=medium" />
+      <option name="PARAMETERS" value="--data_path=..\..\ANN_DATA\simple-examples\data --model=medium --save_path=.\savedLSTMmedium" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
@@ -344,15 +345,14 @@
     <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.ptb_word_lm" />
       <item index="1" class="java.lang.String" itemvalue="Python.reader" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in reader_test.py" />
-      <item index="3" class="java.lang.String" itemvalue="Python.lol" />
+      <item index="2" class="java.lang.String" itemvalue="Python.lol" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in reader_test.py" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.ptb_word_lm" />
-        <item index="1" class="java.lang.String" itemvalue="Python.lol" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in reader_test.py" />
-        <item index="3" class="java.lang.String" itemvalue="Python.reader" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.lol" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in reader_test.py" />
+        <item index="2" class="java.lang.String" itemvalue="Python.reader" />
       </list>
     </recent_temporary>
   </component>
@@ -394,14 +394,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29690832" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.296875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34415585" sideWeight="0.23720682" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34415585" sideWeight="0.7627932" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31678987" sideWeight="0.51458335" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34318903" sideWeight="0.7505208" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.48933902" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31678987" sideWeight="0.48541668" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
@@ -426,6 +425,86 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ptb_word_lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1921">
+          <caret line="113" column="24" lean-forward="false" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+          <folding>
+            <element signature="e#2345#2383#0" expanded="true" />
+            <element signature="e#13044#13336#0" expanded="false" />
+            <element signature="e#13370#13670#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reader_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="34" />
+          <folding>
+            <element signature="e#740#778#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+          <folding>
+            <element signature="e#735#773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ptb_word_lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1921">
+          <caret line="113" column="24" lean-forward="true" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+          <folding>
+            <element signature="e#2345#2383#0" expanded="true" />
+            <element signature="e#13044#13336#0" expanded="false" />
+            <element signature="e#13370#13670#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reader_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="34" />
+          <folding>
+            <element signature="e#740#778#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="82" column="51" lean-forward="false" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2057">
+          <caret line="129" column="67" lean-forward="true" selection-start-line="129" selection-start-column="67" selection-end-line="129" selection-end-column="67" />
+          <folding>
+            <element signature="e#735#773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lol.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -450,7 +529,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -491,7 +569,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -552,7 +629,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -573,7 +649,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -604,7 +679,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -645,7 +719,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -706,7 +779,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -747,7 +819,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -768,7 +839,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -789,7 +859,6 @@
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -803,11 +872,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Python/Lib/email/mime/image.py" />
-    <entry file="file://$PROJECT_DIR$/lol.py">
+    <entry file="file://$PROJECT_DIR$/reader_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="697">
+          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="34" />
+          <folding>
+            <element signature="e#740#778#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+          <folding>
+            <element signature="e#735#773#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -821,34 +902,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ptb_word_lm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="113" column="24" lean-forward="true" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+        <state relative-caret-position="187">
+          <caret line="94" column="15" lean-forward="false" selection-start-line="94" selection-start-column="15" selection-end-line="94" selection-end-column="15" />
           <folding>
             <element signature="e#2345#2383#0" expanded="true" />
             <element signature="e#13044#13336#0" expanded="false" />
             <element signature="e#13370#13670#0" expanded="false" />
-            <element signature="e#13703#14001#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reader_test.py">
+    <entry file="file://$PROJECT_DIR$/lol.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="34" />
-          <folding>
-            <element signature="e#740#778#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="129" column="67" lean-forward="true" selection-start-line="129" selection-start-column="67" selection-end-line="129" selection-end-column="67" />
-          <folding>
-            <element signature="e#735#773#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="12" column="63" lean-forward="false" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
