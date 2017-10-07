@@ -5,3 +5,6 @@
 **/__pycache__
 **/.idea
 ANN_DATA/
+
+# saved lstm
+**/savedLSTMmedium
