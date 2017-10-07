@@ -1,5 +1,5 @@
 def test():
-    f = open("..\..\ANN_DATA\simple-examples\data\ptb.test.txt", 'r')
+    f = open("..\ANN_DATA\simple-examples\data\ptb.test.txt", 'r')
     i = 0;
     for line in f:
         if i < 50:
@@ -10,7 +10,7 @@ def test():
 
 
 def main():
-    f = open("..\..\ANN_DATA\RecSys15\yoochoose-buys.dat", 'r')
+    f = open("..\ANN_DATA\RecSys15\yoochoose-buys.dat", 'r')
     i = 0;
     myset = set()
     for line in f:
@@ -21,9 +21,6 @@ def main():
             print(i)
     f.close()
     return myset,i
-
-
-main()
 
 
 
