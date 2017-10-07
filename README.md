@@ -44,6 +44,8 @@ which isn't highlighted correctly
 class Foo(Base1, Base2):```
 Foo is being declared as a class inheriting from base classes Base1 and Base2.
 
++ Reimport module (get changes) [ImportLib.Reload()](https://docs.python.org/3.5/library/importlib.html#importlib.reload)
+
 + [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
 
 + Print() Knowledge
