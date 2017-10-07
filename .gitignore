@@ -1,4 +1,6 @@
 # My\ allows to ignore a folder with a space in the path
 
 # ignore compiled python code
+
 **/__pycache__
+**/.idea
