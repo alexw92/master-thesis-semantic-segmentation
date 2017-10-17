@@ -57,15 +57,19 @@ def neural_network_model(data):
 
     # (input_data * weights) + biases
 
+    # W1*x1 + b1 = y1
     l1 = tf.add(tf.matmul(data, hidden_1_layer['weights']), hidden_1_layer['biases'])
     l1 = tf.nn.relu(l1)
 
+    # W2*y1 + b2 = y2
     l2 = tf.add(tf.matmul(l1, hidden_2_layer['weights']), hidden_2_layer['biases'])
     l2 = tf.nn.relu(l2)
 
+    # W3*y2 + b3 = y3
     l3 = tf.add(tf.matmul(l2, hidden_3_layer['weights']), hidden_3_layer['biases'])
     l3 = tf.nn.relu(l3)
 
+    # OW*y3 + ob = o
     output = tf.add(tf.matmul(l3, output_layer['weights']), output_layer['biases'])
     return output
 
