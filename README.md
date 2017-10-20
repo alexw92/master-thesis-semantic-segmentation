@@ -2,6 +2,8 @@
 
 ## Knowledge & Tutorials
 + Nice TensorFlow tutorial on [youtube](https://www.youtube.com/watch?v=yX8KuPZCAMo&lc=z12vwxxpxxqmjfwbv04cglyxixiuxrxp0aw) (about 50 min)
++ Extrem schöne Folien zum Verständnis von TF und des InputFormats [github](https://github.com/thiagoavadore/tf-key-concepts-sample)
++ Sehr gute Tutorials auf [sentdex youtube](https://www.youtube.com/watch?v=dFARw8Pm0Gk) und auf persönlicher [ML website](https://pythonprogramming.net/)
 
 ## Tensorflow installieren
 Install Python 3.5.2 and include the installed folder into Path  (```C:\Wichtige Progs\Python``` in my case)
