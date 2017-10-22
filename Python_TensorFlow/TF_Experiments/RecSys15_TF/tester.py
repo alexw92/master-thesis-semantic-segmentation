@@ -63,15 +63,20 @@ from datetime import datetime
 # 7,2014-04-02T06:38:53.104Z,214826835,0
 # 7,2014-04-02T06:39:05.854Z,214826715,0
 # 8,2014-04-06T08:49:58.728Z,214838855,0
-
+214536502
+50000
 # read data lines
+data_write = '../../ANN_DATA/RecSys15/clicks_changed_items.txt'
 data_clicks = '../../ANN_DATA/RecSys15/yoochoose-clicks.dat'
 data_buys = '../../ANN_DATA/RecSys15/yoochoose-buys.dat'
 date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-max_lines = 100000000
+max_lines = 34000000
 
-
+# creates new dataset with itemids mapped to numbers from 1 to ~50000
+# in order to get a lower number of dimensions for nn processing
 def read_clicks_and_buys():
+    itemset = set()
+    max = 0
     print('Reading buys data...')
     datalinesbuy = []
     with open(data_buys) as f:
@@ -87,18 +92,33 @@ def read_clicks_and_buys():
 
     print('Reading clicks data...')
     datalinesclick = []
+    id_counter = 0
+    itemdict = {}
     with open(data_clicks) as f:
+        writefile = open(data_write, 'w')
         for i in range(max_lines):
             if i % 1000000 == 0:
+                writefile.flush()
                 print(((i/max_lines)*100), '%')
             line = f.readline()
             if not line:
-                break;
+                break;                   # 1,2014-04-07T10:51:09.277Z,214536502,0
             datalinesclick.append(line)
+            split = line.split(',')
+            item = split[-2]
+            if not (item in itemdict):
+                id_counter = id_counter + 1
+                itemdict[item] = id_counter
+            itemset.add(item)
+            writefile.write(split[0]+','+split[1]+','+str(itemdict[split[2]])+','+split[3])
+            nitem = int(item)
+            if nitem > max :
+                max = nitem
         print('100 %')
-        datalinesclick = [line.rstrip('\n') for line in datalinesclick]
+        writefile.close()
+        #datalinesclick = [line.rstrip('\n') for line in datalinesclick]
         # print(f.readline())
         # print(f.readlines(20))
     print('data_buys ', len(datalinesbuy))
     print('data_clicks ', len(datalinesclick))
-    return datalinesbuy, datalinesclick
+    return  max, itemset,itemdict
