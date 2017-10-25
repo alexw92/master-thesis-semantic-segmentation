@@ -5,7 +5,7 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from tensorflow.contrib import rnn
-
+# this saves in 'C:/tmp/data/'
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
 # takes like 2 min for calc with this config
@@ -22,8 +22,8 @@ y = tf.placeholder('float')
 
 
 def recurrent_neural_network(x):
-    layer = {'weights': tf.Variable(tf.random_normal([rnn_size,n_classes])),
-             'biases': tf.Variable(tf.random_normal([n_classes]))}
+    layer = {'weights': tf.Variable(tf.random_normal([rnn_size, n_classes]), name="weights"),
+             'biases': tf.Variable(tf.random_normal([n_classes]), name="biases")}
 
     x = tf.transpose(x, [1, 0, 2])
     x = tf.reshape(x, [-1, chunk_size])
@@ -43,7 +43,9 @@ def train_neural_network(x):
     optimizer = tf.train.AdamOptimizer().minimize(cost)
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
+        # Add ops to save and restore all the variables.
+        saver = tf.train.Saver()
 
         for epoch in range(hm_epochs):
             epoch_loss = 0
@@ -62,5 +64,36 @@ def train_neural_network(x):
         print('Accuracy:', accuracy.eval({x: mnist.test.images.reshape((-1, n_chunks, chunk_size)),
                                           y: mnist.test.labels}))
 
+        # Save the variables to disk.
+        save_path = saver.save(sess, "/tmp/model.ckpt")
+        print("Model saved in file: %s" % save_path)
 
-train_neural_network(x)
+
+# Might not work because lstm hasn't been saved explicitly
+# https://stackoverflow.com/questions/40442098/saving-and-restoring-a-trained-lstm-in-tensor-flow
+# confirms that it works though
+def restore_rnn_model():
+    tf.reset_default_graph()
+
+    # Create some variables.
+    v1 = tf.get_variable("weights", [rnn_size, n_classes])
+    v2 = tf.get_variable("biases", [n_classes])
+    # Add ops to save and restore only `v2` using the name "v2"
+    saver = tf.train.Saver({"weights": v1})
+
+    # Use the saver object normally after that.
+    with tf.Session() as sess:
+        # Initialize v2 since the saver will not.
+        v2.initializer.run()
+        saver.restore(sess, "/tmp/model.ckpt")
+
+        print("v1 : %s" % v1.eval())
+        print("v2 : %s" % v2.eval())
+    return v1, v2
+
+
+# train_neural_network(x)
+v1, v2 = restore_rnn_model()
+
+
+
