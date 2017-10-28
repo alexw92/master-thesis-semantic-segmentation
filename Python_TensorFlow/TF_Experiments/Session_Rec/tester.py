@@ -1,6 +1,7 @@
 
 import numpy as np
 import tensorflow as tf
+import random as ran
 from datetime import datetime
 
 # Example split date into month, year etc.
@@ -64,6 +65,8 @@ from datetime import datetime
 # 7,2014-04-02T06:39:05.854Z,214826715,0
 # 8,2014-04-06T08:49:58.728Z,214838855,0
 # read data lines
+data_item_to_item = '../../ANN_DATA/RecSys15/clicks_item_to_item.txt'
+data_write_mixed = '../../ANN_DATA/RecSys15/clicks_changed_items_mixed.txt'
 data_write = '../../ANN_DATA/RecSys15/clicks_changed_items.txt'
 data_clicks = '../../ANN_DATA/RecSys15/yoochoose-clicks.dat'
 data_buys = '../../ANN_DATA/RecSys15/yoochoose-buys.dat'
@@ -124,3 +127,76 @@ def read_clicks_and_buys():
     print('data_buys ', len(datalinesbuy))
     print('data_clicks ', len(datalinesclick))
     return max, itemset,itemdict
+
+
+def shuffleItemIds(itemdict, infile=data_clicks, outfile=data_write_mixed):
+    """
+    Load  previously written files and mix item id mapping in order to eliminate
+    ascending order of ids
+    :param infile: clickfile
+    :param outfile: file with ascending item ids eliminated
+    :return:
+    """
+    # Mix item id mapping
+    print('Mixing item ids')
+    ilist = list(itemdict.keys())
+    print(len(ilist))
+    for i in range(1, len(itemdict)):
+        a = ran.randint(0, len(itemdict)-1)
+        b = ran.randint(0, len(itemdict)-1)
+        itemdict[ilist[a]], itemdict[ilist[b]] = itemdict[ilist[b]], itemdict[ilist[a]]
+    with open(infile,'rt') as f:
+        writef = open(outfile,'wt')
+        for i in range(34000000):
+            if i % 1000000 == 0:
+                print(((i/max_lines)*100), '%')
+            line = f.readline()
+            if line==None:
+                break
+            split = line.split(sep=',')
+            if len(split)<4:
+                break;
+            newline = split[0]+','+split[1]+','+str(itemdict[split[2]])+','+split[3]
+            writef.write(newline)
+        print('100 %')
+        print('mixed item ids saved to '+outfile)
+        writef.close()
+
+
+def create_item_to_item_relation(infile=data_write_mixed, outfile=data_item_to_item):
+    """
+    :param infile: the file written byshuffleItemIds
+    :param outfile: A file contaning a set of tuples (itemid1,itemid2) with itemid2 having been
+            clicked immediately after itemid1 in a session.
+    """
+    lastsession = ''
+    lastitem = ''
+    line = ''
+    with open(infile, 'rt') as read:
+        write = open(outfile, 'wt')
+        i = 0
+        while line is not None:
+            i = i+1
+            if (i % 3400000) == 0:
+                print(str(100*(i/max_lines))+' %')
+            line = read.readline()
+            split = line.split(',')
+            if len(split) < 4:
+                print('format error '+str(len(split))+' '+str(i)+' of '+str(max_lines)+' line '+line)
+                break
+            session = split[0]
+            item = split[2]
+            if lastsession != session:
+                lastsession = session
+                lastitem = item
+                continue
+            else:
+                write.write(lastitem+','+item+'\n')
+                lastsession = session
+                lastitem = item
+        write.close()
+
+
+# max, itemset, itemdict = read_clicks_and_buys()
+# shuffleItemIds(itemdict)
+# create_item_to_item_relation()
