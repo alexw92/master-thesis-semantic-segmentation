@@ -3,13 +3,28 @@ import tensorflow as tf
 x = []
 y = []
 num_data = 0
+vector_dim = 52739  # numer of different items in recsys15
+next_index = 0  # the next index used by next_batch()
 
 
 def next_batch(batch_size):
     if len(x) == 0:
         __load_session_data()
-
+    if next_index+batch_size+1 > num_data:
+        diff = num_data - (next_index+batch_size+1)
+        print('Not enough data remaining to create next batch, '+diff+' values missing')
+        return -1, -1
     # transform to one-Hot-vector
+    nbatch_x = x[next_index:next_index+batch_size]
+    nbatch_y = y[next_index:next_index+batch_size]
+
+    nbatch_x = tf.one_hot(nbatch_x, vector_dim)
+    nbatch_y = tf.one_hot(nbatch_y, vector_dim)
+    # update next pointer
+    global next_index
+    next_index = next_index + batch_size
+
+    return nbatch_x, nbatch_y
 
 
 def __load_session_data(infile='../../ANN_DATA/RecSys15/clicks_item_to_item.txt'):
@@ -18,15 +33,11 @@ def __load_session_data(infile='../../ANN_DATA/RecSys15/clicks_item_to_item.txt'
     with open(infile, 'rt') as read:
         while line is not None:
             line = read.readline()
-            split = line[',']
+            split = line.split(',')
             if len(split) < 2:
                 print('format err at line='+line)
+                break
             x.append(int(split[0]))
             y.append(int(split[1]))
     global num_data
     num_data = len(x)
-
-
-__load_session_data()
-
-

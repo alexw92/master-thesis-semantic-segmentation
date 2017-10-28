@@ -14,7 +14,7 @@ n_classes = 10
 batch_size = 128
 chunk_size = 28
 n_chunks = 28
-rnn_size = 128
+rnn_size = 128  # number of units of lstm cell
 
 
 x = tf.placeholder('float', [None, n_chunks, chunk_size])
