@@ -5,33 +5,35 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from tensorflow.contrib import rnn
+import Session_Rec.traindata as train
 # this saves in 'C:/tmp/data/'
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
-
 # takes like 2 min for calc with this config
 hm_epochs = 10
-n_classes = 10
+n_classes = 52739
 batch_size = 128
 chunk_size = 28
 n_chunks = 28
+n_csize = 52739
 rnn_size = 128  # number of units of lstm cell
 
 
-x = tf.placeholder('float', [None, n_chunks, chunk_size])
-y = tf.placeholder('float')
+x = tf.placeholder('float', [batch_size, n_csize])
+y = tf.placeholder('float', [batch_size, n_csize])
 
 
 def recurrent_neural_network(x):
-    layer = {'weights': tf.Variable(tf.random_normal([rnn_size, n_classes]), name="weights"),
+    layer = {#'weights': tf.Variable(tf.random_normal([rnn_size, n_classes]), name="weights"),
+             'weights': tf.Variable(tf.random_normal([n_csize]), name="weights"),
              'biases': tf.Variable(tf.random_normal([n_classes]), name="biases")}
 
-    x = tf.transpose(x, [1, 0, 2])
-    x = tf.reshape(x, [-1, chunk_size])
-    x = tf.split(x, n_chunks, 0)  # old version: x = tf.split(0, n_chunks, x)
-
+#    x = tf.transpose(x, [1, 0, 2])
+#    x = tf.reshape(x, [-1, chunk_size])
+#    x = tf.split(x, n_chunks, 0)  # old version: x = tf.split(0, n_chunks, x)
+    x  = tf.split(x, batch_size, 0)
     lstm_cell = rnn.BasicLSTMCell(rnn_size)
     outputs, states = rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
-
+    print(outputs[-1].shape)
     output = tf.matmul(outputs[-1], layer['weights']) + layer['biases']
 
     return output
@@ -92,8 +94,8 @@ def restore_rnn_model():
     return v1, v2
 
 
-# train_neural_network(x)
-v1, v2 = restore_rnn_model()
+train_neural_network(x)
+# v1, v2 = restore_rnn_model()
 
 
 
