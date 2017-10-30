@@ -15,6 +15,7 @@ feed forward + backpropagation = epoch (epic^^)
 
 import tensorflow as tf
 import Session_Rec.traindata as train
+import Session_Rec.eval as eval
 
 # mnist = input_data.read_data_sets("/tmp/data", one_hot=True)
 
@@ -79,6 +80,7 @@ def train_neural_network(x):
     prediction = neural_network_model(x)
     # difference between prediction and true solution
     cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=y))
+    #cost = eval.recall(prediction, y)
 
     #                       learning_rate = 0.001
     optimizer = tf.train.AdamOptimizer().minimize(cost)
@@ -108,7 +110,8 @@ def train_neural_network(x):
         print(tf.arg_max(prediction, 1))
         print(tf.arg_max(y, 1))
         test_x, test_y = train.next_batch(batch_size*100)
-        correct = tf.equal(tf.argmax(prediction, 1), tf.arg_max(y, 1))
+        # correct = tf.equal(tf.argmax(prediction, 1), tf.arg_max(y, 1))
+        correct = eval.recall(prediction, y)
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
         print('Accuracy:', accuracy.eval({x: test_x, y: test_y}))
         # (10000, 784)
