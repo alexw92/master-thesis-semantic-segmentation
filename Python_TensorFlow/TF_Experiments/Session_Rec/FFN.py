@@ -29,9 +29,9 @@ import Session_Rec.traindata as train
 '''
 
 # can be variable
-n_nodes_hl1 = 500
-n_nodes_hl2 = 500
-n_nodes_hl3 = 500
+n_nodes_hl1 = 2000
+n_nodes_hl2 = 2000
+n_nodes_hl3 = 5000
 
 n_classes = 52739    # number of outputs
 batch_size = 10  # batch_size images at one time is fed to the network
@@ -49,11 +49,11 @@ def neural_network_model(data):
 
     hidden_2_layer = {'weights': tf.Variable(tf.random_normal([n_nodes_hl1, n_nodes_hl2])),
                       'biases': tf.Variable(tf.random_normal([n_nodes_hl2]))}
+    #
+    # hidden_3_layer = {'weights': tf.Variable(tf.random_normal([n_nodes_hl2, n_nodes_hl3])),
+    #                   'biases': tf.Variable(tf.random_normal([n_nodes_hl3]))}
 
-    hidden_3_layer = {'weights': tf.Variable(tf.random_normal([n_nodes_hl2, n_nodes_hl3])),
-                      'biases': tf.Variable(tf.random_normal([n_nodes_hl3]))}
-
-    output_layer = {'weights': tf.Variable(tf.random_normal([n_nodes_hl3, n_classes])),
+    output_layer = {'weights': tf.Variable(tf.random_normal([n_nodes_hl2, n_classes])),
                     'biases': tf.Variable(tf.random_normal([n_classes]))}
 
     # (input_data * weights) + biases
@@ -67,11 +67,11 @@ def neural_network_model(data):
     l2 = tf.nn.relu(l2)
 
     # W3*y2 + b3 = y3
-    l3 = tf.add(tf.matmul(l2, hidden_3_layer['weights']), hidden_3_layer['biases'])
-    l3 = tf.nn.relu(l3)
+    # l3 = tf.add(tf.matmul(l2, hidden_3_layer['weights']), hidden_3_layer['biases'])
+    # l3 = tf.nn.relu(l3)
 
     # OW*y3 + ob = o
-    output = tf.add(tf.matmul(l3, output_layer['weights']), output_layer['biases'])
+    output = tf.add(tf.matmul(l2, output_layer['weights']), output_layer['biases'])
     return output
 
 
@@ -108,7 +108,7 @@ def train_neural_network(x):
         print(tf.arg_max(prediction, 1))
         print(tf.arg_max(y, 1))
         test_x, test_y = train.next_batch(batch_size*100)
-        correct = tf.equal(tf.arg_max(prediction, 1), tf.arg_max(y, 1))
+        correct = tf.equal(tf.argmax(prediction, 1), tf.arg_max(y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
         print('Accuracy:', accuracy.eval({x: test_x, y: test_y}))
         # (10000, 784)
@@ -126,5 +126,13 @@ def train_neural_network(x):
 # epoch_size = 5000
 # default loss function
 # test_size 1000
+# lowest loss in test epoch around 41000
 # Accuracy: 0.017
+
+# same accuracy with FNN on
+# n_nodes_hl1 = 2000
+# n_nodes_hl2 = 2000
+# no hl 3
+# same values as above
+# lowest loss in test epoch around 41000
 train_neural_network(x)

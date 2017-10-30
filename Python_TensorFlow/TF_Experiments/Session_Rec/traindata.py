@@ -41,11 +41,12 @@ def __load_session_data(infile='../../../ANN_DATA/RecSys15/clicks_item_to_item.t
     print('Loading data from '+infile)
     line = ""
     with open(infile, 'rt') as read:
+        i = 1
         while line is not None:
             line = read.readline()
             split = line.split(',')
             if len(split) < 2:
-                print('format err at line='+line)
+                print('format err at line '+str(i)+'. Line was ('+line+')')
                 break
             x.append(int(split[0]))
             y.append(int(split[1]))
