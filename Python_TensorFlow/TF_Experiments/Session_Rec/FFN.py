@@ -37,10 +37,10 @@ n_nodes_hl3 = 5000
 n_classes = 52739    # number of outputs
 batch_size = 10  # batch_size images at one time is fed to the network
 n_csize = 52739
-epoch_size = 5000
+epoch_size = 500
 # height x width
 x = tf.placeholder('float', [None, n_csize])  # 28*28 pixels, no need to keep the initial shape of the image!
-y = tf.placeholder('float', [None, n_csize])
+y = tf.placeholder('int64', [None, n_csize])
 
 
 def neural_network_model(data):
@@ -80,7 +80,7 @@ def train_neural_network(x):
     prediction = neural_network_model(x)
     # difference between prediction and true solution
     cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=y))
-    #cost = eval.recall(prediction, y)
+    # cost, _ = tf.metrics.recall_at_k(y, prediction, k=20)
 
     #                       learning_rate = 0.001
     optimizer = tf.train.AdamOptimizer().minimize(cost)
