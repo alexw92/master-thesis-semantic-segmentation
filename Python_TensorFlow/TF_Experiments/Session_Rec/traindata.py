@@ -34,7 +34,6 @@ def next_batch(batch_size):
     # update next pointer
     global next_index
     next_index = next_index + batch_size
-
     return nbatch_x, nbatch_y
 
 
