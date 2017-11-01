@@ -23,5 +23,5 @@ def recall(predict, y, k=20, sol_size=1):
     return recall_val
 
 
-def mrr(input):
+def mrr(predict):
     None

@@ -40,7 +40,7 @@ n_csize = 52739
 epoch_size = 500
 # height x width
 x = tf.placeholder('float', [None, n_csize])  # 28*28 pixels, no need to keep the initial shape of the image!
-y = tf.placeholder('int64', [None, n_csize])
+y = tf.placeholder('int64', [batch_size])
 
 
 def neural_network_model(data):
@@ -79,12 +79,14 @@ def neural_network_model(data):
 def train_neural_network(x):
     prediction = neural_network_model(x)
     # difference between prediction and true solution
-    cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=y))
+    # cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=y))
     # cost, _ = tf.metrics.recall_at_k(y, prediction, k=20)
-
+    # https://stackoverflow.com/a/44801217
+   # cost, _ = tf.metrics.mean(tf.nn.in_top_k(predictions=prediction, targets=y, k=20))
+    cost = tf.reduce_mean(tf.cast(tf.nn.in_top_k(predictions=prediction, targets=y, k=20), tf.float32))
     #                       learning_rate = 0.001
     optimizer = tf.train.AdamOptimizer().minimize(cost)
-
+    # optimizer = tf.train.GradientDescentOptimizer(0.1).minimize(cost, y)
     # = cycles of feed forward + backpropagation
     hm_epochs = 10
 
@@ -99,12 +101,12 @@ def train_neural_network(x):
             epoch_loss = 0
             print(train.num_examples)
             for _ in range(epoch_size):  # _ shorthand for  variable we don't care about
-                if(_%(epoch_size//10)==0):
+                if _%(epoch_size//10) == 0:
                     print(str(100*(_/epoch_size))+' % complete')
                 epoch_x, epoch_y = train.next_batch(batch_size)
                 _, c = sesh.run([optimizer, cost], feed_dict={x: epoch_x, y: epoch_y})
                 epoch_loss += c
-              #  print(str(c)+' loss ')
+            #  print(str(c)+' loss ')
             print('Epoch', epoch, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
         print(tf.arg_max(prediction, 1))
@@ -138,4 +140,6 @@ def train_neural_network(x):
 # no hl 3
 # same values as above
 # lowest loss in test epoch around 41000
+
+
 train_neural_network(x)
