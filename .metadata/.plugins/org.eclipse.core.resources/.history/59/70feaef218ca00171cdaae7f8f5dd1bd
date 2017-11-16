@@ -1,0 +1,86 @@
+package algbio.sa;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ * 
+ * @author Alexander Werthmann
+ * 
+ *         TASK SHEET 3 - TASK 2 Longest common substring implementation
+ * 
+ * 
+ *         What to proof:
+ * 
+ *         The following algorithm returns the longest common substring for two
+ *         given strings s and t:
+ * 
+ *         1: v = st, maxL = 0 2: suffixArr = SuffixArray(v) 3: for i in
+ *         range(0,len(suffixArr)-1) 4: i1 = i 5: i2 = i+1 6: e1 = suffixArr[i1]
+ *         7: e2 = suffixArr[i2] 8: if ( not(e1 in range(0, len(s)-1) and e2 in
+ *         range(len(s),len(s)+len(t)-1) 9: AND not(e2 in range(0, len(s)-1) and
+ *         e1 in range(len(s),len(s)+len(t)-1) ) 10: continue; 11: else 12:
+ *         localMax= 0 13: for(j in range(0,min(len(e1), len(e2))-1) ) 14:
+ *         if(e1[j] == e2[j]) 15: localMax++; 16: else 17: break; 18:
+ *         if(localMax>maxL) 19: maxL = localMax
+ * 
+ * 
+ *         The key idea to proof is that the longest common substring can be
+ *         found in two consecutive elements (one suffix of s and one of t) in
+ *         the suffix array of the concatenated string (so we do not have to
+ *         compare n with n array elements). This can be proven easily: Let w =
+ *         w1,w2,w3,...,wn be the longest common substring, which starts at
+ *         index i in s and at index j in t. This implies that w is the prefix
+ *         of both the suffixes i and i+j in v (remember v = st!) As the suffi
+ *         xarray is sorted and w is the longest common substring of both of the
+ *         strings s and t, there can't be another element between suffixes i
+ *         and i+j in the suffix array.
+ */
+public class LCS {
+
+	public static String fasta_hp1 = "fasta_hp1.txt";
+	public static String fasta_hp2 = "fasta_hp2.txt";
+	private static int lenFirstString = 0;
+
+	public LCS() {
+		StringBuilder sb1 = new StringBuilder();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fasta_hp1)))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb1.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		lenFirstString = sb1.length();
+		
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fasta_hp2)))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb1.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Calculates the longest common substring of given strings a and b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return the longest common substring of a and b
+	 */
+	public static String calc_LCS(String s, String t) {
+		String v = s, t;
+		MySuffixBuilder mysb = new MySuffixBuilder();
+		String concat = a + "0" + b; // Using 0 as separator
+		String res = null;
+
+		return res;
+	}
+
+}
