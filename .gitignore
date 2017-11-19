@@ -10,3 +10,12 @@ ANN_DATA/
 
 # saved lstm
 **/savedLSTMmedium
+
+# ignore java workspace stuff
+.metadata
+.recommenders
+
+
+# ignore some fasta files
+fasta_hp1.txt
+fasta_hp2.txt
