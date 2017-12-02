@@ -37,7 +37,7 @@ def next_batch(batch_size):
     return nbatch_x, nbatch_y
 
 
-def __load_session_data(infile='../../../ANN_DATA/RecSys15/clicks_item_to_item.txt'):
+def __load_session_data(infile='../../ANN_DATA/RecSys15/clicks_item_to_item.txt'):
     print('Loading data from '+infile)
     line = ""
     with open(infile, 'rt') as read:

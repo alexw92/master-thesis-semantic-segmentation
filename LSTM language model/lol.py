@@ -24,7 +24,7 @@ def main():
         if i % 100000 == 0:
             print(i)
     f.close()
-    return myset,i
+    return myset, i
 
 
 x1 = tf.constant(5)

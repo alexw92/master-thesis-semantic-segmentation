@@ -30,7 +30,7 @@ def recurrent_neural_network(x):
 #    x = tf.transpose(x, [1, 0, 2])
 #    x = tf.reshape(x, [-1, chunk_size])
 #    x = tf.split(x, n_chunks, 0)  # old version: x = tf.split(0, n_chunks, x)
-    x  = tf.split(x, batch_size, 0)
+    x = tf.split(x, batch_size, 0)
     lstm_cell = rnn.BasicLSTMCell(rnn_size)
     outputs, states = rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
     print(outputs[-1].shape)
