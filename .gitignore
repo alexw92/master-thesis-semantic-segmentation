@@ -6,7 +6,10 @@
 **/.idea
 **/temp
 **/tmp
-ANN_DATA/
+
+# ignore datafiles
+ANN_DATA
+
 
 # saved lstm
 **/savedLSTMmedium

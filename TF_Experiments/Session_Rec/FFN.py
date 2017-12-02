@@ -109,8 +109,8 @@ def train_neural_network(x):
             #  print(str(c)+' loss ')
             print('Epoch', epoch, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
-        print(tf.arg_max(prediction, 1))
-        print(tf.arg_max(y, 1))
+        print(tf.argmax(prediction, 1))
+        print(tf.argmax(y, 1))
         test_x, test_y = train.next_batch(batch_size*100)
         # correct = tf.equal(tf.argmax(prediction, 1), tf.arg_max(y, 1))
         correct = tf.metrics.recall(prediction, y)

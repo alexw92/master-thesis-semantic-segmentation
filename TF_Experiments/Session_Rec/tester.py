@@ -2,6 +2,7 @@
 import numpy as np
 import tensorflow as tf
 import random as ran
+import pickle
 from datetime import datetime
 
 # Example split date into month, year etc.
@@ -70,6 +71,7 @@ data_write_mixed = '../../ANN_DATA/RecSys15/clicks_changed_items_mixed.txt'
 data_write = '../../ANN_DATA/RecSys15/clicks_changed_items.txt'
 data_clicks = '../../ANN_DATA/RecSys15/yoochoose-clicks.dat'
 data_buys = '../../ANN_DATA/RecSys15/yoochoose-buys.dat'
+itemdict_pickle = '../../ANN_DATA/RecSys15/itemdict_pickle'
 date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
 max_lines = 34000000  # found lines in click.data: 33003944 (in buy.data: 1150753)
 # found different item ids: 52739 -> dim for 1-Hot feature encoding
@@ -131,7 +133,7 @@ def read_clicks_and_buys():
 
 def shuffleItemIds(itemdict, infile=data_clicks, outfile=data_write_mixed):
     """
-    Load  previously written files and mix item id mapping in order to eliminate
+    Load previously written files and mix item id mapping in order to eliminate
     ascending order of ids
     :param infile: clickfile
     :param outfile: file with ascending item ids eliminated
@@ -151,15 +153,17 @@ def shuffleItemIds(itemdict, infile=data_clicks, outfile=data_write_mixed):
             if i % 1000000 == 0:
                 print(((i/max_lines)*100), '%')
             line = f.readline()
-            if line==None:
+            if line is None:
                 break
             split = line.split(sep=',')
-            if len(split)<4:
+            if len(split) < 4:
                 break;
             newline = split[0]+','+split[1]+','+str(itemdict[split[2]])+','+split[3]
             writef.write(newline)
         print('100 %')
         print('mixed item ids saved to '+outfile)
+        with open(itemdict_pickle, 'wb') as picklefile:
+            pickle.dump(itemdict, picklefile)
         writef.close()
 
 
