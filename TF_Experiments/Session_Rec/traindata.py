@@ -1,17 +1,32 @@
 import tensorflow as tf
 import numpy as np
+import pickle
 
 x = []
 y = []
 num_data = 0
+itemdict_url = 'itemdict_pickle'  # the dict containing all mixed item mappings
 vector_dim = 52739  # numer of different items in recsys15
 next_index = 0  # the next index used by next_batch()
 num_examples = 23000000
+itemdict = None
+
+# TODO Eventuell für RNN session parallel arbeiten und die Daten aus dem
+# TODO originalen File (yoochoose-clicks.dat) holen und mithilfe des itemdicts mappen
+# TODO aus dem orig File können die sessions noch reproduziert werden
+
+
+def __load_itemdict():
+    with open(itemdict_url, 'rb') as file:
+        global itemdict
+        itemdict = pickle.load(file)
 
 
 def next_batch(batch_size):
+    if itemdict is None:
+        __load_itemdict()  # only done once
     if len(x) == 0:
-        __load_session_data()
+        __load_session_data()  # only done once
     if next_index+batch_size+1 > num_data:
         diff = num_data - (next_index+batch_size+1)
         print('Not enough data remaining to create next batch, '+diff+' values missing')
