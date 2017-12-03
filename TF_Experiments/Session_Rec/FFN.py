@@ -109,13 +109,20 @@ def train_neural_network(x):
             #  print(str(c)+' loss ')
             print('Epoch', epoch, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
-        print(tf.argmax(prediction, 1))
-        print(tf.argmax(y, 1))
         test_x, test_y = train.next_batch(batch_size*100)
-        # correct = tf.equal(tf.argmax(prediction, 1), tf.arg_max(y, 1))
-        correct = tf.metrics.recall(prediction, y)
+        recall, reop = tf.metrics.recall(y, prediction)
+
+        correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
+
+        # TypeError: parameter 'targets' has DataType float32 not in list of allowed values: int32, int64
+        # correct_topk = tf.nn.in_top_k(predictions=prediction, targets=y, k=25)
+
+        sesh.run(tf.local_variables_initializer())  # init recall
+
+        print('Recall:', reop.eval({x: test_x, y: test_y}))
         print('Accuracy:', accuracy.eval({x: test_x, y: test_y}))
+        # print('CorrectTopk:', correct_topk.eval({x: test_x, y: test_y}))
         # (10000, 784)
         # (10000, 10)
         # print(mnist.test.images.shape)

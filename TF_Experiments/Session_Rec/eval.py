@@ -2,6 +2,7 @@ from tensorflow import nn
 import tensorflow as tf
 
 
+# Already implemented
 def recall(predict, y, k=20, sol_size=1):
     """
     Returns the recall value the prediction. The correct value has to be in the

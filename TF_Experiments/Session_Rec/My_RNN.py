@@ -5,7 +5,7 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from tensorflow.contrib import rnn
-import Session_Rec.traindata as train
+import traindata as train
 # this saves in 'C:/tmp/data/'
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 # takes like 2 min for calc with this config
@@ -88,6 +88,7 @@ def restore_rnn_model():
         # Initialize v2 since the saver will not.
         v2.initializer.run()
         saver.restore(sess, "/tmp/model.ckpt")
+        # do some work with the model
 
         print("v1 : %s" % v1.eval())
         print("v2 : %s" % v2.eval())
