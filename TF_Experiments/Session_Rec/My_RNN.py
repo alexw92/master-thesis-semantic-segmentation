@@ -23,7 +23,7 @@ y = tf.placeholder('float', [batch_size, n_csize])
 
 
 def recurrent_neural_network(x):
-    layer = {#'weights': tf.Variable(tf.random_normal([rnn_size, n_classes]), name="weights"),
+    layer = {  # 'weights': tf.Variable(tf.random_normal([rnn_size, n_classes]), name="weights"),
              'weights': tf.Variable(tf.random_normal([n_csize]), name="weights"),
              'biases': tf.Variable(tf.random_normal([n_classes]), name="biases")}
 
