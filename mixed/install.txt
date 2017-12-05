@@ -1,1 +1,7 @@
 pip install GDAL-2.2.3-cp35-cp35m-win_amd64.whl
+
+# docs
+http://gdal.org/python
+
+# download cp35 win_amd64
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
