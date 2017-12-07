@@ -27,5 +27,5 @@ image = Image.open(buffer)
 image.show()
 
 # Or using pyplot
-plt.imshow(image)
-plt.show()
+# plt.imshow(image)
+# plt.show()
