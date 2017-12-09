@@ -9,3 +9,6 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
 # install shapely
 # 1.6.2 cp35_win__amd64
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
+
+#install opencv
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv
