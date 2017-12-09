@@ -21,10 +21,17 @@ import sys
 # fixed error _csv.Error: field larger than field limit (131072) in csv.reader(open('...'))
 csv.field_size_limit(2147483647)
 
+# get env
+prefix = 'G:/'
+with open('../ANN_DATA/ENV') as env_file:
+    env = env_file.readline()
+if env == 'PC2':
+    prefix = '../ANN_DATA/'
+
 # corresponding osm https://www.openstreetmap.org/export#map=16/49.7513/9.9609
-image_path = 'G:/ThreeBand_Images'  # 6010_0_0.tif
+image_path = prefix+'ThreeBand_Images'  # 6010_0_0.tif
 sample_tif = '../mixed/sample.tiff'
-sample_tif_2 = 'G:/ThreeBand_Images/6010_0_0.tif'
+sample_tif_2 = prefix+'ThreeBand_Images/6010_0_0.tif'
 grid_sizes = '../ANN_DATA/DSTL SIFD/grid_sizes.csv'
 train_polys = '../ANN_DATA/DSTL SIFD/train_wkt_v4.csv'
 sample_imgid = '6120_2_2'
