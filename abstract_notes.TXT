@@ -1,0 +1,20 @@
+##### Title ?  ######
+Classification of satellite images (using NN)
+
+- general stuff about image classification, MNIST dataset, facebook, google
+	- normal case: For one image e.g. 300x300px -> predict one class ['cat', 'dog', 'human', etc...]
+	- this case  : For one image e.g. 300x300px -> predict one class ['Building', 'Road', 'Track', etc.] FOR EACH PIXEL
+	
+- given : datasources satellite images delivered by googlemaps, labelled maps from openstreetmap, kaggle dataset 'dstl satellite imagery feature detection'
+
+- wanted: automatically generated training data 
+			- IN : Lat, Long, pxWidth, pxHeight
+			- OUT: Matrix_X(pxWidth, pxHeight) "for every pixel the rgb color", Matrix_Y(pxWidth, pxHeight) "for every pixel the featureID, about 12"
+
+- wanted: model(s) capable of image segmentation, which learns to classificate the features for this specific task as precicesly as possible
+- wanted: evluation and comparison of the results of different approaches
+
+- problems: 
+		- computational effort seems to be very high since there are a lot more predictions necessary as for traditional image classification tasks
+		- shape of data (imagefile, dpi, 3-band vs. 16-band, etc.)
+		- number of classes of openstreetmaps is much higher than number of kaggle dataset classes
