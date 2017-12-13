@@ -73,6 +73,12 @@ def __get_scalers(im_size):
 
 #  https://toblerity.org/shapely/manual.html#polygons
 def __mask_for_polygons(polygons, im_size):
+    """
+
+    :param polygons: polygons containing the class
+    :param im_size: (x, y) size of the image
+    :return:
+    """
     img_mask = np.zeros(im_size, np.uint8)
     if not polygons:
         return img_mask
