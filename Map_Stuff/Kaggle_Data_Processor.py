@@ -25,7 +25,7 @@ prefix = 'G:/'
 with open('../ANN_DATA/ENV') as env_file:
     env = env_file.readline()
 if env == 'PC2':
-    prefix = '../ANN_DATA/'
+    prefix = '../ANN_DATA/DSTL SIFD/'
 elif env == 'Main':
     prefix = 'G:/'
 
