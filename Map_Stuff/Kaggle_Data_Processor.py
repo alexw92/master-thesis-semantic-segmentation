@@ -72,22 +72,23 @@ def __get_scalers(im_size):
 
 
 #  https://toblerity.org/shapely/manual.html#polygons
-def __mask_for_polygons(polygons, im_size):
+def __mask_for_polygons(polygons, im_size, poly_type, img_mask=None):
     """
 
     :param polygons: polygons containing the class
     :param im_size: (x, y) size of the image
     :return:
     """
-    img_mask = np.zeros(im_size, np.uint8)
+    if img_mask is None:
+        img_mask = np.zeros(im_size, np.uint8)
     if not polygons:
         return img_mask
     int_coords = lambda x: np.array(x).round().astype(np.int32)
     exteriors = [int_coords(poly.exterior.coords) for poly in polygons]
     interiors = [int_coords(pi.coords) for poly in polygons
                  for pi in poly.interiors]
-    cv2.fillPoly(img_mask, exteriors, 1)    # color polygons white
-    cv2.fillPoly(img_mask, interiors, 0)    # leave holes black
+    cv2.fillPoly(img_mask, exteriors, int(poly_type) * 25)    # color polygons white
+  # cv2.fillPoly(img_mask, interiors, 0)    # leave holes black
     return img_mask
 
 
@@ -125,8 +126,13 @@ x_scaler, y_scaler = __get_scalers(imsize)
 train_polygons_scaled = shapely.affinity.scale(
     train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
 
+train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[class_name])
 
-train_mask = __mask_for_polygons(train_polygons_scaled, imsize)
+class_name = 'TREES'
+train_polys = __load_polygons(sample_imgid, PolygonType[class_name])
+train_polygons_scaled = shapely.affinity.scale(
+    train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
+train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[class_name], img_mask=train_mask)
 
 img = (__scale_percentile(im_rgb[xstart:xend, ystart:yend]))
 plt.figure()  # https://stackoverflow.com/a/41210974/8862202,  to show multiple figures
@@ -155,12 +161,19 @@ print('training...')
 # do not care about overfitting here
 pipeline.fit(xs, ys)
 pred_ys = pipeline.predict_proba(xs)[:, 1]
-print('average precision', average_precision_score(ys, pred_ys))
-pred_mask = pred_ys.reshape(train_mask.shape)
 
-threshold = 0.5
-pred_mask_bin = pred_mask >= threshold
+# das zeug unten wieder einkommentieren wenn multi class prediction geht
+# vllt damit -> https://stackoverflow.com/questions/26210471/scikit-learn-gridsearch-giving-valueerror-multiclass-format-is-not-supported
 
-plt.figure()
-plt.imshow(pred_mask_bin, cmap='Greys')
+
+# print('average precision', average_precision_score(ys, pred_ys))
+# pred_mask = pred_ys.reshape(train_mask.shape)
+#
+# threshold = 0.5
+# pred_mask_bin = pred_mask >= threshold
+#
+# plt.figure()
+# plt.imshow(pred_mask_bin, cmap='Greys')
+
+
 plt.show()
