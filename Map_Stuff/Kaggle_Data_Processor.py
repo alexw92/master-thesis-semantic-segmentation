@@ -155,5 +155,6 @@ pred_mask = pred_ys.reshape(train_mask.shape)
 threshold = 0.5
 pred_mask_bin = pred_mask >= threshold
 
+plt.figure()
 plt.imshow(pred_mask_bin, cmap='Greys')
 plt.show()
