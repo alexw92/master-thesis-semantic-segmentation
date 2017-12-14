@@ -87,8 +87,8 @@ def __mask_for_polygons(polygons, im_size, poly_type, img_mask=None):
     exteriors = [int_coords(poly.exterior.coords) for poly in polygons]
     interiors = [int_coords(pi.coords) for poly in polygons
                  for pi in poly.interiors]
-    cv2.fillPoly(img_mask, exteriors, int(poly_type) * 25)    # color polygons white
-  # cv2.fillPoly(img_mask, interiors, 0)    # leave holes black
+    cv2.fillPoly(img_mask, exteriors, int(poly_type))    # color polygons white
+  # cv2.fillPoly(img_mask, interiors, 0)    # leave holes black lets hope there are no holes
     return img_mask
 
 
@@ -112,8 +112,8 @@ def __show_mask(m):
 #  data processing tutorial from kaggle
 #  https://www.kaggle.com/c/dstl-satellite-imagery-feature-detection#data-processing-tutorial
 class_name = 'BUILDING'
-xstart, xend = 2900, 3200
-ystart, yend = 2000, 2300
+xstart, xend = 1000, 1300
+ystart, yend = 1000, 1300
 
 x_max, y_min = __load_gridsize(sample_imgid)
 train_polys = __load_polygons(sample_imgid, PolygonType[class_name])
@@ -128,11 +128,11 @@ train_polygons_scaled = shapely.affinity.scale(
 
 train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[class_name])
 
-class_name = 'TREES'
-train_polys = __load_polygons(sample_imgid, PolygonType[class_name])
-train_polygons_scaled = shapely.affinity.scale(
-    train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
-train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[class_name], img_mask=train_mask)
+for classname in PolygonType.keys():
+    train_polys = __load_polygons(sample_imgid, PolygonType[classname])
+    train_polygons_scaled = shapely.affinity.scale(
+        train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
+    train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], img_mask=train_mask)
 
 img = (__scale_percentile(im_rgb[xstart:xend, ystart:yend]))
 plt.figure()  # https://stackoverflow.com/a/41210974/8862202,  to show multiple figures
@@ -145,7 +145,7 @@ plt.figure()
 plt.title('image: \''+sample_imgid+'\''+' Class = '+class_name)
 plt.xlabel(str(xstart)+' - '+str(xend))
 plt.ylabel(str(ystart)+' - '+str(yend))
-plt.imshow(train_mask, cmap='Greys')
+plt.imshow(train_mask, cmap='tab10')
 # plt.show()
 
 # learning with sk learn
