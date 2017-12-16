@@ -3,7 +3,7 @@ pip install GDAL-2.2.3-cp35-cp35m-win_amd64.whl
 # docs
 http://gdal.org/python
 
-# download cp35 win_amd64
+# download gdal cp35 win_amd64
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
 
 # install shapely
@@ -12,3 +12,6 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
 
 #install opencv
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv
+
+# install fiona (requires gdal!)
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona 
