@@ -8,7 +8,7 @@ import shapely.affinity
 import cv2
 import numpy as np
 
-## modules for making predictions with sklearn
+# modules for making predictions with sklearn
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
@@ -42,6 +42,10 @@ sample_imgid = '6120_2_2'
 
 PolygonType = {'BUILDING': '1', 'MIS_STRUCTURES': '2', 'ROAD': '3', 'TRACK': '4', 'TREES': '5', 'CROPS': '6',
                'WATERWAY': '7', 'STANDING_WATER': '8', 'VEHICLE_LARGE': '9', 'VEHICLE_SMALL': '10'}
+
+ClassPriority = ['WATERWAY', 'MIS_STRUCTURES', 'VEHICLE_SMALL',
+                 'VEHICLE_LARGE', 'STANDING_WATER', 'CROPS',
+                 'TRACK', 'ROAD', 'BUILDING', 'TREES']
 
 
 def __load_gridsize(img_id):
@@ -88,7 +92,7 @@ def __mask_for_polygons(polygons, im_size, poly_type, img_mask=None):
     interiors = [int_coords(pi.coords) for poly in polygons
                  for pi in poly.interiors]
     cv2.fillPoly(img_mask, exteriors, int(poly_type))    # color polygons white
-  # cv2.fillPoly(img_mask, interiors, 0)    # leave holes black lets hope there are no holes
+    cv2.fillPoly(img_mask, interiors, 0)    # leave holes black lets hope there are no holes
     return img_mask
 
 
@@ -128,12 +132,25 @@ train_polygons_scaled = shapely.affinity.scale(
 
 train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[class_name])
 
-for classname in PolygonType.keys():
+# for classname in PolygonType.keys():
+#     train_polys = __load_polygons(sample_imgid, PolygonType[classname])
+#     train_polygons_scaled = shapely.affinity.scale(
+#         train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
+#     train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], img_mask=train_mask)
+classlist = []
+train_mask = np.zeros(imsize, np.uint8)
+for classname in ClassPriority:
+    # if classname == 'MIS_STRUCTURES':
+    #     continue
+    print('adding class: ' + classname)
+    classlist.append(classname+'('+PolygonType[classname]+')')
     train_polys = __load_polygons(sample_imgid, PolygonType[classname])
     train_polygons_scaled = shapely.affinity.scale(
         train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
-    train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], img_mask=train_mask)
-
+    train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], train_mask)
+    # plt.figure()
+    # plt.imshow(train_mask[xstart:xend, ystart:yend], vmin=0, vmax=10, cmap='ocean')
+print(classlist)
 img = (__scale_percentile(im_rgb[xstart:xend, ystart:yend]))
 plt.figure()  # https://stackoverflow.com/a/41210974/8862202,  to show multiple figures
 plt.title('image: \''+sample_imgid+'\'')
@@ -142,14 +159,15 @@ plt.ylabel(str(ystart)+' - '+str(yend))
 plt.imshow(img)
 train_mask = train_mask[xstart:xend, ystart:yend]
 plt.figure()
-plt.title('image: \''+sample_imgid+'\''+' Class = '+class_name)
+plt.title('image: \''+sample_imgid+'\''+' Classes = '+str(classlist))
 plt.xlabel(str(xstart)+' - '+str(xend))
 plt.ylabel(str(ystart)+' - '+str(yend))
-plt.imshow(train_mask, cmap='tab10')
+plt.imshow(train_mask, vmin=0, vmax=10, cmap='ocean')
 # plt.show()
 
 # learning with sk learn
 print(np.shape(img))
+
 print(np.shape(train_mask))
 xs = img.reshape(-1, 3).astype(np.float32)
 ys = train_mask.reshape(-1)
