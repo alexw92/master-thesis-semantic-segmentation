@@ -11,13 +11,24 @@ import shapefile    # pip install pyshp
 # left, bottom, right, top
 # bounds = b.attrib['minlat'], b.attrib['minlon'], b.attrib['maxlat'], b.attrib['maxlon']
 def __convert_longLat_to_pixel(minX, minY, maxX, maxY, x, y, newXMax=300, newYMax=300):
+    """
+    :param minX: minLat
+    :param minY: minLong
+    :param maxX: maxLat
+    :param maxY: maxLong
+    :param x:    x (Lat) to be transformed
+    :param y:    y (Long) to be transformed
+    :param newXMax: new XMax value (min is always 0)
+    :param newYMax: new YMax value (min is always 0)
+    :return:
+    """
     xdiff = maxX - minX
     ydiff = maxY - minY
-    xratio =
     xscale = newXMax/xdiff
     yscale = newYMax/ydiff
-    print(xscale * x)
-    print(yscale * y)
+    resx = xscale * (x-minX)
+    resy = yscale * (y-minY)
+    return resx, resy
 
 
 
@@ -40,11 +51,11 @@ nodes = {}
 b = r.findall('bounds')[0]
 
 # left, bottom, right, top
-bounds = b.attrib['minlat'], b.attrib['minlon'], b.attrib['maxlat'], b.attrib['maxlon']
+bounds = float(b.attrib['minlat']), float(b.attrib['minlon']), float(b.attrib['maxlat']), float(b.attrib['maxlon'])
 xmin, ymin, xmax, ymax = bounds
 print(bounds)
-print(str(float(xmax) - float(xmin)), str(float(ymax) - float(ymin)))
-__convert_longLat_to_pixel(float(xmin), float(ymin), float(xmax), float(ymax), 49.7490, 9.95)  # lat="49.7551035" lon="9.9579631"
+print(str(xmax - xmin)+str(ymax - ymin))
+__convert_longLat_to_pixel(xmin, ymin, xmax, ymax, 49.7490, 9.95)  # lat="49.7551035" lon="9.9579631"
 # Put all nodes in a dictionary
 for n in r.findall('node'):
     nodes[n.attrib['id']] = (float(n.attrib['lon']), float(n.attrib['lat']))
@@ -63,8 +74,11 @@ for way in r.findall("way"):
         if c.tag == "nd":
             # If it's a <nd> tag then it refers to a node, so get the lat-lon of that node
             # using the dictionary we created earlier and append it to the co-ordinate list
-            ll = nodes[c.attrib['ref']]
-           # print(ll)
+            ll = nodes[c.attrib['ref']] # ll = list of lon,lat
+            print(ll)
+            y, x = __convert_longLat_to_pixel(xmin, ymin, xmax, ymax, ll[1], ll[0], 500, 178)  # lat="49.7551035" lon="9.9579631"
+            ll = int(round(x)), int(round(y))
+            print(ll)
             coords.append(ll)
         if c.tag == "tag":
             # If it's a <tag> tag (confusing, huh?) then it'll have some useful information in it for us
