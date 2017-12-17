@@ -137,7 +137,7 @@ for way in r.findall("way"):
             if c.attrib['k']=='building':
                 isBuilding = True
     # Take the list of co-ordinates and convert to a Shapely polygon
-    if len(coords) > 2 and valid and isBuilding:
+    if len(coords) > 2 and isBuilding:
         n_buildings = n_buildings + 1
         print('added poly'+str(coords) )
         polygons[village_name] = Polygon(coords)
