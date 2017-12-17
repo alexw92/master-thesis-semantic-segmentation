@@ -6,6 +6,8 @@ import fiona		# install fiona https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona 
 import os
 import matplotlib.pyplot as plt
 import shapefile    # pip install pyshp
+import cv2
+import numpy as np
 import math
 
 
@@ -49,6 +51,26 @@ def __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, maxpix
     return resx, resy
 
 
+# Equal to the kaggle color poly function
+def colorPolys(polygons, im_size, poly_type, img_mask=None):
+    """
+
+    :param polygons: polygons containing the class
+    :param im_size: (x, y) size of the image
+    :return:
+    """
+    if img_mask is None:
+        img_mask = np.zeros(im_size, np.uint8)
+    if not polygons:
+        return img_mask
+    int_coords = lambda x: np.array(x).round().astype(np.int32)
+    exteriors = [int_coords(poly.exterior.coords) for poly in polygons]
+    interiors = [int_coords(pi.coords) for poly in polygons
+                 for pi in poly.interiors]
+    cv2.fillPoly(img_mask, exteriors, poly_type)    # color polygons white
+    cv2.fillPoly(img_mask, interiors, 0)    # leave holes black lets hope there are no holes
+    return img_mask
+
 # download maps from: https://www.openstreetmap.org/export#map=16/49.7513/9.9609
 input_filename = "../ANN_DATA/wuerzburg_klein.osm"
 output_filename = "../ANN_DATA/wuerzburg_klein.shp"
@@ -70,9 +92,8 @@ b = r.findall('bounds')[0]
 # left, bottom, right, top
 bounds = float(b.attrib['minlat']), float(b.attrib['minlon']), float(b.attrib['maxlat']), float(b.attrib['maxlon'])
 latmin, lonmin, latmax, lonmax = bounds
-print(bounds)
-
-k =__convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, 49.7490, 9.95, 800)  # lat="49.7551035" lon="9.9579631"
+print('bounds:' + str(bounds))
+  # lat="49.7551035" lon="9.9579631"
 
 # Put all nodes in a dictionary
 for n in r.findall('node'):
@@ -81,12 +102,18 @@ for n in r.findall('node'):
 
 # Create a dictionary to hold the polygons we create
 polygons = {}
+poly_list = []
+# count building for test purposes
+n_buildings = 0
+pixelwh = 1500
 
 # For each 'way' in the file
 for way in r.findall("way"):
 
     coords = []
-
+    valid = True
+    isBuilding = False
+    i = 0
     # Look at all of the children of the <way> node
     for c in way.getchildren():
         if c.tag == "nd":
@@ -94,7 +121,10 @@ for way in r.findall("way"):
             # using the dictionary we created earlier and append it to the co-ordinate list
             ll = nodes[c.attrib['ref']]  # ll = list of lon,lat
             lon, lat = ll
-            x, y = __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, 1200)  # lat="49.7551035" lon="9.9579631"
+            if lon<lonmin or lon>lonmax or lat<latmin or lat>latmax:
+                print('coord out of bounds')
+                valid = False
+            x, y = __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, pixelwh)  # lat="49.7551035" lon="9.9579631"
             ll = x, y
             # print(ll)
             coords.append(ll)
@@ -102,48 +132,27 @@ for way in r.findall("way"):
             # If it's a <tag> tag (confusing, huh?) then it'll have some useful information in it for us
             # Get out the information we want as an attribute (in this case village name - which could be
             # in any of a number of fields, so we check)
-            if c.attrib['v'] not in ("residential", 'village'):
-                village_name = c.attrib['v']
+            village_name = str(i)
+            i = i+1
+            if c.attrib['k']=='building':
+                isBuilding = True
     # Take the list of co-ordinates and convert to a Shapely polygon
-    if len(coords) > 2:
+    if len(coords) > 2 and valid and isBuilding:
+        n_buildings = n_buildings + 1
+        print('added poly'+str(coords) )
         polygons[village_name] = Polygon(coords)
+        poly_list.append(Polygon(coords))
 
+print('buildings: '+str(n_buildings))
 
-# Set up the schema for the shapefile
-# In this case we have two columns: id and name
-schema = {
-    'geometry': 'Polygon',
-    'properties': {'id': 'int', 'name': 'str'},
-}
-
-# Remove the shapefile if it exists already
-try:
-    os.remove(output_filename)
-except:
-    pass
-
-i = 0
-
-
-# Write the shapefile
-with fiona.open(output_filename, 'w', 'ESRI Shapefile', schema) as c:
-    # For every polygon we stored earlier
-    for name, p in polygons.items():
-        i += 1
-       #  print("Writing: %s" % name)
-        # Write it to the shapefile
-        c.write({
-            'geometry': mapping(p),
-            'properties': {'id': i, 'name': name},
-            })
-
-# plot shapefile source: https://gis.stackexchange.com/a/152331
-listx = []
-listy = []
-sf = shapefile.Reader(output_filename)
+## color polys, polytype = color
+img_mask = colorPolys(polygons=poly_list, im_size=(pixelwh,pixelwh), poly_type=1)
+train_mask = img_mask
 plt.figure()
-for shape in sf.shapeRecords():
-    x = [i[0] for i in shape.shape.points[:]]
-    y = [i[1] for i in shape.shape.points[:]]
-    plt.plot(x, y)
+#plt.axis('equal')
+print(train_mask.shape)
+# plt.title('image: \''+sample_imgid+'\''+' Classes = '+str(classlist))
+# plt.xlabel(str(xstart)+' - '+str(xend))
+# plt.ylabel(str(ystart)+' - '+str(yend))
+plt.imshow(train_mask, cmap='rainbow', origin='lower')
 plt.show()
