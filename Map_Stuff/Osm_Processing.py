@@ -6,6 +6,7 @@ import fiona		# install fiona https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona 
 import os
 import matplotlib.pyplot as plt
 import shapefile    # pip install pyshp
+import math
 
 
 # left, bottom, right, top
@@ -31,6 +32,22 @@ def __convert_longLat_to_pixel(minX, minY, maxX, maxY, x, y, newXMax=300, newYMa
     return resx, resy
 
 
+# https://forum.openstreetmap.org/viewtopic.php?id=4353
+# sollte eig klappen.... aber iwie manchmal negative werte
+def __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, maxpixel):
+    """
+    :param newXMax: new XMax value (min is always 0)
+    :param newYMax: new YMax value (min is always 0)
+    :return:
+    """
+    if lon < lonmin or lon > lonmax:
+        print('lon out of bounds')
+    if lat < latmin or lat > latmax:
+        print('lat out of bounds')
+    resx = int((lon - lonmin)/(lonmax-lonmin)*maxpixel)
+    resy = int((lat-latmin)/(latmax-latmin)*maxpixel)
+    return resx, resy
+
 
 # download maps from: https://www.openstreetmap.org/export#map=16/49.7513/9.9609
 input_filename = "../ANN_DATA/wuerzburg_klein.osm"
@@ -52,10 +69,11 @@ b = r.findall('bounds')[0]
 
 # left, bottom, right, top
 bounds = float(b.attrib['minlat']), float(b.attrib['minlon']), float(b.attrib['maxlat']), float(b.attrib['maxlon'])
-xmin, ymin, xmax, ymax = bounds
+latmin, lonmin, latmax, lonmax = bounds
 print(bounds)
-print(str(xmax - xmin)+str(ymax - ymin))
-__convert_longLat_to_pixel(xmin, ymin, xmax, ymax, 49.7490, 9.95)  # lat="49.7551035" lon="9.9579631"
+
+k =__convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, 49.7490, 9.95, 800)  # lat="49.7551035" lon="9.9579631"
+
 # Put all nodes in a dictionary
 for n in r.findall('node'):
     nodes[n.attrib['id']] = (float(n.attrib['lon']), float(n.attrib['lat']))
@@ -74,11 +92,11 @@ for way in r.findall("way"):
         if c.tag == "nd":
             # If it's a <nd> tag then it refers to a node, so get the lat-lon of that node
             # using the dictionary we created earlier and append it to the co-ordinate list
-            ll = nodes[c.attrib['ref']] # ll = list of lon,lat
-            print(ll)
-            y, x = __convert_longLat_to_pixel(xmin, ymin, xmax, ymax, ll[1], ll[0], 500, 178)  # lat="49.7551035" lon="9.9579631"
-            ll = int(round(x)), int(round(y))
-            print(ll)
+            ll = nodes[c.attrib['ref']]  # ll = list of lon,lat
+            lon, lat = ll
+            x, y = __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, 1200)  # lat="49.7551035" lon="9.9579631"
+            ll = x, y
+            # print(ll)
             coords.append(ll)
         if c.tag == "tag":
             # If it's a <tag> tag (confusing, huh?) then it'll have some useful information in it for us
