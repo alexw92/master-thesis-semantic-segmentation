@@ -7,6 +7,7 @@ import shapely.wkt # shapely tut https://toblerity.org/shapely/manual.html#polyg
 import shapely.affinity
 import cv2
 import numpy as np
+from Polygon_Calc import color_polygon
 
 # modules for making predictions with sklearn
 from sklearn.linear_model import SGDClassifier
@@ -147,7 +148,9 @@ for classname in ClassPriority:
     train_polys = __load_polygons(sample_imgid, PolygonType[classname])
     train_polygons_scaled = shapely.affinity.scale(
         train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
-    train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], train_mask)
+    for poly in train_polygons_scaled:
+        train_mask = color_polygon(poly, imsize[0], PolygonType[classname], train_mask )
+    #train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], train_mask)
     # plt.figure()
     # plt.imshow(train_mask[xstart:xend, ystart:yend], vmin=0, vmax=10, cmap='ocean')
 print(classlist)

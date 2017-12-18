@@ -9,6 +9,7 @@ import shapefile    # pip install pyshp
 import cv2
 import numpy as np
 import math
+from Polygon_Calc import color_polygon
 
 
 # left, bottom, right, top
@@ -68,7 +69,7 @@ def colorPolys(polygons, im_size, poly_type, img_mask=None):
     interiors = [int_coords(pi.coords) for poly in polygons
                  for pi in poly.interiors]
     cv2.fillPoly(img_mask, exteriors, poly_type)    # color polygons white
-    cv2.fillPoly(img_mask, interiors, 0)    # leave holes black lets hope there are no holes
+    cv2.fillPoly(img_mask, interiors, 0)            # leave holes black lets hope there are no holes
     return img_mask
 
 # download maps from: https://www.openstreetmap.org/export#map=16/49.7513/9.9609
