@@ -44,9 +44,11 @@ def __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, maxpix
     :return:
     """
     if lon < lonmin or lon > lonmax:
-        print('lon out of bounds')
+        # print('lon out of bounds')
+     pass
     if lat < latmin or lat > latmax:
-        print('lat out of bounds')
+        # print('lat out of bounds')
+        pass
     resx = int((lon - lonmin)/(lonmax-lonmin)*maxpixel)
     resy = int((lat-latmin)/(latmax-latmin)*maxpixel)
     return resx, resy
@@ -71,6 +73,7 @@ def colorPolys(polygons, im_size, poly_type, img_mask=None):
     cv2.fillPoly(img_mask, exteriors, poly_type)    # color polygons white
     cv2.fillPoly(img_mask, interiors, 0)            # leave holes black lets hope there are no holes
     return img_mask
+
 
 # download maps from: https://www.openstreetmap.org/export#map=16/49.7513/9.9609
 input_filename = "../ANN_DATA/wuerzburg_klein.osm"
@@ -103,7 +106,8 @@ for n in r.findall('node'):
 
 # Create a dictionary to hold the polygons we create
 polygons = {}
-poly_list = []
+poly_list_building = []
+poly_list_wood = []
 # count building for test purposes
 n_buildings = 0
 pixelwh = 1500
@@ -114,6 +118,7 @@ for way in r.findall("way"):
     coords = []
     valid = True
     isBuilding = False
+    isWood = False
     i = 0
     # Look at all of the children of the <way> node
     for c in way.getchildren():
@@ -123,7 +128,7 @@ for way in r.findall("way"):
             ll = nodes[c.attrib['ref']]  # ll = list of lon,lat
             lon, lat = ll
             if lon<lonmin or lon>lonmax or lat<latmin or lat>latmax:
-                print('coord out of bounds')
+                # print('coord out of bounds')
                 valid = False
             x, y = __convert_longLat_to_pixel2(latmin, lonmin, latmax, lonmax, lon, lat, pixelwh)  # lat="49.7551035" lon="9.9579631"
             ll = x, y
@@ -135,25 +140,30 @@ for way in r.findall("way"):
             # in any of a number of fields, so we check)
             village_name = str(i)
             i = i+1
-            if c.attrib['k']=='building':
+            if c.attrib['k'] == 'building':
                 isBuilding = True
+            elif c.attrib['k'] == 'natural' and c.attrib['v'] == 'wood':
+                isWood = True
     # Take the list of co-ordinates and convert to a Shapely polygon
     if len(coords) > 2 and isBuilding:
         n_buildings = n_buildings + 1
-        print('added poly'+str(coords) )
-        polygons[village_name] = Polygon(coords)
-        poly_list.append(Polygon(coords))
+        poly_list_building.append(Polygon(coords))
+    if len(coords) > 2 and isWood:
+        poly_list_wood.append(Polygon(coords))
 
 print('buildings: '+str(n_buildings))
 
-## color polys, polytype = color
-img_mask = colorPolys(polygons=poly_list, im_size=(pixelwh,pixelwh), poly_type=1)
+# color polys, polytype = color
+# label buildings
+img_mask = colorPolys(polygons=poly_list_building, im_size=(pixelwh, pixelwh), poly_type=1)
+# label woods
+img_mask = colorPolys(polygons=poly_list_wood, im_size=(pixelwh, pixelwh), poly_type=2, img_mask=img_mask)
 train_mask = img_mask
 plt.figure()
-#plt.axis('equal')
+# plt.axis('equal')
 print(train_mask.shape)
 # plt.title('image: \''+sample_imgid+'\''+' Classes = '+str(classlist))
 # plt.xlabel(str(xstart)+' - '+str(xend))
 # plt.ylabel(str(ystart)+' - '+str(yend))
-plt.imshow(train_mask, cmap='rainbow', origin='lower')
+plt.imshow(train_mask,vmin=0, vmax=10, cmap='tab10', origin='lower')
 plt.show()

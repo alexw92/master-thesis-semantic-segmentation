@@ -149,7 +149,7 @@ for classname in ClassPriority:
     train_polygons_scaled = shapely.affinity.scale(
         train_polys, xfact=x_scaler, yfact=y_scaler, origin=(0, 0, 0))
     for poly in train_polygons_scaled:
-        train_mask = color_polygon(poly, imsize[0], PolygonType[classname], train_mask )
+        train_mask = color_polygon(poly, imsize[0], PolygonType[classname], train_mask)
     #train_mask = __mask_for_polygons(train_polygons_scaled, imsize, PolygonType[classname], train_mask)
     # plt.figure()
     # plt.imshow(train_mask[xstart:xend, ystart:yend], vmin=0, vmax=10, cmap='ocean')
