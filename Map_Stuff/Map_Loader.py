@@ -49,6 +49,8 @@ def clipped_zoom(img, zoom_factor, **kwargs):
     else:
         out = img
     return out
+
+
 # googleapi parameters
 # corresponding osm https://www.openstreetmap.org/export#map=16/49.7513/9.9609
 x = '49.7513'
