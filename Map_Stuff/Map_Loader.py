@@ -13,6 +13,13 @@ from scipy.ndimage import zoom, imread
 
 
 def clipped_zoom(img, zoom_factor, **kwargs):
+    """
+    Approach one: Apply zoom with the correct zoom_factor on the image to match
+    :param img:
+    :param zoom_factor:
+    :param kwargs:
+    :return:
+    """
 
     h, w = img.shape[:2]
     print(img.shape[:2])
@@ -49,6 +56,8 @@ def clipped_zoom(img, zoom_factor, **kwargs):
     else:
         out = img
     return out
+
+
 
 
 # googleapi parameters
