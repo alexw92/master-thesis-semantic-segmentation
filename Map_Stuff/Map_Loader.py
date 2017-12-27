@@ -10,6 +10,9 @@ from gdalconst import *
 import matplotlib.pyplot as plt  # this is if you want to plot the map using pyplot pip install matplotlib
 import numpy as np
 from scipy.ndimage import zoom, imread
+import Approach2 as helper
+import xml.etree.cElementTree as ET
+from shapely.geometry import  Polygon
 
 
 def clipped_zoom(img, zoom_factor, **kwargs):
@@ -57,49 +60,149 @@ def clipped_zoom(img, zoom_factor, **kwargs):
         out = img
     return out
 
+def convert_longLat_to_pixel(latmin, lonmin, latmax, lonmax, lon, lat, maxpixel):
+    """
+    :param newXMax: new XMax value (min is always 0)
+    :param newYMax: new YMax value (min is always 0)
+    :return:
+    """
+    if lon < lonmin or lon > lonmax:
+        # print('lon out of bounds')
+     pass
+    if lat < latmin or lat > latmax:
+        # print('lat out of bounds')
+        pass
+    resx = int((lon - lonmin)/(lonmax-lonmin)*maxpixel)
+    resy = int((lat-latmin)/(latmax-latmin)*maxpixel)
+    return resx, resy
 
 
+def readPolygons(xmlroot, bbox, pxwidth, pxheight):
+    """
 
-# googleapi parameters
-# corresponding osm https://www.openstreetmap.org/export#map=16/49.7513/9.9609
-x = '49.7513'
-y = '9.9609'
-size = '800x800'
-zoomf = '16'
-sensor = 'false'
-maptype = 'hybrid'
-sample_tif = '../mixed/sample.tiff'
+    :param xmlroot: root object of the xml structure containing osm data
+    :param bbox: the bounding box (lonmin, latmin, lonmax, latmax)
+    :param pxwidth: current version requires pxwidth = pxheight
+    :param pxheight: current version requires pxwidth = pxheight
+    :return:
+    """
 
-url = 'http://maps.googleapis.com/maps/api/staticmap'+'?'+'center='+x+','+y+'&size='+size+'&zoom='+zoomf +\
-      '&sensor=' + sensor + '&maptype=' + maptype + '&style=feature:all|element:labels|visibility:off'
+    lonmin, latmin, lonmax, latmax = bbox
+    polygons = {}
+    poly_list_building = []
+    poly_list_wood = []
+    # count building for test purposes
+    n_buildings = 0
+    nodes = {}
+    # Put all nodes in a dictionary
+    for n in xmlroot.findall('node'):
+        nodes[n.attrib['id']] = (float(n.attrib['lon']), float(n.attrib['lat']))
 
-buffer = BytesIO(request.urlopen(url).read())
-image = Image.open(buffer)
+    # For each 'way' in the file
+    for way in xmlroot.findall("way"):
+        coords = []
+        valid = True
+        isBuilding = False
+        isWood = False
+        print('way found')
+        for c in way.getchildren():
+            if c.tag == "nd":
+                # If it's a <nd> tag then it refers to a node, so get the lat-lon of that node
+                # using the dictionary we created earlier and append it to the co-ordinate list
+                ll = nodes[c.attrib['ref']]  # ll = list of lon,lat
+                lon, lat = ll
+                if lon < lonmin or lon > lonmax or lat < latmin or lat > latmax:
+                    # print('coord out of bounds')
+                    valid = False
+                x, y = convert_longLat_to_pixel(latmin, lonmin, latmax, lonmax, lon, lat,
+                                                   pxwidth)  # lat="49.7551035" lon="9.9579631"
+                ll = x, y
+                # print(ll)
+                coords.append(ll)
+            if c.tag == "tag":
+                # If it's a <tag> tag (confusing, huh?) then it'll have some useful information in it for us
+                # Get out the information we want as an attribute (in this case village name - which could be
+                # in any of a number of fields, so we check)
+                if c.attrib['k'] == 'building':
+                    isBuilding = True
+                elif c.attrib['k'] == 'natural' and c.attrib['v'] == 'wood':
+                    isWood = True
+                    # Take the list of co-ordinates and convert to a Shapely polygon
+        if len(coords) > 2 and isBuilding:
+            n_buildings = n_buildings + 1
+            poly_list_building.append(Polygon(coords))
+        if len(coords) > 2 and isWood:
+            poly_list_wood.append(Polygon(coords))
+    polygon_list = {}
+    polygon_list['building'] = poly_list_building
+    polygon_list['wood'] = poly_list_wood
+    return polygon_list
 
 
+if __name__ == '__main__':
+    # googleapi parameters
+    # corresponding osm https://www.openstreetmap.org/export#map=16/49.7513/9.9609
+    lat = 49.7513
+    lon = 9.9609
+    width = 512
+    height = 512
+    size = '512x512'
+    zoomf = 17
+    sensor = 'false'
+    maptype = 'hybrid'
+    sample_tif = '../mixed/sample.tiff'
 
-# Show Using PIL
-# image.show()
+    url = 'http://maps.googleapis.com/maps/api/staticmap'+'?'+'center='+str(lat)+','+str(lon)+\
+          '&size='+str(width)+'x'+str(height)+\
+          '&zoom='+str(zoomf) +\
+          '&sensor=' + sensor + '&maptype=' + maptype + '&style=feature:all|element:labels|visibility:off'
 
-# Or using pyplot
-# plt.imshow(image)
-# plt.show()        #  needed in scripts to show the plot
+    buffer = BytesIO(request.urlopen(url).read())
+    image = Image.open(buffer)
 
-data_sample = gdal.Open(sample_tif, GA_ReadOnly)
-boundary = data_sample.RasterXSize, data_sample.RasterYSize, data_sample.RasterCount
-tifArr = data_sample.ReadAsArray()
-print('Image boundaries: '+str(boundary))
-# display sample tif, works in console
-f = plt.imread(sample_tif)
-# plt.imshow(f)
-# plt.show()
-img = imread('../ANN_DATA/zoom_sample.png', True)
-# print(__convert_to_pixel(0.000339, -0.004006))
-zm1 = clipped_zoom(img, 0.5)
-zm2 = clipped_zoom(img, 1.5)
+    # Calc BoundingBox
+    centerPoint = helper.G_LatLng(lat, lon)
+    corners = helper.getCorners(centerPoint, zoomf, width, height)
+    bbox = corners['W'], corners['S'], corners['E'], corners['N']
+    print(corners)
+    # Load osm data using bbox
 
-fig, ax = plt.subplots(1, 3)
-ax[0].imshow(img)
-ax[1].imshow(zm1)
-ax[2].imshow(zm2)
-plt.show()
+    # bbox, order: west, south, east, north (min long, min lat, max long, max lat)
+    osm_url = 'http://api.openstreetmap.org/api/0.6/map?bbox='+str(corners['W'])+','+str(corners['S'])+\
+              ','+str(corners['E'])+','+str(corners['N'])
+    osm_string = request.urlopen(osm_url).read()
+    print(osm_string)
+    root = ET.fromstring(osm_string)
+    poly_dict = readPolygons(root, bbox, pxwidth=width, pxheight=height)
+    poly_list_building = poly_dict['building']
+    poly_list_wood = poly_dict['wood']
+    print(len(poly_list_building)+' buildings found')
+    print(len(poly_list_wood)+' wood found')
+    # create empty image to be filled with labelled osm data
+
+    # fill polygons into image
+
+    # Show Using PIL
+    # image.show()
+
+    # Or using pyplot
+    # plt.imshow(image)
+    # plt.show()        #  needed in scripts to show the plot
+
+    #data_sample = gdal.Open(sample_tif, GA_ReadOnly)
+    #boundary = data_sample.RasterXSize, data_sample.RasterYSize, data_sample.RasterCount
+    #tifArr = data_sample.ReadAsArray()
+    #print('Image boundaries: '+str(boundary))
+    # display sample tif, works in console
+    #f = plt.imread(sample_tif)
+    # plt.imshow(f)
+    # plt.show()
+    #img = imread('../ANN_DATA/zoom_sample.png', True)
+    # print(__convert_to_pixel(0.000339, -0.004006))
+    #zm1 = clipped_zoom(image, 0.5)
+    #zm2 = clipped_zoom(image, 1.5)
+
+    fig, ax = plt.subplots(1, 2)
+    ax[0].imshow(image)
+    ax[1].imshow(image)
+    plt.show()

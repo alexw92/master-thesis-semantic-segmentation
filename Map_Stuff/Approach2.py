@@ -83,13 +83,14 @@ def getCorners(center, zoom, mapWidth, mapHeight):
 # gmaps https://maps.googleapis.com/maps/api/staticmap?center=49.7513,9.9609&size=800x800&zoom=16&maptype=hybrid
 # how to download osm data with given bbox, order: left, bottom, right, top (min long, min lat, max long, max lat):
 # http://api.openstreetmap.org/api/0.6/map?bbox=11.54,48.14,11.543,48.145
-centerLat = 49.7513
-centerLon = 9.9609
-zoom = 16
-mapWidth = 640
-mapHeight = 640
-centerPoint = G_LatLng(centerLat, centerLon)
-centerPoint = G_LatLng(centerLat, centerLon)
-corners = getCorners(centerPoint, zoom, mapWidth, mapHeight)
-print(corners)
+if __name__ == '__main__':
+    centerLat = 49.7513
+    centerLon = 9.9609
+    zoom = 16
+    mapWidth = 640
+    mapHeight = 640
+    centerPoint = G_LatLng(centerLat, centerLon)
+    centerPoint = G_LatLng(centerLat, centerLon)
+    corners = getCorners(centerPoint, zoom, mapWidth, mapHeight)
+    print(corners)
 
