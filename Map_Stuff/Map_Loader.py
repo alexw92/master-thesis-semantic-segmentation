@@ -7,12 +7,15 @@ from PIL import Image   # pip install pillow (for python3)
 from urllib import request
 import gdal
 from gdalconst import *
+import matplotlib as mpl
 import matplotlib.pyplot as plt  # this is if you want to plot the map using pyplot pip install matplotlib
 import numpy as np
 from scipy.ndimage import zoom, imread
 import Approach2 as helper
 import xml.etree.cElementTree as ET
 from shapely.geometry import  Polygon
+import cv2
+
 
 
 def clipped_zoom(img, zoom_factor, **kwargs):
@@ -60,6 +63,7 @@ def clipped_zoom(img, zoom_factor, **kwargs):
         out = img
     return out
 
+
 def convert_longLat_to_pixel(latmin, lonmin, latmax, lonmax, lon, lat, maxpixel):
     """
     :param newXMax: new XMax value (min is always 0)
@@ -68,7 +72,7 @@ def convert_longLat_to_pixel(latmin, lonmin, latmax, lonmax, lon, lat, maxpixel)
     """
     if lon < lonmin or lon > lonmax:
         # print('lon out of bounds')
-     pass
+        pass
     if lat < latmin or lat > latmax:
         # print('lat out of bounds')
         pass
@@ -104,7 +108,6 @@ def readPolygons(xmlroot, bbox, pxwidth, pxheight):
         valid = True
         isBuilding = False
         isWood = False
-        print('way found')
         for c in way.getchildren():
             if c.tag == "nd":
                 # If it's a <nd> tag then it refers to a node, so get the lat-lon of that node
@@ -115,7 +118,7 @@ def readPolygons(xmlroot, bbox, pxwidth, pxheight):
                     # print('coord out of bounds')
                     valid = False
                 x, y = convert_longLat_to_pixel(latmin, lonmin, latmax, lonmax, lon, lat,
-                                                   pxwidth)  # lat="49.7551035" lon="9.9579631"
+                                                pxwidth)  # lat="49.7551035" lon="9.9579631"
                 ll = x, y
                 # print(ll)
                 coords.append(ll)
@@ -133,15 +136,38 @@ def readPolygons(xmlroot, bbox, pxwidth, pxheight):
             poly_list_building.append(Polygon(coords))
         if len(coords) > 2 and isWood:
             poly_list_wood.append(Polygon(coords))
-    polygon_list = {}
-    polygon_list['building'] = poly_list_building
-    polygon_list['wood'] = poly_list_wood
+    polygon_list = {'building': poly_list_building,
+                    'wood': poly_list_wood}
     return polygon_list
+
+
+# Equal to the kaggle color poly function
+def colorPolys(polygons, im_size, poly_type, img_mask=None):
+    """
+    :param polygons: list of  polygons containing the class
+    :param im_size: (x, y) size of the image in pixels
+    :param poly_type: the type of the polygon, which is the number used to color the polygons
+    :param img_mask: (optional) an image mask to be used to color with polygons, will be created if not given
+    :return:
+    """
+    if img_mask is None:
+        img_mask = np.zeros(im_size, np.uint8)
+    if not polygons:
+        return img_mask
+    int_coords = lambda x: np.array(x).round().astype(np.int32)
+    exteriors = [int_coords(poly.exterior.coords) for poly in polygons]
+    interiors = [int_coords(pi.coords) for poly in polygons
+                 for pi in poly.interiors]
+    cv2.fillPoly(img_mask, exteriors, poly_type)    # color polygons white
+    cv2.fillPoly(img_mask, interiors, 0)            # leave holes black lets hope there are no holes
+    return img_mask
 
 
 if __name__ == '__main__':
     # googleapi parameters
-    # corresponding osm https://www.openstreetmap.org/export#map=16/49.7513/9.9609
+    # google static map url: http://maps.googleapis.com/maps/api/staticmap?center=49.7513,9.9609&size=512x512
+    # &zoom=17&sensor=false&maptype=hybrid&style=feature:all|element:labels|visibility:off
+    # corresponding osm    : https://www.openstreetmap.org/export#map=16/49.7513/9.9609
     lat = 49.7513
     lon = 9.9609
     width = 512
@@ -176,33 +202,19 @@ if __name__ == '__main__':
     poly_dict = readPolygons(root, bbox, pxwidth=width, pxheight=height)
     poly_list_building = poly_dict['building']
     poly_list_wood = poly_dict['wood']
-    print(len(poly_list_building)+' buildings found')
-    print(len(poly_list_wood)+' wood found')
-    # create empty image to be filled with labelled osm data
-
-    # fill polygons into image
-
-    # Show Using PIL
-    # image.show()
-
-    # Or using pyplot
-    # plt.imshow(image)
-    # plt.show()        #  needed in scripts to show the plot
-
-    #data_sample = gdal.Open(sample_tif, GA_ReadOnly)
-    #boundary = data_sample.RasterXSize, data_sample.RasterYSize, data_sample.RasterCount
-    #tifArr = data_sample.ReadAsArray()
-    #print('Image boundaries: '+str(boundary))
-    # display sample tif, works in console
-    #f = plt.imread(sample_tif)
-    # plt.imshow(f)
-    # plt.show()
-    #img = imread('../ANN_DATA/zoom_sample.png', True)
-    # print(__convert_to_pixel(0.000339, -0.004006))
-    #zm1 = clipped_zoom(image, 0.5)
-    #zm2 = clipped_zoom(image, 1.5)
-
+    print(str(len(poly_list_building))+' buildings found')
+    print(str(len(poly_list_wood))+' wood found')
+    # fill polygons into empty image
+    train_mask = colorPolys(polygons=poly_list_building, poly_type=1, im_size=(width, height))
+    # flip to mask to get same dim as orig image
+    train_mask = np.flip(train_mask, 0)
+    # increase quality of plotted satellite, thanks to https://stackoverflow.com/a/46161614/8862202
+    mpl.rcParams['figure.dpi'] = 250
+    # plot satellite image (train) and osm labelled image (label)
     fig, ax = plt.subplots(1, 2)
+    plt.title('satellite image')
     ax[0].imshow(image)
-    ax[1].imshow(image)
+    plt.title('osm labelled image')
+    ax[1].imshow(train_mask, vmin=0, vmax=10, cmap='tab10')
+    # plt.imshow(train_mask, vmin=0, vmax=10, cmap='tab10', origin='lower')
     plt.show()

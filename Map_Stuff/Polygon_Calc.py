@@ -8,6 +8,7 @@ import numpy as np
 
 def color_polygon(polygon, size=5, poly_class=1, im_mask=None,):
     """
+    VERY SLOW
     Fills the polygon `polygon` with values `poly_class` leaving holes uncolored
     Returns the image with the colored polygones
     :param polygon: the polygon to be colored
