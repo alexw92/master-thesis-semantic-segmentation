@@ -11,12 +11,19 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt  # this is if you want to plot the map using pyplot pip install matplotlib
 import numpy as np
 from scipy.ndimage import zoom, imread
-import Approach2 as helper
+import Map_Stuff.Approach2 as helper
 import xml.etree.cElementTree as ET
 from shapely.geometry import  Polygon
 import cv2
+import random
+import json
+import time
+import os
+from pprint import pprint
 
 
+# google api key
+API_KEY = 'AIzaSyDGB5AkLLgzXB6_rUwVjWIUqQ1FT3sXzO0'
 
 def clipped_zoom(img, zoom_factor, **kwargs):
     """
@@ -163,17 +170,105 @@ def colorPolys(polygons, im_size, poly_type, img_mask=None):
     return img_mask
 
 
+def maybe_download_images(city='wuerzburg', zoom=16, size=224, datadir='../ANN_DATA/Google_Osm', num_imgs=160):
+    dirname = datadir+'/'+city+'_'+str(size)
+    if not os.path.isdir(datadir):
+        os.mkdir(datadir)
+    if not os.path.isdir(dirname):
+        os.mkdir(dirname)
+        # load data
+        coords = []
+        json_data = ''
+        with open('city_bounds.json', 'r') as f:
+            json_data = json.loads(f.read())
+        pprint(json_data)
+        lat_left = json_data[city]['left']
+        lat_right = json_data[city]['right']
+        lon_left = json_data[city]['down']
+        lon_right = json_data[city]['up']
+        for i in range(0, num_imgs):
+            # thx to  https://stackoverflow.com/questions/6088077/how-to-get-a-random-number-between-a-float-range
+            map_lat = random.uniform(lat_left, lat_right)
+            map_lon = random.uniform(lon_left, lon_right)
+            url = 'http://maps.googleapis.com/maps/api/staticmap' + '?'\
+                  + 'key='+API_KEY  \
+                  + '&center=' + str(map_lat) + ',' \
+                  + str(map_lon) + \
+                  '&size=' + str(size) + 'x' + str(size) + \
+                  '&zoom=' + str(zoom) + \
+                  '&sensor=false&maptype=hybrid&style=feature:all|element:labels|visibility:off'
+            print(url)
+            buffer = BytesIO(request.urlopen(url).read())
+            image = Image.open(buffer)
+            file_name = city[0:3] + '_' + str(map_lat) + '_' + str(map_lon) + '.png'
+            image.save(dirname + '/' + file_name)
+
+
+
+
+
+def get_sample():
+    lat = 49.7513
+    lon = 9.9609
+    width = 224
+    height = 224
+    size = '224x224'
+    zoomf = 17
+    sensor = 'false'
+    maptype = 'hybrid'
+
+    time_google_start = time.clock()
+    url = 'http://maps.googleapis.com/maps/api/staticmap' + '?' + 'center=' + str(lat) + ',' + str(lon) + \
+          '&size=' + str(width) + 'x' + str(height) + \
+          '&zoom=' + str(zoomf) + \
+          '&sensor=' + sensor + '&maptype=' + maptype + '&style=feature:all|element:labels|visibility:off'
+
+    buffer = BytesIO(request.urlopen(url).read())
+    time_google = time.clock() - time_google_start
+    # print('required time by googlemaps: '+str(time_google))
+    image = np.asarray(Image.open(buffer).convert('RGB'))
+    # Calc BoundingBox
+    centerPoint = helper.G_LatLng(lat, lon)
+    corners = helper.getCorners(centerPoint, zoomf, width, height)
+    bbox = corners['W'], corners['S'], corners['E'], corners['N']
+    # Load osm data using bbox
+
+    time_osm_start = time.clock()
+    # bbox, order: west, south, east, north (min long, min lat, max long, max lat)
+    osm_url = 'http://api.openstreetmap.org/api/0.6/map?bbox=' + str(corners['W']) + ',' + str(corners['S']) + \
+              ',' + str(corners['E']) + ',' + str(corners['N'])
+    osm_string = request.urlopen(osm_url).read()
+    time_osm = time.clock() - time_osm_start
+    # print('required time by osm '+str(time_osm))
+    root = ET.fromstring(osm_string)
+    poly_dict = readPolygons(root, bbox, pxwidth=width, pxheight=height)
+    poly_list_building = poly_dict['building']
+    poly_list_wood = poly_dict['wood']
+    # fill polygons into empty image
+    train_mask = colorPolys(polygons=poly_list_building, poly_type=1, im_size=(width, height))
+    # flip to mask to get same dim as orig image
+    train_mask = np.flip(train_mask, 0)
+    # increase quality of plotted satellite, thanks to https://stackoverflow.com/a/46161614/8862202
+    # plot satellite image (train) and osm labelled image (label)
+    return image, train_mask
+
+
 if __name__ == '__main__':
     # googleapi parameters
     # google static map url: http://maps.googleapis.com/maps/api/staticmap?center=49.7513,9.9609&size=512x512
     # &zoom=17&sensor=false&maptype=hybrid&style=feature:all|element:labels|visibility:off
     # corresponding osm    : https://www.openstreetmap.org/export#map=16/49.7513/9.9609
-    lat = 49.7513
-    lon = 9.9609
-    width = 512
-    height = 512
-    size = '512x512'
-    zoomf = 17
+
+    #links 16/49.79377/9.89788
+    #rechts 16/49.7961/10.0050
+    #oben   16/49.80352/9.95350
+    #unten  16/49.77555/9.95169
+    lat = 49.79377
+    lon = 9.89788
+    width = 224
+    height = 224
+    size = '224x224'
+    zoomf = 16
     sensor = 'false'
     maptype = 'hybrid'
     sample_tif = '../mixed/sample.tiff'
@@ -197,7 +292,7 @@ if __name__ == '__main__':
     osm_url = 'http://api.openstreetmap.org/api/0.6/map?bbox='+str(corners['W'])+','+str(corners['S'])+\
               ','+str(corners['E'])+','+str(corners['N'])
     osm_string = request.urlopen(osm_url).read()
-    print(osm_string)
+    # print(osm_string)
     root = ET.fromstring(osm_string)
     poly_dict = readPolygons(root, bbox, pxwidth=width, pxheight=height)
     poly_list_building = poly_dict['building']
@@ -209,7 +304,7 @@ if __name__ == '__main__':
     # flip to mask to get same dim as orig image
     train_mask = np.flip(train_mask, 0)
     # increase quality of plotted satellite, thanks to https://stackoverflow.com/a/46161614/8862202
-    mpl.rcParams['figure.dpi'] = 250
+    mpl.rcParams['figure.dpi'] = 150
     # plot satellite image (train) and osm labelled image (label)
     fig, ax = plt.subplots(1, 2)
     plt.title('satellite image')
@@ -218,3 +313,4 @@ if __name__ == '__main__':
     ax[1].imshow(train_mask, vmin=0, vmax=10, cmap='tab10')
     # plt.imshow(train_mask, vmin=0, vmax=10, cmap='tab10', origin='lower')
     plt.show()
+    maybe_download_images(num_imgs=10)
