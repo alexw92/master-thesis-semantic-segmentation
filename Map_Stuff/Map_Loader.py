@@ -20,10 +20,27 @@ import json
 import time
 import os
 from pprint import pprint
+from termcolor import colored
 
 
 # google api key
 API_KEY = 'AIzaSyDGB5AkLLgzXB6_rUwVjWIUqQ1FT3sXzO0'
+file_list = []
+initialized = False
+current_index = 0
+
+
+def initialize():
+    f_list = os.listdir('..\ANN_DATA\Google_Osm\wuerzburg_224')
+    print(file_list)
+    global initialized
+    initialized = True
+    for i in range(0, len(f_list)):
+        file_name = f_list[i]
+        coords = file_name.split('.png')[0].split('_')
+        file_lat_long = file_name,float(coords[1]), float(coords[2])
+        file_list.append(file_lat_long)
+
 
 def clipped_zoom(img, zoom_factor, **kwargs):
     """
@@ -182,14 +199,16 @@ def maybe_download_images(city='wuerzburg', zoom=16, size=224, datadir='../ANN_D
         with open('city_bounds.json', 'r') as f:
             json_data = json.loads(f.read())
         pprint(json_data)
-        lat_left = json_data[city]['left']
-        lat_right = json_data[city]['right']
-        lon_left = json_data[city]['down']
-        lon_right = json_data[city]['up']
+        lat_left = json_data[city]['south']
+        lat_right = json_data[city]['north']
+        lon_left = json_data[city]['west']
+        lon_right = json_data[city]['east']
         for i in range(0, num_imgs):
             # thx to  https://stackoverflow.com/questions/6088077/how-to-get-a-random-number-between-a-float-range
             map_lat = random.uniform(lat_left, lat_right)
             map_lon = random.uniform(lon_left, lon_right)
+           #  print(str(lat_left)+' '+str(lat_right))
+           #  print(str(lon_left)+' '+str(lon_right))
             url = 'http://maps.googleapis.com/maps/api/staticmap' + '?'\
                   + 'key='+API_KEY  \
                   + '&center=' + str(map_lat) + ',' \
@@ -208,27 +227,37 @@ def maybe_download_images(city='wuerzburg', zoom=16, size=224, datadir='../ANN_D
 
 
 def get_sample():
-    lat = 49.7513
-    lon = 9.9609
-    width = 224
-    height = 224
-    size = '224x224'
-    zoomf = 17
-    sensor = 'false'
-    maptype = 'hybrid'
+    if not initialized:
+        initialize()
+    #lat = 49.7513
+    #lon = 9.9609
+    #width = 224
+    #height = 224
+    #size = '224x224'
+    zoomf = 17  # find better solution
+    width = 224 # find better solution
+    height = 224 # find better solution
+    #sensor = 'false'
+    #maptype = 'hybrid'
+    global current_index
+    if current_index == len(file_list)-1:
+        print('epoch end reached')
+    next_file, next_lat, next_long = file_list[current_index]
+    current_index =(current_index + 1) % len(file_list)
+    # time_google_start = time.clock()
+    # url = 'http://maps.googleapis.com/maps/api/staticmap' + '?' + 'center=' + str(lat) + ',' + str(lon) + \
+    #      '&size=' + str(width) + 'x' + str(height) + \
+    #      '&zoom=' + str(zoomf) + \
+    #      '&sensor=' + sensor + '&maptype=' + maptype + '&style=feature:all|element:labels|visibility:off'
 
-    time_google_start = time.clock()
-    url = 'http://maps.googleapis.com/maps/api/staticmap' + '?' + 'center=' + str(lat) + ',' + str(lon) + \
-          '&size=' + str(width) + 'x' + str(height) + \
-          '&zoom=' + str(zoomf) + \
-          '&sensor=' + sensor + '&maptype=' + maptype + '&style=feature:all|element:labels|visibility:off'
-
-    buffer = BytesIO(request.urlopen(url).read())
-    time_google = time.clock() - time_google_start
+    # buffer = BytesIO(request.urlopen(url).read())
+    # time_google = time.clock() - time_google_start
     # print('required time by googlemaps: '+str(time_google))
-    image = np.asarray(Image.open(buffer).convert('RGB'))
+    image = np.asarray(
+        Image.open('../ANN_DATA/Google_Osm/wuerzburg_224/'+next_file).convert(
+            'RGB'))
     # Calc BoundingBox
-    centerPoint = helper.G_LatLng(lat, lon)
+    centerPoint = helper.G_LatLng(next_lat, next_long)
     corners = helper.getCorners(centerPoint, zoomf, width, height)
     bbox = corners['W'], corners['S'], corners['E'], corners['N']
     # Load osm data using bbox
@@ -313,4 +342,15 @@ if __name__ == '__main__':
     ax[1].imshow(train_mask, vmin=0, vmax=10, cmap='tab10')
     # plt.imshow(train_mask, vmin=0, vmax=10, cmap='tab10', origin='lower')
     plt.show()
-    maybe_download_images(num_imgs=10)
+    #maybe_download_images(num_imgs=160)
+
+    # get wue main city bounds
+    #fg = 'http://maps.googleapis.com/maps/api/staticmap?center=49.7873,9.9519&size=512x512&zoom=14&sensor=false&maptype=hybrid&style=feature:all|element:labels|visibility:off'
+    #buffer = BytesIO(request.urlopen(fg).read())
+    #image = Image.open(buffer)
+    #lat = 49.7873
+    #lon = 9.9519
+    #centerPoint = helper.G_LatLng(lat, lon)
+    #corners = helper.getCorners(centerPoint, 14, width, height)
+    #bbox = corners['W'], corners['S'], corners['E'], corners['N']
+    #print(corners)

@@ -31,9 +31,9 @@ print('img dim format used: ' + K.image_data_format())
 data_dirpath = '../ANN_DATA'
 size = 224
 n_cls = 3
-batch_size = 8
-num_images = 24  # total number of images used in one complete epoch
-num_epoch = 5
+batch_size = 1
+num_images = 160  # total number of images used in one complete epoch
+num_epoch = 2
 model_filepath = 'mymodel1.h5'
 
 
