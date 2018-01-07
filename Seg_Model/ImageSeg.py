@@ -199,6 +199,11 @@ cls2col = {
     2: [0, 255, 0]
 }
 
+class_weights = {
+    0 : 1.,
+    1: 50.,
+    2: 0
+}
 
 def pred2building(img_pred):
     img_pred = np.argmax(img_pred, axis=2)
@@ -217,7 +222,8 @@ history = model.fit_generator(train_batch_generator.get_batch(),
                               steps_per_epoch=train_batch_generator.get_size() // batch_size,
                               epochs=num_epoch,
                               validation_data=val_batch_generator.get_batch(),
-                              validation_steps=val_batch_generator.get_size() // batch_size)
+                              validation_steps=val_batch_generator.get_size() // batch_size,
+                              class_weight=class_weights)
 
 # save image
 model.save(model_filepath)
@@ -230,7 +236,7 @@ for x, y in val_batch_generator.get_batch():
     pred = model.predict(x)
     building = pred2building(pred[0, :, :, :])
     print('Acc: %.3f' % get_acc(y, pred))
-    img = x[0, :, :, :]
+    img = x[0, :, :, :]  # get first image of batch
     plt.imshow(building)
     plt.show()
     plt.imshow(img.astype(np.uint8))
