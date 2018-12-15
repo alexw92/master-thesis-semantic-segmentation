@@ -1,0 +1,53 @@
+icnet
+
+p-value for score iou and column other is 3.3839545406111593e-14
+p-value for score iou and column building is 0.3920906047476248
+p-value for score iou and column wood is 0.2496188883787972
+p-value for score iou and column water is 0.005372936091562351
+p-value for score iou and column road is 0.18007389262048867
+
+3 col > 5%
+
+p-value for score acc and column other is 0.020702824749956317
+p-value for score acc and column building is 0.0005158026453570018
+p-value for score acc and column wood is 0.8634251901989253
+p-value for score acc and column water is 0.6891674706940877
+p-value for score acc and column road is 0.04105247735037683
+
+2 col > 5%
+
+deeplab 
+
+p-value for score iou and column other is 2.3154665245014622e-07
+p-value for score iou and column building is 0.07056713149593087
+p-value for score iou and column wood is 0.13669532396557857
+p-value for score iou and column water is 0.20903725988234323
+p-value for score iou and column road is 1.05300181337789e-06
+
+3 col > 5%
+
+p-value for score acc and column other is 1.405528080811434e-07
+p-value for score acc and column building is 0.7450448656289931
+p-value for score acc and column wood is 0.13196075346829408
+p-value for score acc and column water is 0.28147651679418073
+p-value for score acc and column road is 7.58251989753747e-08
+
+3 col > 5%
+
+segnet
+
+p-value for score iou and column other is 1.0784064434152798e-97
+p-value for score iou and column building is 7.244034040387714e-17
+p-value for score iou and column wood is 5.935568416549795e-06
+p-value for score iou and column water is 0.10223857521172228
+p-value for score iou and column road is 1.2525708671876113e-15
+
+1 col < 5% 
+
+p-value for score acc and column other is 4.899456672363614e-50
+p-value for score acc and column building is 2.1371898561725033e-09
+p-value for score acc and column wood is 5.48981536095568e-14
+p-value for score acc and column water is 0.17026635798969914
+p-value for score acc and column road is 0.5186195741773749
+
+2 col < 5% 

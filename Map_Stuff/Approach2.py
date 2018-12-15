@@ -64,6 +64,8 @@ def getCorners(center, zoom, mapWidth, mapHeight):
     scale = 2**zoom
     proj = MercatorProjection()
     centerPx = proj.fromLatLngToPoint(center)
+    print(centerPx.x)
+    print(centerPx.y)
     SWPoint = G_Point(centerPx.x-(mapWidth/2)/scale, centerPx.y+(mapHeight/2)/scale)
     SWLatLon = proj.fromPointToLatLng(SWPoint)
     NEPoint = G_Point(centerPx.x+(mapWidth/2)/scale, centerPx.y-(mapHeight/2)/scale)
@@ -76,6 +78,46 @@ def getCorners(center, zoom, mapWidth, mapHeight):
     }
 
 
+# from https://stackoverflow.com/a/47579340/8862202
+# neglects map scale on y axis
+# Seems to work as well
+def get_static_map_bounds(lat, lng, zoom, sx, sy):
+    # lat, lng - center
+    # sx, sy - map size in pixels
+
+    # 256 pixels - initial map size for zoom factor 0
+    sz = 256 * 2 ** zoom
+
+    #resolution in degrees per pixel
+    res_lat = math.cos(lat * math.pi / 180.) * 360. / sz
+    res_lng = 360./sz
+
+    d_lat = res_lat * sy / 2
+    d_lng = res_lng * sx / 2
+
+    return {'W' :lng-d_lng, 'E' :lng+d_lng, 'S' : lat-d_lat, 'N' :lat+d_lat}
+
+
+# thx 2 https://stackoverflow.com/a/19412565/8862202
+def getMeterDistance(lon1, lat1, lon2, lat2):
+    from math import sin, cos, sqrt, atan2, radians
+    # approximate radius of earth in km
+    R = 6373.0
+
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance*1000
+
 # Usage
 # centerLat = 49.141404
 # centerLon = -121.960988
@@ -87,10 +129,14 @@ if __name__ == '__main__':
     centerLat = 49.7513
     centerLon = 9.9609
     zoom = 16
-    mapWidth = 640
-    mapHeight = 640
+    mapWidth = 400
+    mapHeight = 800
     centerPoint = G_LatLng(centerLat, centerLon)
     centerPoint = G_LatLng(centerLat, centerLon)
     corners = getCorners(centerPoint, zoom, mapWidth, mapHeight)
+
     print(corners)
 
+    # second approach
+    corners2 = get_static_map_bounds(centerLat, centerLon, zoom, mapWidth, mapHeight)
+    print(corners2)

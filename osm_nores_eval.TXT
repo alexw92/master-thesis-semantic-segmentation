@@ -1,0 +1,103 @@
+# Evaluation for osm datasets without residential area DE_TOP15
+
+
+# segnet (fail 6 statt 5 klassen angegeben)
+runs:
+	- mit weights lr=0.001   80k it
+	- train:
+	- test: @step model.ckpt-196875 mean IU:  0.11200763118342003
+	
+	- mit weights lr=0.0001  80k it
+	- train:
+	- test: @step model.ckpt-234000 mean IU:  0.5420591891052118
+class Unlabelled   accuracy = 0.836583, IoU =  0.622334
+class Building     accuracy = 0.747411, IoU =  0.578307
+class Wood         accuracy = 0.722757, IoU =  0.678748
+class Water        accuracy = 0.703840, IoU =  0.525984
+class Road         accuracy = 0.391840, IoU =  0.304924
+	
+	- ohne weights lr=0.001  300k it
+	- train:
+	- test: @step model.ckpt-234000 mean IU:  0.49474001713760235 
+									class Unlabelled   accuracy = 0.840315, IoU =  0.624301
+									class Building     accuracy = 0.542727, IoU =  0.480630
+									class Wood         accuracy = 0.918928, IoU =  0.717070
+									class Water        accuracy = 0.455034, IoU =  0.445649
+									class Road         accuracy = 0.228379, IoU =  0.206050
+	
+	- ohne weights lr=0.0001 300k it
+	- train:
+	- test: @step model.ckpt-247500 mean IU:  0.5389091195526345
+									class Unlabelled   accuracy = 0.918949, IoU =  0.650410
+									class Building     accuracy = 0.665894, IoU =  0.566625
+									class Wood         accuracy = 0.778699, IoU =  0.719996
+									class Water        accuracy = 0.598080, IoU =  0.585293
+									class Road         accuracy = 0.184657, IoU =  0.172221
+
+	
+	Wichtig: Obwohl die IOU bei den weights nicht bedeutend besser ist, sind 
+	die Bilder besser predicted bzgl der Nicht-Background Features.
+	Shapes von Straßen und Gebäuden sind wesentlich besser erkennbar als ohne Gewichte!
+	Es zeigt sich hier dass die reine IOU über alle Klassen nicht die beste Metrik ist 
+	und die IoU der einzelnen Klassen betrachtet werden sollte.
+
+# icnet (fail 6 statt 5 klassen angegeben)
+runs:
+	- mit weights lr=0.001   80k it
+	- train: todo
+	- test: mIoU: 0.5646947622299194
+	
+										class Unlabelled   accuracy = 0.825823, IoU =  0.482278
+										class Building     accuracy = 0.612116, IoU =  0.539558
+										class Wood         accuracy = 0.866188, IoU =  0.740037
+										class Water        accuracy = 0.864900, IoU =  0.783744
+										class Road         accuracy = 0.322230, IoU =  0.277857
+	
+	- mit weights lr=0.0001  80k it
+	- train:
+	- test: mIoU: 0.5227660536766052
+	
+	- ohne weights lr=0.001  300k it
+	- train:
+	- test: mIoU: 0.5850030779838562
+										class Unlabelled   accuracy = 0.727690, IoU =  0.648429
+										class Building     accuracy = 0.746667, IoU =  0.534424
+										class Wood         accuracy = 0.861908, IoU =  0.757212
+										class Water        accuracy = 0.945871, IoU =  0.759786
+										class Road         accuracy = 0.568674, IoU =  0.225165
+	
+	- ohne weights lr=0.0001 300k it
+	- train:
+	- test: mIoU: 0.5100838541984558
+
+
+# deeplab (mobilenet_v2 backbone)
+runs:
+	- mit weights lr=0.001   80k it
+	- train: miou_1.0[0.417425454]
+	- test: miou_1.0[0.411102384]
+	
+									class Unlabelled   accuracy = 0.000023, IoU =  0.000023
+									class Building     accuracy = 0.765985, IoU =  0.387241
+									class Wood         accuracy = 0.732467, IoU =  0.660763
+									class Water        accuracy = 0.108475, IoU =  0.107860
+									class Road         accuracy = 0.781709, IoU =  0.139805
+	
+	- mit weights lr=0.0001  80k it
+	- train: miou_1.0[0.283046544]
+	- test: miou_1.0[0.276655376]
+	
+	- ohne weights lr=0.001  300k it
+	- train: @step model.ckpt-122166 miou_1.0[0.616233349]
+	- test: @step model.ckpt-122166 miou_1.0[0.590330184]
+	
+									class Unlabelled   accuracy = 0.860410, IoU =  0.643199
+									class Building     accuracy = 0.496579, IoU =  0.380221
+									class Wood         accuracy = 0.865474, IoU =  0.744292
+									class Water        accuracy = 0.788127, IoU =  0.725720
+									class Road         accuracy = 0.146127, IoU =  0.129664
+	
+	- ohne weights lr=0.0001 300k it 
+	- train: @step model.ckpt-122208 miou_1.0[0.553815126]
+	- test:  @step model.ckpt-122208 miou_1.0[0.54682678]
+

@@ -1,1017 +1,351 @@
-# Tensorflow Framework
+# Datasets erzeugen
 
-## Knowledge & Tutorials
-+ Nice TensorFlow tutorial on [youtube](https://www.youtube.com/watch?v=yX8KuPZCAMo&lc=z12vwxxpxxqmjfwbv04cglyxixiuxrxp0aw) (about 50 min)
-+ SchÃ¶ne Folien zum VerstÃ¤ndnis von TF und des InputFormats [github](https://github.com/thiagoavadore/tf-key-concepts-sample)
-+ Sehr gute Tutorials auf [sentdex youtube](https://www.youtube.com/watch?v=dFARw8Pm0Gk) und auf persÃ¶nlicher [ML website](https://pythonprogramming.net/)
-+ https://github.com/robi56/Deep-Learning-for-Recommendation-Systems
+- 13 größte städte in dtl. (nach berlin, ist ja schon gedownloaded) hinzugefügt
 
-## Tensorflow installieren
-Install Python 3.5.2 and include the installed folder into Path  (```C:\Wichtige Progs\Python``` in my case)
+- (y)Hamburg 		 		--- 663 sq km
+- (y)Muenchen  			--- 1015 sq km    *neu
+- (y)koeln                --- 615 sq km     *neu
+- (y)Frankfurth am Main   --- 206 sq km
+- (y)Stuttgart            --- 256 sq km
+- (y)Düsseldorf           --- 292 sq km
+- (y)Dortmund             --- 554 sq km
+- (y)Essen                --- 173 sq km
+- (y)Leipzig              --- 268 sq km
+- (y)Bremen               --- 400 sq km
+- (y)Dresden              --- 439 sq km
+- (y)Hannover             --- 452 sq km
+- (y)Nürnberg             --- 182 sq km
 
-If you want to use a Nvidia Graphics card to run the the code refer to [this](http://www.heatonresearch.com/2017/01/01/tensorflow-windows-gpu.html).
+**Next**: Alle importieren in postgis
+      Coordinaten der bbox Aufschreiben und in Python übernehmen (**DONE**)
+	  
+- (y)Hamburg 		 		--- 663 sq km
+- (y)Muenchen  			--- 1015 sq km   
+- (y)Koeln				--- 615 sq km   
+- (y)Frankfurth am Main   --- 206 sq km
+- (y)Stuttgart            --- 256 sq km
+- (y)Duesseldorf          --- 292 sq km 
+- (y)Dortmund             --- 554 sq km
+- (y)Essen                --- 173 sq km
+- (y)Leipzig              --- 268 sq km
+- (y)Bremen               --- 400 sq km
+- (y)Dresden              --- 439 sq km
+- (y)Hannover             --- 452 sq km
+- (y)Nürnberg             --- 182 sq km
 
-Install with ```pip``` according to the [docs](https://www.tensorflow.org/install/install_windows#installing_with_native_pip)
+**Next:** coords in python eintragen (**DONE**)
 
-run the following testCode:
+Downloadprozedur für neues dataset überlegen
+Problem: Nur 25k images von google am Tag möglich
+**Ein Image mit 600x600px 17 zoom hat circa 437x437 meter (0.43 sq km) 
+in auf deutschem/europäischem Breitengrad**
 
-```python
-import tensorflow as tf
-
-
-def main():
-    hello = tf.constant('Hello, TensorFlow!')
-    sess = tf.Session()
-    print(sess.run(hello))
-
-
-# Call Main method
-main()
-
-```
-
-## Save and Load models
-
-[Save and Load Link YT](https://www.youtube.com/watch?v=l4X-kZjl1gs#t=48m00s)
-
-# Python language knowledge
-
-+ Why you need a ```self``` keyword in Python ? [Stackoverflow](https://stackoverflow.com/a/2725996)
-
-+ There are no multiline comments in python apart from using triple ``` ''' multiline comment '''```
-which isn't highlighted correctly
-
-+ Python's [with statement](http://effbot.org/zone/python-with-statement.htm)
-
-+ In general, in a statement such as ```Python
-class Foo(Base1, Base2):```
-Foo is being declared as a class inheriting from base classes Base1 and Base2.
-
-+ Reimport module (get changes) [ImportLib.Reload()](https://docs.python.org/3.5/library/importlib.html#importlib.reload)
-
-+ [Python 3 Tutorial](https://docs.python.org/3/tutorial/)
-
-+ Print() Knowledge
-
-If you donâ€™t want characters prefaced by \ to be interpreted as special characters, you can use raw strings by adding an r before the first quote:
-```Python
->>> print('C:\some\name')  # here \n means newline!
-C:\some
-ame
->>> print(r'C:\some\name')  # note the r before the quote
-C:\some\name
-```
-Strings can be concatenated (glued together) with the + operator, and repeated with *:
-
-```Python
->>> # 3 times 'un', followed by 'ium'
->>> 3 * 'un' + 'ium'
-'unununium'
-```
-
-Break long strings (in Java you'd need "abcd"+"abc"+...):
-
-```Python
->>> text = ('Put several strings within parentheses '
-...         'to have them joined together.')
->>> text
-'Put several strings within parentheses to have them joined together.'
-```
-
-Length of a string and cutting:
-```Python
-str = "abcde"
-len( str ) #5
-str[3]     #d
-str[4]     #e
-
-str[len(str)] #e
-str[-1]       #e [Count from the end backwards]
-
-lol = "Alexander"
-lol[0:3]     #Ale
-lol[:3]      #Ale
-lol[3:]      #xander
-```
-
-Python string are *immutable*:
-```Python
->>> word[0] = 'J'
-  ...
-TypeError: 'str' object does not support item assignment
-```
-___
-### Lists
-
-```Python
-# Indexing like strings
-numbers = [1,2,3,4,5]
-numbers = numbers + [6,7,8,9]
->>> numbers[0]    # 1 indexing returns the item
->>> numbers[-3:]  # [3,4,5] slicing returns a new list
-
-# Unlike strings, lists are a mutable type
-cubes = [1, 8, 27, 65, 125]
-cubes[3] = 64
->>> cubes              # [1, 8, 27, 64, 125]
-cubes.append(216)  # add the cube of 6
->>> cubes              ## [1, 8, 27, 64, 125, 216]
-
-# Slizing is also possible
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
->>> letters # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-# replace some values
->>> letters[2:5] = ['C', 'D', 'E']
->>> letters # ['a', 'b', 'C', 'D', 'E', 'f', 'g']
-# now remove them
->>> letters[2:5] = []
->>> letters # ['a', 'b', 'f', 'g']
-# clear the list by replacing all the elements with an empty list
-letters[:] = []
->>> letters # []
-# len() works with lists as well
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
->>> len(letters)  # 3
-```
-
-### Nested lists
-```Python
-a = ['a', 'b', 'c']
-n = [1, 2, 3]
-x = [a, n]
->>> x  # [['a', 'b', 'c'], [1, 2, 3]]
->>> x[0] # ['a', 'b', 'c']
->>> x[0][1] # 'b'
+Ausgerechnet mittels:
 
 ```
-
-___
-### Control Structures
-
-Fibonacci example:
-```Python
->>> a, b = 0, 1
->>> while b < 1000:
-...     print(b, end=',')
-...     a, b = b, a+b
+lat = 52.4983678856
+lon = 13.3306850560
+centerPoint = helper.G_LatLng(lat, lon)
+corners = helper.getCorners(centerPoint, 17, 600, 600)
+bbox = corners['W'], corners['S'], corners['E'], corners['N']
+dis1 = helper.getMeterDistance(lon1=bbox[0], lat1=bbox[1], lon2=bbox[0], lat2=bbox[3])
+dis2 = helper.getMeterDistance(lon1=bbox[0], lat1=bbox[1], lon2=bbox[2], lat2=bbox[1])
+print(dis1)
+print(dis2)
 ```
 
-if-statement:
-```Python
-if x < 0:
-    x = 0
-    print('Negative changed to zero')
-elif x == 0:
-    print('Zero')
-elif x == 1:
-    print('Single')
-else:
-    print('More')
-```
-
-for-loop:
-```Python
-# Iterating over a copy in order to keep loop range
-for w in words[:]:  # Loop over a slice copy of the entire list.
-    if len(w) > 6:
-        words.insert(0, w)
-        
-# loop over range
-for i in range(5):
-    print(i)      # prints numbers from 0 to 4
-
-range(5, 10)      # range from 5 to 9
-
-range(0, 10, 3)   # 0 to 9 in 3-steps: 0, 3, 6, 9
-
-# Iterate with indices
-a = ['Mary', 'had', 'a', 'little', 'lamb']
-for i in range(len(a)):
-    print(i, a[i])
-    
-# Create List from range (Matlab style :D)
-list(range(5)) # [0, 1, 2, 3, 4, 4]
-
-# else in for-loop
-# else is entered if loop range is exhausted without break 
-for n in range(2, 10):
-    for x in range(2, n):
-        if n % x == 0:
-            print(n, 'equals', x, '*', n//x)
-            break
-    else:
-        # loop fell through without finding a factor
-        print(n, 'is a prime number')
-```
-
-The *pass* statement does nothing. It can be used when a statement is required syntactically but the program requires no action. **Remember:** There are no semicolons ";" in python. 
-```Python
-while True:
-    pass  # Busy-wait for keyboard interrupt (Ctrl+C)
-
-class MyEmptyClass:
-    pass
-    
-def initlog(*args):
-    pass   # Remember to implement this!
-```
-
-___
-
-Defning functions:
-```Python
->>> def fib2(n):  # return Fibonacci series up to n
-...     """Return a list containing the Fibonacci series up to n."""
-...     result = []
-...     a, b = 0, 1
-...     while a < n:
-...         result.append(a) # result = result + [a], but more efficient
-...         a, b = b, a+b
-...     return result
-...
->>> k=fib2              # save function in variable
->>> f100 = fib2(100)  # save function call
->>> f100
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
->>> # return without an expression argument returns None. Falling off the end of a function also returns None.
-```
-
-Default parameters:
-```Python
-def ask_ok(prompt, retries=4, reminder='Please try again!'):
-    while True:
-        ok = input(prompt)
-        if ok in ('y', 'ye', 'yes'):
-            return True
-        if ok in ('n', 'no', 'nop', 'nope'): # This tests whether or not a sequence contains a certain value.
-            return False
-        retries = retries - 1
-        if retries < 0:
-            raise ValueError('invalid user response')
-        print(reminder)
-ask_ok('Do you really want to quit?')
-ask_ok('OK to overwrite the file?', 2)
-ask_ok('OK to overwrite the file?', 2, 'Come on, only yes or no!')
-
-# The default values are evaluated at the point of function definition in the defining scope, so that
-i = 5
-
-def f(arg=i):
-    print(arg)
-
-i = 6
-f() # returns 5
-
-def f(a, L=[]):
-    L.append(a)
-    return L
-
-print(f(1)) # [1]
-print(f(2)) # [1, 2]
-print(f(3)) # [1, 2, 3]
-
-# Don't share the default value
-def f(a, L=None):
-    if L is None:
-        L = []
-    L.append(a)
-    return L
-    
-print(f(1)) # [1]
-print(f(2)) # [2]
-print(f(3)) # [3]
-```
-
-Keyword argumnts:
-```Python
-# def parrot(voltage, state='a stiff', action='voom', type='Norwegian Blue')
-
-parrot(1000)                                          # 1 positional argument
-parrot(voltage=1000)                                  # 1 keyword argument
-parrot(voltage=1000000, action='VOOOOOM')             # 2 keyword arguments
-parrot(action='VOOOOOM', voltage=1000000)             # 2 keyword arguments
-parrot('a million', 'bereft of life', 'jump')         # 3 positional arguments
-parrot('a thousand', state='pushing up the daisies')  # 1 positional, 1 keyword
-
-# Invalid calls:
-parrot()                     # required argument missing
-parrot(voltage=5.0, 'dead')  # non-keyword argument after a keyword argument
-parrot(110, voltage=220)     # duplicate value for the same argument
-parrot(actor='John Cleese')  # unknown keyword argument
-
-# **name contains dictionary with keywords
-# *name contains tuple with values
-# *name must occur before **name
-def cheeseshop(kind, *arguments, **keywords):
-    print("-- Do you have any", kind, "?")
-    print("-- I'm sorry, we're all out of", kind)
-    for arg in arguments:
-        print(arg)
-    print("-" * 40)
-    for kw in keywords:
-        print(kw, ":", keywords[kw])
-        
-# possible call
-cheeseshop("Limburger", "It's very runny, sir.",
-           "It's really very, VERY runny, sir.",
-           shopkeeper="Michael Palin",
-           client="John Cleese",
-           sketch="Cheese Shop Sketch")
-```
-
-Arbitrary Argument Lists:
-
-```Python
-# Arbitrary number of arguments. These arguments will be wrapped up in a tuple (see Tuples and Sequences).
-# Before the variable number of arguments, zero or more normal arguments may occur.
-def write_multiple_items(file, separator, *args):
-    file.write(separator.join(args))
-
-# Any formal parameters which occur after the *args parameter are â€˜keyword-onlyâ€™ arguments, meaning that they can only 
-# be used as keywords rather than positional arguments.
-def concat(*args, sep="/"):
-    return sep.join(args)
-```
-
-Unpacking argument list:
-
-```Python
->>> list(range(3, 6))            # normal call with separate arguments
-[3, 4, 5]
->>> args = [3, 6]
->>> list(range(*args))            # call with arguments unpacked from a list
-[3, 4, 5]
-```
-Lambda expressions:
-```Python
-# As return
->>> def make_incrementor(n):
-...     return lambda x: x + n
-...
->>> f = make_incrementor(42)
->>> f(0)
-42
->>> f(1)
-43
-
-# pass a function as an argument
-
->>> pairs = [(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four')]
->>> pairs.sort(key=lambda pair: pair[1])
->>> pairs
-[(4, 'four'), (1, 'one'), (3, 'three'), (2, 'two')]
-```
-Data structures:
-
-```Python
-list = []
-list.append(1)
-list.extend(list)
-list.insert(1,'newel')
-list.remove(1)
-list.pop()
-list.clear()
-list.index('newe1')
-list.count('neww1')
-list.sort()
-list.reverse()
-list.copy()
-
-Smart one-liners
-#no loop needed
-squares = list(map(lambda x: x**2, range(10))) # option 1
-squares = [x**2 for x in range(10)] # option 2
-
-
->>> combs = []
->>> for x in [1,2,3]:
-...     for y in [3,1,4]:
-...         if x != y:
-...             combs.append((x, y))
-
-# One-liner for nested loop
-combs = [(x,y) for x in [1,2,3] for y in [3,1,4] if x != y]
-# [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
-
-[(x, x**2) for x in range(6)] # list of tuples
-
-# flatten a list
->>> vec = [[1,2,3], [4,5,6], [7,8,9]]
->>> [num for elem in vec for num in elem]
-# [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
-# Create matrix
-matrix = [
-    [1, 2, 3, 4],
-    [5, 6, 7, 8],
-    [9, 10, 11, 12],
-]
-
-# transpose rows and columns
->>> [[row[i] for row in matrix] for i in range(4)]
-[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
-
-# equivalent to
->>> transposed = []
->>> for i in range(4):
-...     transposed.append([row[i] for row in matrix])
-
-# best way to get this job done
->>> list(zip(*matrix))
-[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]
+- Nicht mehr als 500 Bilder pro Stadt
+- Dataset mit 7000 Bilden (incl. Berlin) erzeugt 'de_top14'
+- Feature Distribution:
 
 ```
-
-Delete elements given their indices:
-
-```Python
->>> a = [-1, 1, 66.25, 333, 333, 1234.5]
->>> del a[0]
->>> a
-[1, 66.25, 333, 333, 1234.5]
->>> del a[2:4]
->>> a
-[1, 66.25, 1234.5]
->>> del a[:]
->>> a
-[]
-
-# delete a variable
-del a
+"building": 14.39
+"road": 11.11
+"unlabelled": 15.29
+"water": 2.24
+"residential": 32.44
+"wood": 24.53
 ```
 
-Singleton tuple:
+# Neues Dataset in Planung- Europa top 20 ex DE
+1. Istanbul 8933 sq km y			*warning: 50% < unusable sea water*
+2. Moskau 8846 sq km y
+3. London 2286 sq km y
+4. St. Petersburg 4212 sq km y
+5. Madrid 	2749 sq km y
+6. Kiew 	2340 sq km y
+7. Rom     	1032 sq km y
+8. Paris    1070 sq km y            *could not load bigger bbox 'too many nodes error from hotosm'*
+9. Minsk    1464 sq km y
+10. Wien    2079 sq km y
+11. Bukarest 	1592 sq km y
+12. Budapest   	1423 sq km y
+13. Warschau    1445 sq km y
+14. Barcelona   1350 sq km y
+15. Charkiv     3240 sq km y
+16. Mailand     2202 sq km y
+17. Prag  	    1547 sq km y
+18. Nischni Nowgorod 1092 sq km y
+19. Sofia    	968 sq km y
+20. Belgrad  	3579 sq km y
+21. Kasan 	    1743 sq km y
+22. Samara	    956 sq km y
+23. Rostow am Don 	1309 sq km y
+24. Birmingham  1588 sq km y
+25. Ufa         888 sq km y
 
-```Python
->>> empty = ()
->>> singleton = ('hello') # does not work len(lol) = 5
->>> singleton = 'hello',    # <-- note trailing comma
->>> len(empty)
-0
->>> len(singleton)
-1
->>> singleton
-('hello',)
-```
+- Wichtig: Unterschiedliche viele Bilder von den Städten laden,
+sodass Fläche optimal ausgenutzt wird
 
-Tuple packing:
+- *Problem:* Manche Städte haben sehr wenige gelabelte Gebäude (oft Viertel mit nur residential area ohne Gebäude)
+- *Idee:* Bilde für jede Stadt Quotient aus Gebäude(Anzahl)/Qudratkilometer und lasse diesen Wert in die Wahl der zu ladenden
+Gebäude für die Städte miteinfließen. Schließe ggf. zu schlechte Städte direkt aus
 
-```Python
-t = 12345, 54321, 'hello!'
-x, y, z = t     # 3 variables = tuple of 3 elements
-```
+- *Big Todo*: Rolle keine zufälligen Kartenausschnitte mehr sondern zerhacke das Bild von links nach rechts und oben nach unten.
+Dies könnte lange Wartezeiten beim Laden verursachen da oft große Gebiete mit unlabelt Data da sind. Schwierig ist die Implementierung
+da die BBox des Bildes erst aus der Center-Coordinate errechnet werden muss und von vornherein nicht klar ist "wie weit" man nach rechts
+bzw. nach unten gehen muss damit man das letzte Bild gerade nicht schneidet aber trotzdem nicht zuweit weg geht. Generische Lösung kompliziert
+wegen Erdkrümmung.
 
-Sets:
-```Python
+*Außerdem auffällig:*
+- Mehrspurige Autobahnen sind oft zu dünn
+- Schräge Aufnahme von Gebäuden macht Labelling unpräzise
+- Meersegmente problematisch, da sie ungelabellet sind (Wird vermutlich Wasserklassifikation stark schwächen wenn zuviel davon da ist)
+- Manche Gebäude sind einfach blau angemalt (Google Feature? Geheimgebäude?)
 
-```
+| Stadt            | qm   | Gebäude    | Gebäude/qm   | Anzahl Bilder|
+|------------------|------|------------|--------------|------------------:|
+| Istanbul         | 8933 |   247320   |27.686|				1200
+| Moskau           | 8846 |   472169   |53.376|				1800
+| London           | 2286 |   400430   |175.16|             1000        
+| St. Petersburg   | 4212 |   194267   |46.122|             1400
+| Madrid           | 2749 |   181060   |65.863|             1000
+| Kiew             | 2340 |   100724   |43.044|             700
+| Rom              | 1032 |   156758   |151.89|              450
+| Paris            | 1070 |   727437   |679.84|             1000
+| Minsk            | 1464 |   113943   |77.82|               400
+| Wien             | 2079 |   369930   |177.93|             800
+| Bukarest         | 1592 |   89771    |56.388|              400
+| Budapest         | 1423 |   205994   |144.76|              500
+| Warschau         | 1445 |   238325   |164.93|              500
+| Barcelona        | 1350 |   60619    |44.90|               250
+| Charkiv          | 3240 |   126490   |37.871|             700
+| Mailand          | 2202 |   224641   |102.01|             700
+| Prag             | 1547 |   318561   |205.92|              500
+| Nischni Nowgorod | 1092 |    85291   |78.105|              400
+| Sofia            | 968  |    96911   |100.11|              380
+| Belgrad          | 3579 |   205518   |57.423|             500
+| Kasan            | 1743 |    71304   |40.908|              300
+| Samara           | 956  |    35416   |37.046|              300
+| Rostow am Don    | 1309 |   125197   |95.643|              400
+| Birmingham       | 1588 |   600898   |378.39|             700
+| Ufa              | 888  |    24986   |28.137|              200
 
-Dictionaries:
-```Python
-d1 = {'k': 123, 'loool':88}
-d1['abc'] = 123
-d1 #
-del d1['k']
+Gesamt: 15580
 
-list(d1.keys())   # ['loool', 'abc']
-sorted(d1.keys()) # ['abc', 'loool']
+Ermittlung günstiger Anzahl der Bilder pro Region (Grobe Abschätzungshilfe):
+Für Städte mit mehr als 30 Gebäuden pro qm:
 
-# Create dict
-dict([('sape', 4139), ('guido', 4127), ('jack', 4098)]) # with dict() constructor
+(*qm_nutzbar* / 0.5 qm ) * 0.3 
 
-{x: x**2 for x in (2, 4, 6)}  # with dict comprehensions
+Für andere Städte :
 
-{x: x**2 for x in (2, 4, 6)}  # as keyword argument
+(*qm_nutzbar* / 0.5 qm ) * 0.2
 
-# Looping/Iterating through dict
+## Dataset Cleaning
 
-for k, v in d1.items():
-    print('key ',k,' val ',v)
-# key loool val 88
-# key abc val 123
+Images which are to similiar to each other shall be removed (that is, from a given image pair *(im_1, im_2)*
+with *dist(im_1,im_2)*<*Threshold*, *im_2* will be removed from the dataset).
 
-# looping through a sequence with index and val
-for i, v in enumerate(['tic', 'tac', 'toe']):
-    print(i, v)
-# 0 tic
-# 1 tac
-# 2 toe
+With a **threshold of 0.0045**, this would affect the dataset as it follows:
 
-# reversed range
-for i in reversed(range(1, 10, 2)):
-    print(i)
+- **de_top14**: Reduced from 7000 to 6562 **~6.26% images lost**
+- **de_top25_exde**: Reduced from 16479 to 14601 **~11.4% images lost** 
+- **world_tiny2k**: Reduced from 1999 to 1840 **~7.95% images lost**
 
-# sorted returns a new sorted list (source unaltered)
-basket = ['apple', 'orange', 'apple', 'pear', 'orange', 'banana']
-for f in sorted(set(basket)):
-    print(f)
-    
-# apple (only once 'cause set)
-# banana
-# orange (only once 'cause set)
-# pear
+# Feature Distrib on reduced Datasets
 
-# Change a list while looping over it? 
-# No, it is often simpler and safer to create a new list instead
+![de_top14](./plots/de_top14_feature_distrib.png)
+![eu_top25_exde](./plots/eu_top25_exde_feature_distrib.png)
+![world_tiny2k](./plots/world_tiny2k_feature_distrib.png)
 
-import math
-raw_data = [56.2, float('NaN'), 51.7, 55.3, 52.5, float('NaN'), 47.8]
-filtered_data = []
-for value in raw_data:
-    if not math.isnan(value):
-        filtered_data.append(value)
-        
-filtered_data
-[56.2, 51.7, 55.3, 52.5, 47.8]
 
-# The Boolean operators and and or are so-called short-circuit operators:
-# arguments are evaluated from left to right, evaluation stops as soon as the outcome is determined.
-# if A and C are true but B is false, A and B and C does not evaluate the expression C.
-# the return value of a short-circuit operator is the last evaluated argument (if no booleans are used)
-```
+## Dataset Splitting 
 
-Comparing sequences:
-```Python
-# Sequence objects may be compared to other objects with the same sequence type. 
-# The comparison uses lexicographical ordering
-(1, 2, 3)              < (1, 2, 4) # True, two tuples
-[1, 2, 3]              < [1, 2, 4] # True, two lists
-'ABC' < 'C' < 'Pascal' < 'Python' # True, evaluation from left to right
-(1, 2, 3, 4)           < (1, 2, 4) # true, length may differ
-(1, 2)                 < (1, 2, -1) # true
-(1, 2, 3, 4)           < (1, 2, 3) # false
-(1, 2, 3)             == (1.0, 2.0, 3.0) # true, mixed numeric types are compared according to their numeric value
-(1, 2, ('aa', 'ab'))   < (1, 2, ('abc', 'a'), 4) # true, stops at 'aa' < 'abc'
-
-# Note that comparing objects of different types with < or > is legal provided that the objects have appropriate comparison
-# methods. (for numbers it is their numerical value for instance)
-```
-
-___
-### Modules
-[Docs](https://docs.python.org/3/tutorial/modules.html)
-
-Import a module:
-```Python
-
-# this imports the module in file modulfib.py
-import modulfib as mf
-
-# call a modules function
-mf.fib(100)
-
-# save a modules function locally
-fib = mf.fib
-
-# return the modules name
-mf.__name__
-```
-
-Use a module as a script:
-```Python
-# this is module fibo.py
-
-# code...
-
-# at the end of the module
-if __name__ == "__main__":
-    import sys
-    fib(int(sys.argv[1]))
-    
-# now you can run
-# python fibo.py <args> to run this code 
-# 'cause __name__ is set to __main__
-```
-Python's module search path:
-+ The directory containing the input script (or the current directory when no file is specified).
-+ PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).
-+ The installation-dependent default.
-
-Python saves modules compiled modules in the *__pycache__* directory under the name *module.version.pyc*
-Python code is compiles platform-independent (-> Java).
-
-Standard modules:
-
-```Python
-# append a folder to PythonPath
-import sys
-sys.path.append('/ufs/guido/lib/python')
-
-# dir() function
-import fibo
-dir(fibo)
-# ['__name__', 'fib', 'fib2']
-
-# all names in sys
-dir(sys)
-
-# all names defined currently
-dir()
-
-# dir() does not list the names of built-in functions and variables.
-# getting those by using...
-import builtins
-dir(builtins)
+The training and validation sets are used during training.
 
 ```
-
-[Packages doc](https://docs.python.org/3/tutorial/modules.html#packages)
-- Packages are folders containg modules
-- can be imported using ```PackageName.ModulName ```
-
-```Python
-# this makes the method echofilter from module echo directly available
-from sound.effects.echo import echofilter
-```
-- when using syntax like import item.subitem.subsubitem, each item except for the last must be a package
-- the last item can be a module or a package but canâ€™t be a class or function or variable defined in the previous item.
-
-If a packageâ€™s __init__.py code defines a list named __all__, it is taken to be the list of module names that should be imported when from package import * is encountered. It is up to the package author to keep this list up-to-date when a new version of the package is released. Package authors may also decide not to support it, if they donâ€™t see a use for importing * from their package. For example, the file sound/effects/__init__.py could contain the following code:
-
-```Python
-__all__ = ["echo", "surround", "reverse"]
-```
-Although certain modules are designed to export only names that follow certain patterns when you use import \*, it is still considered bad practice in production code.
-
-___
-### Input and Output
-
-Formatting Output:
-```Python
-# str() and repr() convert any object into a string
-# str()  -> produce human-readable text
-# repr() -> meant to generate representations which can be read by the interpreter
->>> s = 'Hello, world.'
->>> str(s)
-'Hello, world.'
->>> repr(s)
-"'Hello, world.'"
->>> str(1/7)
-'0.14285714285714285'
->>> x = 10 * 3.25
->>> y = 200 * 200
->>> s = 'The value of x is ' + repr(x) + ', and y is ' + repr(y) + '...'
->>> print(s)
-The value of x is 32.5, and y is 40000...
->>> # The repr() of a string adds string quotes and backslashes:
-... hello = 'hello, world\n'
->>> hellos = repr(hello)
->>> print(hellos)
-'hello, world\n'
->>> # The argument to repr() may be any Python object:
-... repr((x, y, ('spam', 'eggs')))
-"(32.5, 40000, ('spam', 'eggs'))"
+for each epoch
+    for each training data instance
+        propagate error through the network
+        adjust the weights
+        calculate the accuracy over training data
+    for each validation data instance
+        calculate the accuracy over the validation data
+    if the threshold validation accuracy is met
+        exit training
+    else
+        continue training
 ```
 
-Example (Writing Table of Squares and Cubes):
-```Python
->>> for x in range(1, 11):
-...     print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')
-...     # Note use of 'end' on previous line
-...     print(repr(x*x*x).rjust(4))
-...
- 1   1    1
- 2   4    8
- 3   9   27
- 4  16   64
- 5  25  125
- 6  36  216
- 7  49  343
- 8  64  512
- 9  81  729
-10 100 1000
+Once you're finished training, then you run against your testing set and verify that the accuracy is sufficient.
 
-# The following generates the same output
->>> for x in range(1, 11):
-...     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
+**Training Set**: this data set is used to adjust the weights on the neural network.
 
-str.rjust() # right-justifies
-str.ljust() # left-justifies
-str.center() # centers
-```
+**Validation Set**: this data set is used to minimize overfitting.
+ You're not adjusting the weights of the network with this data set,
+ you're just verifying that any increase in accuracy over the training data set
+ actually yields an increase in accuracy over a data set that has not been shown
+ to the network before, or at least the network hasn't trained on it (i.e. validation data set).
+ If the accuracy over the training data set increases, but the accuracy over then validation
+ data set stays the same or decreases, then you're overfitting your neural network and you should stop training.
 
-Usage of *format()*:
-```Python
-print('We are the {} who say "{}!"'.format('knights', 'Ni'))
-# We are the knights who say "Ni!"
+**Testing Set**: this data set is used only for testing the final solution in order to confirm
+ the actual predictive power of the network.
+ 
+# 5 Fold Validation
 
-# Brackets with values (format fields)
-print('{0} and {1}'.format('spam', 'eggs'))
-# spam and eggs
-print('{1} and {0}'.format('spam', 'eggs'))
-# eggs and spam
+Different 5-Fold splits are checked and the most balanced ones chosen for 5-Fold-Cross-Validation
 
-# with keyword arguments
-print('This {food} is {adjective}.'.format(food='spam', adjective='absolutely horrible'))
-# This spam is absolutely horrible.
+### de_top15
 
-# combining both
-print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred',
-                                                       other='Georg'))
-# The story of Bill, Manfred, and Georg.
+0: ['koel', 'dres', 'esse'] 
+1: ['duis', 'stut', 'hann'] 
+2: ['leip', 'muni', 'dort'] 
+3: ['brem', 'berl', 'fran'] 
+4: ['hamb', 'nuer', 'dues']
 
-# '!a' (apply ascii()), '!s' (apply str()) and '!r' (apply repr()) can be used to convert the value before it is formatted
-contents = 'eels'
-print('My hovercraft is full of {}.'.format(contents))
-# My hovercraft is full of eels.
-print('My hovercraft is full of {!r}.'.format(contents))
-# My hovercraft is full of 'eels'.
+- [1408, 1401, 1414, 1405, 1404]
+- Best fold splitting with std 4
 
-# Use : to add additional format codes
-import math
-print('The value of PI is approximately {0:.3f}.'.format(math.pi))
-# The value of PI is approximately 3.142.
+### Feature distrib de_top15
 
-# Use integer after the ':' for minimum character width
-table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
-for name, phone in table.items():
-    print('{0:10} ==> {1:10d}'.format(name, phone))
-# Jack       ==>       4098
-# Dcab       ==>       7678
-# Sjoerd     ==>       4127
+e1: {'wood': 0.2983977884311869,
+ 'road': 0.10457110755997469, 
+ 'residential': 0.3067120837279039,
+ 'unlabelled': 0.1469938506155305,
+ 'building': 0.11831597024936884,
+ 'water': 0.02500919941603535}
+ 
+e2:{'wood': 0.23019293956697626,
+ 'road': 0.1158905563486399,
+ 'residential': 0.3170478566896662,
+ 'unlabelled': 0.1600222242049327,
+ 'building': 0.15692133793322227,
+ 'water': 0.019925085256562777}
 
 
-# Referencing by name instead of position
-table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 8637678}
-print('Jack: {0[Jack]:d}; Sjoerd: {0[Sjoerd]:d}; '
-      'Dcab: {0[Dcab]:d}'.format(table))
-# Jack: 4098; Sjoerd: 4127; Dcab: 8637678
 
-# Old-school formatting
-print('The value of PI is approximately %5.3f.' % math.pi)
-# The value of PI is approximately 3.142.
-```
-___
-### Files
+e3:{'wood': 0.29838557677196365,
+ 'road': 0.10811336240766953,
+ 'residential': 0.303818028052805,
+ 'unlabelled': 0.14888550997956929,
+ 'building': 0.11943965896589669,
+ 'water': 0.02135786382209649}
 
-Reading and Writing Files:
-```Python
-# open(filename, mode) mode='r', 'w' or 'r+' ('r' if omitted)
-# append 'b' for binary mode (default is text mode)
-f = open('workfile', 'w')
 
-# Good practice: using with (ensures closing, even if exception occurs)
-with open('workfile') as f:
-     read_data = f.read()
-f.closed
-# True
 
-# Without 'with' one must close the file explicitly
-f.close()
-```
+e4:{'wood': 0.20174671213918546,
+ 'road': 0.1149980525899564,
+ 'residential': 0.35344977856860416,
+ 'unlabelled': 0.1459538335310399,
+ 'building': 0.16415052985369719,
+ 'water': 0.019701093317516807}
 
-Methods of File Objects:
-```Python
-# Read entire file
-f.read()
 
-# read until newline \n
-f.readline()
+e5:{'wood': 0.1725235022950302,
+ 'road': 0.11293436609686605,
+ 'residential': 0.3414093720322888,
+ 'unlabelled': 0.16904109488762292,
+ 'building': 0.16781921098448874,
+ 'water': 0.036272453703703696}
 
-# looping over lines of a file
-for line in f:
-    print(line, end='')
-# This is the first line of the file.
-# Second line of the file
+ 
+### eu_top25
 
-# read lines of a file into a list
-list(f)
-f.readlines()
+0: ['berl', 'lond', 'mail', 'buka', 'kiew'] 
+1: ['mosk', 'sama', 'rom_', 'sofi', 'kasa'] 
+2: ['prag', 'wien', 'madr', 'muni', 'char'] 
+3: ['pari', 'belg', 'barc', 'hamb', 'ista'] 
+4: ['buda', 'nisc', 'wars', 'mins', 'st_p']
 
-# Writing
-# f.write(string)
-f.write('This is a test\n')
-# 15  (Number of chars written)
+- [3053, 2954, 3036, 2917, 2941]
+- fold splitting with std 54
 
-# Other types must be converted first (either to string or to a bytes object in bin mode)
-value = ('the answer', 42)
-s = str(value)  # convert the tuple to string
-f.write(s)
+### Feature distrib eu_top25
 
-# get the current position of the object (returns number of bytes from the beginning when in byte mode)
-f.tell()
+e1: {'residential': 0.303264278305492,
+ 'wood': 0.18885067420024038,
+ 'building': 0.1835410725333919,
+ 'unlabelled': 0.16669832314299232,
+ 'road': 0.12346273428685832,
+ 'water': 0.03418291753102592}
+ 
+e2:{'residential': 0.28652251937109763,
+ 'wood': 0.1711001363499586,
+ 'building': 0.17061893665839142,
+ 'unlabelled': 0.2008524637027011,
+ 'road': 0.1376497959452343,
+ 'water': 0.033256147972617174}
 
-# change the file object's position with f.seek(offset, from_what)
-# from_what=0 (beginning of file, default)
-# from_what=1 (current file position)
-# from_what=2 (end of file)
+e3:{'residential': 0.1989877680793447,
+ 'wood': 0.31977545747328323,
+ 'building': 0.16068834632557463,
+ 'unlabelled': 0.1750524493119603,
+ 'road': 0.12863185203484148,
+ 'water': 0.016864126774996345}
 
-f = open('workfile', 'rb+')
-f.write(b'0123456789abcdef')
-# 16
-f.seek(5)      # Go to the 6th byte in the file
-# 5
-f.read(1)
-# b'5'
-f.seek(-3, 2)  # Go to the 3rd byte before the end
-# 13
-f.read(1)
-# b'd'
+e4:{'residential': 0.2110840827714924,
+ 'wood': 0.25849840589646894,
+ 'building': 0.19598418561688194,
+ 'unlabelled': 0.18470212451910234,
+ 'road': 0.11392435912086225,
+ 'water': 0.03580684207519138}
 
-# In text files (those opened without a b in the mode string), only seeks relative to the beginning of the file are allowed
-# Other values produce undefined behaviour
-```
+e5:{'residential': 0.2490577921341947,
+ 'wood': 0.19677026143790854,
+ 'building': 0.16059237504250223,
+ 'unlabelled': 0.1990937436246172,
+ 'road': 0.14519783803694875,
+ 'water': 0.049287989723827856}
 
-Save structured data with ```json```:
-[doc stelle json](https://docs.python.org/3/tutorial/inputoutput.html#saving-structured-data-with-json)
-```Python
-# create json representation from python object
-import json
-json.dumps([1, 'simple', 'list'])
-# '[1, "simple", "list"]'
+# Kaggle dataset
 
-# dump() serializes into a text file,
-json.dump(x, f) # x = object, f = opened textfile for writing
+- train: 480, test: 60, val: 60
+- distrib = {0: 0.615830, 1: 0.038690, 2: 0.004052, 3: 0.008817,
+ 			   4: 0.029346, 5: 0.108000, 6: 0.189018, 7: 0.005066,
+ 			   8: 0.001049, 9: 1.176852e-05, 10: 0.000120}
+* median frequency balancing:
+* 0: 0.014317
+* 1: 0.227888
+* 3: 2.175962
+* 4: 1.000000
+* 5: 0.300450
+* 6: 0.081639
+* 7: 0.046646
+* 8: 1.740426
+* 9: 8.405148
+* 10: 749.202109
+* 11: 73.475000}
 
-# for decoding
-x = json.load(f) # f = opened textfile for reading
-# This simple serialization technique can handle lists and dictionaries
-# but serializing arbitrary class instances in JSON requires a bit of extra effort
-```
-See (pickle doc)[https://docs.python.org/3/library/pickle.html#module-pickle] for information considering the transformation of arbitrary python objects into json representation
+# Vaihingen dataset 
 
-___
-### Exception handling
+- train: 264, test: 15, val: 15
 
-[docs exception](https://docs.python.org/3/tutorial/errors.html)
 
-Exception throwing:
-```Python
-for arg in sys.argv[1:]:
-    try:
-        f = open(arg, 'r')
-    except OSError:
-        print('cannot open', arg)
-    else:       # if the try clause does not raise an exception
-        print(arg, 'has', len(f.readlines()), 'lines')
-        f.close()
-```
+* vaihingen weights
+* {0: 0.27496586356764924, 1: 0.2600085789871505, 2: 0.20469702380952381, 3: 0.23992597316704442, 4: 0.012058994708994705, 5: 0.008343565759637187}
 
-User-defined Exceptions:
-```Python
-class Error(Exception):
-    """Base class for exceptions in this module."""
-    pass
+* median frequency balancing:
+* 0: 0.808506
+* 1: 0.855016
+* 2: 1.086051
+* 3: 0.926584
+* 4: 18.435326
+* 5: 26.644663
 
-class InputError(Error):
-    """Exception raised for errors in the input.
 
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
-    """
 
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
 
-class TransitionError(Error):
-    """Raised when an operation attempts a state transition that's not
-    allowed.
-
-    Attributes:
-        previous -- state at beginning of transition
-        next -- attempted new state
-        message -- explanation of why the specific transition is not allowed
-    """
-
-    def __init__(self, previous, next, message):
-        self.previous = previous
-        self.next = next
-        self.message = message
-```
-
-Clean-up actions:
-```Python
-def divide(x, y):
-     try:
-         result = x / y
-     except ZeroDivisionError:
-         print "division by zero!"
-     else:
-         print "result is", result
-     finally:
-         print "executing finally clause"
-```
-
-___
-### Classes
-
-Defining classes
-```Python
-class MyClass:
-    """A simple example class"""
-    i = 12345
-
-    def f(self):
-        return 'hello world'
-        
-    def __init__(self):     # invoked when creating an object (Constructor)
-        self.data = []
-
-MyClass.i       # can be accessed this way
-MyClass.f       # "        "
-x = MyClass()   # creating an object
-```
-
-Constructor with arguments:
-```Python
-class Complex:
-     def __init__(self, realpart, imagpart):
-         self.r = realpart
-         self.i = imagpart
-
- x = Complex(3.0, -4.5)
- x.r, x.i
-(3.0, -4.5)
-```
-
-**Important:** There is no possibility to create multiple constructors in a class in python, unlike in Java.
-But it is possible to define constructors with all arguments and give them default values.
-
-Instance Objects:
-Instance objects have two kinds of attribute names: **data attributes** and **methods**
-**Data attributes** spring into existence when they are first assigned to. No definition is necesarry!
-Example for class *MyClass*:
-```Python
-x.counter = 1
-while x.counter < 10:
-    x.counter = x.counter * 2
-print x.counter
-del x.counter
-```
-x.f is a valid **method** reference
-MyClass.f is a **function**
-
-Method objects:
-```Python
-xf = x.f  # x.f is a method object which can be stored and used later 
-while True:
-    print xf()
-```
-
-In general, calling a method with a list of n arguments is equivalent to calling the corresponding function with an argument 
-list that is created by inserting the methodâ€™s object before the first argument.
-
-```x.f()``` is exactly equivalent to ```MyClass.f(x)```.
-
-Class and Instance Variables:
-```Python
-class Dog:
-
-    kind = 'canine'         # class variable shared by all instances
-
-    def __init__(self, name):
-        self.name = name    # instance variable unique to each instance
-
-d = Dog('Fido')
-e = Dog('Buddy')
-d.kind                  # shared by all dogs
-# 'canine'
-e.kind                  # shared by all dogs
-# 'canine'
-d.name                  # unique to d
-# 'Fido'
-e.name                  # unique to e
-# 'Buddy'
-```
-
-Lists, Dicts etc should be used as instance variable, not as class variable:
-```Pyton
-class Dog:
-
-    def __init__(self, name):
-        self.name = name
-        self.tricks = []    # creates a new empty list for each dog
-
-    def add_trick(self, trick):
-        self.tricks.append(trick)
-
-d = Dog('Fido')
-e = Dog('Buddy')
-d.add_trick('roll over')
-e.add_trick('play dead')
-d.tricks
-# ['roll over']
-e.tricks
-# ['play dead']
-```
-
-[Random remarks 9.4](https://docs.python.org/2/tutorial/classes.html#random-remarks)
-
-# Pycharm tricks
-
-+ Where to change key bindings:
-```
-File | Settings | Keymap
-```
-
-+ *Autoformat *in Eclipse (CTRL + Shift + F) the action is called *Reformat code* in PyCharm. Located in the Code menu, somewhere in the middle Default Keybining for *Reformatting* is ```CTRL + ALT + L```.
-
-+ Where to activate documentation-popup on mouse-hover
-```
-File | Settings | Editor | Show quick doc on mouse move
-```
 
 

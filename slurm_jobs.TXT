@@ -1,0 +1,671 @@
+# job 1
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data 
+- lr=e-3
+- outdir=job1
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151975
+
+mIoU: 0.516404926776886
+acc:  0.8060059259259259
+mean IU:  0.5164049594247535
+    class Impervious_surfaces accuracy = 0.842939, IoU =  0.700758
+    class Buildings    accuracy = 0.845847, IoU =  0.794939
+    class Low vegetation accuracy = 0.791933, IoU =  0.549908
+    class Tree         accuracy = 0.745190, IoU =  0.667951
+    class Car          accuracy = 0.707283, IoU =  0.384874
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 2
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-4
+- outdir=job2
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151976
+
+mIoU: 0.4531048834323883
+acc:  0.7409192592592593
+mean IU:  0.4531049013155147
+    class Impervious_surfaces accuracy = 0.775660, IoU =  0.609242
+    class Buildings    accuracy = 0.875253, IoU =  0.703657
+    class Low vegetation accuracy = 0.599160, IoU =  0.495182
+    class Tree         accuracy = 0.814224, IoU =  0.606581
+    class Car          accuracy = 0.361333, IoU =  0.303967
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 3
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-5
+- outdir=job3
+- vaihingen weights
+- 100k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151977
+
+52271
+
+mIoU: 0.3843512237071991
+acc:  0.7008979629629629
+mean IU:  0.38435120046487414
+    class Impervious_surfaces accuracy = 0.861009, IoU =  0.557600
+    class Buildings    accuracy = 0.652693, IoU =  0.631249
+    class Low vegetation accuracy = 0.742637, IoU =  0.358085
+    class Tree         accuracy = 0.654544, IoU =  0.596109
+    class Car          accuracy = 0.487276, IoU =  0.163064
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 4
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-3
+- outdir=job4
+- no weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151978
+
+48202
+
+mIoU: 0.44376394152641296
+acc:  0.7651537037037037
+mean IU:  0.44376393857749874
+    class Impervious_surfaces accuracy = 0.872447, IoU =  0.667592
+    class Buildings    accuracy = 0.746778, IoU =  0.727234
+    class Low vegetation accuracy = 0.800296, IoU =  0.457131
+    class Tree         accuracy = 0.702976, IoU =  0.639049
+    class Car          accuracy = 0.665085, IoU =  0.171578
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 5
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-4
+- outdir=job5
+- no weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151979
+
+48828
+
+mIoU: 0.42546114325523376
+acc:  0.7498812962962963
+mean IU:  0.42546112969226185
+    class Impervious_surfaces accuracy = 0.706719, IoU =  0.618463
+    class Buildings    accuracy = 0.810573, IoU =  0.755473
+    class Low vegetation accuracy = 0.754968, IoU =  0.418643
+    class Tree         accuracy = 0.732783, IoU =  0.614151
+    class Car          accuracy = 0.690563, IoU =  0.146038
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 6
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-5
+- outdir=job6
+- no weights
+- 100k it
+- maxruntime=20h
+- mem=2000
+--patience=6
+- batchjob:151980
+
+48515
+
+mIoU: 0.4115714728832245
+acc:  0.7566814814814815
+mean IU:  0.4115714596317533
+    class Impervious_surfaces accuracy = 0.687526, IoU =  0.630928
+    class Buildings    accuracy = 0.859548, IoU =  0.752936
+    class Low vegetation accuracy = 0.767105, IoU =  0.443706
+    class Tree         accuracy = 0.748925, IoU =  0.632865
+    class Car          accuracy = 0.343625, IoU =  0.008995
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+**Nirgends bessere results als vorher (eher schlechtere)**
+- Problem: Zu hohe Patience
+- Fix: resette alte patience und vesuche patience=3
+- Bemerkung: Ohne weights war durchgehend schlechter, also diesmal neue Experimente mit weights versuchen
+
+
+# job 7
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data 
+- lr=e-3
+- outdir=job7
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=3
+- batchjob:152888
+
+mIoU: 0.49733567237854004
+acc:  0.7856509259259259
+mean IU:  0.4973356818456529
+    class Impervious_surfaces accuracy = 0.863532, IoU =  0.660719
+    class Buildings    accuracy = 0.780416, IoU =  0.744698
+    class Low vegetation accuracy = 0.748785, IoU =  0.535634
+    class Tree         accuracy = 0.764304, IoU =  0.658986
+    class Car          accuracy = 0.585725, IoU =  0.383977
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 8
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-4
+- outdir=job8
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=3
+- batchjob:152889
+
+mIoU: 0.44735464453697205
+acc:  0.7411574074074074
+mean IU:  0.44735468150301344
+    class Impervious_surfaces accuracy = 0.652431, IoU =  0.591739
+    class Buildings    accuracy = 0.886428, IoU =  0.688538
+    class Low vegetation accuracy = 0.831330, IoU =  0.431175
+    class Tree         accuracy = 0.752212, IoU =  0.677544
+    class Car          accuracy = 0.344786, IoU =  0.295132
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 9
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-5
+- outdir=job9
+- vaihingen weights
+- 100k it
+- maxruntime=24h
+- mem=2000
+--patience=3
+- batchjob:152890
+
+26605
+
+mIoU: 0.4565246105194092
+acc:  0.7568448148148148
+mean IU:  0.45652462221167855
+    class Impervious_surfaces accuracy = 0.846036, IoU =  0.611078
+    class Buildings    accuracy = 0.753804, IoU =  0.701844
+    class Low vegetation accuracy = 0.713602, IoU =  0.509703
+    class Tree         accuracy = 0.780639, IoU =  0.651056
+    class Car          accuracy = 0.302579, IoU =  0.265467
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 10
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data 
+- lr=e-3
+- outdir=job10
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=4
+- batchjob:152891
+
+mIoU: 0.5025355815887451
+acc:  0.7883161111111111
+mean IU:  0.5025355655966649
+    class Impervious_surfaces accuracy = 0.856408, IoU =  0.656570
+    class Buildings    accuracy = 0.786758, IoU =  0.754136
+    class Low vegetation accuracy = 0.727275, IoU =  0.542695
+    class Tree         accuracy = 0.788896, IoU =  0.662534
+    class Car          accuracy = 0.697658, IoU =  0.399278
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 11
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-4
+- outdir=job11
+- vaihingen weights
+- 80k it
+- maxruntime=20h
+- mem=2000
+--patience=4
+- batchjob:152892
+
+mIoU: 0.40985140204429626
+acc:  0.7002642592592593
+mean IU:  0.40985135949309653
+    class Impervious_surfaces accuracy = 0.786833, IoU =  0.629043
+    class Buildings    accuracy = 0.663281, IoU =  0.642709
+    class Low vegetation accuracy = 0.871323, IoU =  0.218400
+    class Tree         accuracy = 0.642575, IoU =  0.588780
+    class Car          accuracy = 0.725496, IoU =  0.380177
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+
+# job 12
+- train osm-pretrained icnet (detop15_nores,lr=e-3,weights) on vaihingen data
+- lr=e-5
+- outdir=job12
+- vaihingen weights
+- 100k it
+- maxruntime=24h
+- mem=2000
+--patience=4
+- batchjob:152893
+
+mIoU: 0.4432549476623535
+acc:  0.7599201851851852
+mean IU:  0.4432549615745676
+    class Impervious_surfaces accuracy = 0.701338, IoU =  0.620054
+    class Buildings    accuracy = 0.831601, IoU =  0.751682
+    class Low vegetation accuracy = 0.793807, IoU =  0.430675
+    class Tree         accuracy = 0.746242, IoU =  0.659292
+    class Car          accuracy = 0.510269, IoU =  0.197827
+    class Clutter      accuracy = 0.000000, IoU =  0.000000
+	
+
+# !!! retrain deeplab osm no res mit weights !!!
+- probably used wrong weights in previous test! 
+- lr=e-3
+- 100k it
+- batchjob:154162
+
+# train osm data with residential area
+....
+## job20
+- segnet
+- lr=e-4
+- 24h
+- 120000 it
+- batchjob: 154168
+
+acc:  0.6855102299668089
+mean IU:  0.5475913348590276
+    class Unlabelled   accuracy = 0.616429, IoU =  0.390732
+    class Building     accuracy = 0.791705, IoU =  0.585153
+    class Wood         accuracy = 0.852435, IoU =  0.738427
+    class Water        accuracy = 0.887899, IoU =  0.761944
+    class Road         accuracy = 0.590363, IoU =  0.315589
+    class Residential  accuracy = 0.546423, IoU =  0.493704
+
+
+## job21
+- icnet
+- lr=e-3
+- patience=4
+- reset patience
+- cityscapes
+- 120000 it
+- 24h
+- batchjob: 154169
+
+mIoU: 0.5583255887031555
+acc:  0.7063059546388494
+mean IU:  0.558325593831717
+    class Unlabelled   accuracy = 0.628348, IoU =  0.378221
+    class Building     accuracy = 0.638544, IoU =  0.556980
+    class Wood         accuracy = 0.844625, IoU =  0.750743
+    class Water        accuracy = 0.914268, IoU =  0.800445
+    class Road         accuracy = 0.469087, IoU =  0.308952
+    class Residential  accuracy = 0.728725, IoU =  0.554611
+
+## job22
+- deeplab
+- lr=e-3
+- 120000 it
+- cityscapes
+- batchjob: 154170
+- new batchjob:154185 (old one did not continue afer 6000 steps on golfi, new one on varda)
+
+accuracy[0.627519786]
+
+0_Unlabelled_acc[0.500015199]
+0_Unlabelled_iou[0.363316476]
+1_Building_acc[0.237090483]
+1_Building_iou[0.220528662]
+2_Wood_acc[0.943640709]
+2_Wood_iou[0.753668129]
+3_Water_acc[0.0251919664]
+3_Water_iou[0.0251916759]
+4_Road_acc[0.0314574577]
+4_Road_iou[0.0309685394]
+5_Residential_acc[0.939420521]
+5_Residential_iou[0.54905051]
+
+miou_1.0[0.323787332]
+
+# NEW RUNS CAUSE OF BAD RESULTS FOR DEEPLABNET
+
+## job23
+- deeplab
+- lr=e-3
+- 120000 it
+- NO WEIGHTS
+- cityscapes
+- batchjob: 156778
+
+accuracy[0.620426178]
+miou_1.0[0.311427325]
+
+0_Unlabelled_acc[0.472431064]
+0_Unlabelled_iou[0.347506493]
+1_Building_acc[0.214415133]
+1_Building_iou[0.198903039]
+2_Wood_acc[0.941737652]
+2_Wood_iou[0.752299964]
+3_Water_acc[0.000121545803]
+3_Water_iou[0.000121545447]
+4_Road_acc[0.0257586837]
+4_Road_iou[0.0254147518]
+5_Residential_acc[0.947081327]
+5_Residential_iou[0.544318259]
+
+
+## job24
+- deeplab
+- lr=e-3
+- 300000 it
+- NO WEIGHTS
+- cityscapes
+- batchjob: 156779
+
+accuracy[0.631772161]
+miou_1.0[0.326194316]
+
+0_Unlabelled_acc[0.54080385]
+0_Unlabelled_iou[0.390381843]
+1_Building_acc[0.236260936]
+1_Building_iou[0.220384523]
+2_Wood_acc[0.937620759]
+2_Wood_iou[0.747159183]
+3_Water_acc[0.00979876146]
+3_Water_iou[0.00979755353]
+4_Road_acc[0.0339075923]
+4_Road_iou[0.0333734229]
+5_Residential_acc[0.940255821]
+5_Residential_iou[0.556069493]
+
+
+
+## job25
+- deeplab
+- lr=e-3
+- 300000 it
+- cityscapes
+- batchjob: 157523
+
+accuracy[0.634125173]
+miou_1.0[0.331803083]
+
+0_Unlabelled_acc[0.547105551]
+0_Unlabelled_iou[0.389939249]
+1_Building_acc[0.226235315]
+1_Building_iou[0.212611571]
+2_Wood_acc[0.940446138]
+2_Wood_iou[0.760257781]
+3_Water_acc[0.0430644825]
+3_Water_iou[0.0430642441]
+4_Road_acc[0.0291981734]
+4_Road_iou[0.0287802387]
+5_Residential_acc[0.94275409]
+5_Residential_iou[0.556165397]
+
+
+# check generalisation (eval on eu data with de trained models)
+
+# train on eu dataset with better approach (with res area or without res area)
+
+- start time 28.09.2018 18:00
+
+## job30
+- segnet
+- lr=e-4
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 350000 its
+- batchjob: 163034
+
+checkpoint: 240784
+
+acc:  0.5354866797166293
+mean IU:  0.3872080206339311
+    class Unlabelled   accuracy = 0.308026, IoU =  0.273804
+    class Building     accuracy = 0.837355, IoU =  0.417640
+    class Wood         accuracy = 0.709119, IoU =  0.610094
+    class Water        accuracy = 0.632160, IoU =  0.400866
+    class Road         accuracy = 0.561330, IoU =  0.233636
+	
+EVAL auf DE
+
+acc:  0.6361572783309626
+mean IU:  0.45542776943604346
+    class Unlabelled   accuracy = 0.462394, IoU =  0.416086
+    class Building     accuracy = 0.814327, IoU =  0.489290
+    class Wood         accuracy = 0.865298, IoU =  0.674746
+    class Water        accuracy = 0.773768, IoU =  0.426681
+    class Road         accuracy = 0.563310, IoU =  0.270336
+
+
+## job31
+- icnet
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 350000 its
+- save pred every 800
+- patience 3
+- batchjob: 163035
+
+checkpoint: 11200  (STOPPED EARLY) probably too low patience
+TODO check model (2 Steps earlier)
+
+mIoU: 0.5529887676239014
+acc:  0.6673084358687547
+mean IU:  0.5529887374508375
+    class Unlabelled   accuracy = 0.725260, IoU =  0.466807
+    class Building     accuracy = 0.564061, IoU =  0.501615
+    class Wood         accuracy = 0.868607, IoU =  0.712911
+    class Water        accuracy = 0.858159, IoU =  0.798548
+    class Road         accuracy = 0.398224, IoU =  0.285063
+
+
+EVAL auf DE
+
+mIoU: 0.5657657980918884
+acc:  0.7201741030504188
+mean IU:  0.5657658414374119
+    class Unlabelled   accuracy = 0.756673, IoU =  0.569706
+    class Building     accuracy = 0.611200, IoU =  0.520273
+    class Wood         accuracy = 0.848900, IoU =  0.729343
+    class Water        accuracy = 0.898902, IoU =  0.722669
+    class Road         accuracy = 0.438826, IoU =  0.286838
+
+
+## job32
+- deeplab
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 350000 its
+- batchjob: 163030
+
+checkpoint 350000
+
+accuracy[0.638140261]
+miou_1.0[0.310200036]
+
+0_Unlabelled_acc[0.944477439]
+0_Unlabelled_iou[0.542698205]
+1_Building_acc[0.0567206815]
+1_Building_iou[0.0560319126]
+2_Wood_acc[0.892493784]
+2_Wood_iou[0.760473]
+3_Water_acc[0.181529224]
+3_Water_iou[0.179732323]
+4_Road_acc[0.0121915564]
+4_Road_iou[0.0120647745]
+
+EVAL auf DE 
+accuracy[0.672992349]
+miou_1.0[0.311293602]
+
+0_Unlabelled_acc[0.940553486]
+0_Unlabelled_iou[0.59250015]
+1_Building_acc[0.0400304645]
+1_Building_iou[0.0398149341]
+2_Wood_acc[0.900806189]
+2_Wood_iou[0.750499964]
+3_Water_acc[0.163507745]
+3_Water_iou[0.163200513]
+4_Road_acc[0.0105223097]
+4_Road_iou[0.0104524614]
+
+
+## job33 CANCELLED
+- deeplab
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- NO WEIGHTS
+- 350000 its
+- batchjob: 163036
+
+## job34
+- icnet
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 400000 its
+- save pred every 1000
+- patience 5
+- batchjob: 163293
+
+checkpoint 65000 (TODO: Check model 4 steps ago)
+
+mIoU: 0.5584595799446106
+acc:  0.6752617617449664
+mean IU:  0.5584595656933676
+    class Unlabelled   accuracy = 0.755428, IoU =  0.461863
+    class Building     accuracy = 0.595611, IoU =  0.529235
+    class Wood         accuracy = 0.848532, IoU =  0.724421
+    class Water        accuracy = 0.818899, IoU =  0.768474
+    class Road         accuracy = 0.400194, IoU =  0.308305
+
+EVAL auf DE 
+
+mIoU: 0.5807411670684814
+acc:  0.7273194246878457
+mean IU:  0.5807411458793895
+    class Unlabelled   accuracy = 0.786227, IoU =  0.571385
+    class Building     accuracy = 0.647688, IoU =  0.548314
+    class Wood         accuracy = 0.823491, IoU =  0.728582
+    class Water        accuracy = 0.902607, IoU =  0.737591
+    class Road         accuracy = 0.437669, IoU =  0.317835
+
+
+eventuell noch Segnet und ICNet ohne gewichte probieren
+
+## job 35 quasi wie 33 das fehler hattte wgen dim anzahl 5 vs 6 (BEST EU DEEPLAB)
+- deeplab
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- NO WEIGHTS
+- 350000 its
+-diesmal mit 1.0 1.0 ... als weight
+- batchjob: 163804
+
+accuracy[0.706055462]
+miou_1.0[0.55494833]
+
+0_Unlabelled_acc[0.777895093]
+0_Unlabelled_iou[0.574538231]
+1_Building_acc[0.631199658]
+1_Building_iou[0.47182402]
+2_Wood_acc[0.89744097]
+2_Wood_iou[0.761672616]
+3_Water_acc[0.836684883]
+3_Water_iou[0.778405905]
+4_Road_acc[0.235249981]
+4_Road_iou[0.188300729]
+
+EVAL auf DE
+
+accuracy[0.734015167]
+miou_1.0[0.566464067]
+
+0_Unlabelled_acc[0.817005098]
+0_Unlabelled_iou[0.63069576]
+1_Building_acc[0.597331643]
+1_Building_iou[0.472202778]
+2_Wood_acc[0.915076911]
+2_Wood_iou[0.751586676]
+3_Water_acc[0.835660636]
+3_Water_iou[0.788778961]
+4_Road_acc[0.231835693]
+4_Road_iou[0.189056173]
+
+
+## job36 (BEST EU SEGNET)
+- FIXED MAX RUNTIME TO 5 DAYS
+- segnet
+- lr=e-4
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 350000 its
+- batchjob: 163805
+
+checkpoint: 386208
+
+acc:  0.6600321140939597
+mean IU:  0.5244470282805664
+    class Unlabelled   accuracy = 0.540872, IoU =  0.453211
+    class Building     accuracy = 0.801031, IoU =  0.515519
+    class Wood         accuracy = 0.807395, IoU =  0.688532
+    class Water        accuracy = 0.905774, IoU =  0.669616
+    class Road         accuracy = 0.545275, IoU =  0.295357
+	
+EVAL auf DE Dataset
+
+acc:  0.7257028172909752
+mean IU:  0.5772044377997293
+    class Unlabelled   accuracy = 0.650857, IoU =  0.560009
+    class Building     accuracy = 0.771379, IoU =  0.557811
+    class Wood         accuracy = 0.894173, IoU =  0.733245
+    class Water        accuracy = 0.866082, IoU =  0.716131
+    class Road         accuracy = 0.554055, IoU =  0.318825
+
+
+## job37 (BEST EU ICNET)
+- FIXED MAX RUNTIME TO 5 DAYS
+- icnet
+- lr=e-3
+- eu_top25 no residential area (5 class)
+- using eu_top25 no_res_weights
+- 350000 its
+- save pred every 800
+- patience 5
+- batchjob: 163806
+
+checkpoint: 143200
+mIoU: 0.5606285333633423
+acc:  0.6583601901565995
+mean IU:  0.5606285315924348
+    class Unlabelled   accuracy = 0.786827, IoU =  0.412333
+    class Building     accuracy = 0.593058, IoU =  0.524594
+    class Wood         accuracy = 0.827643, IoU =  0.740345
+    class Water        accuracy = 0.906801, IoU =  0.822219
+    class Road         accuracy = 0.364632, IoU =  0.303651
+	
+EVAL auf DE Dataset
+
+mIoU: 0.5665380358695984
+acc:  0.703866706179864
+mean IU:  0.5665380149088919
+    class Unlabelled   accuracy = 0.818366, IoU =  0.517992
+    class Building     accuracy = 0.634310, IoU =  0.547200
+    class Wood         accuracy = 0.799225, IoU =  0.732863
+    class Water        accuracy = 0.951822, IoU =  0.728001
+    class Road         accuracy = 0.380537, IoU =  0.306635
+

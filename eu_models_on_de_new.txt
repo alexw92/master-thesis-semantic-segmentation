@@ -1,0 +1,38 @@
+icnet job 37 on new de dataset
+
+mIoU: 0.5512335300445557
+acc:  0.6904247850386931
+mean IU:  0.5512335313718171
+    class Unlabelled   accuracy = 0.809249, IoU =  0.503973
+    class Building     accuracy = 0.629018, IoU =  0.539618
+    class Wood         accuracy = 0.777429, IoU =  0.711112
+    class Water        accuracy = 0.930997, IoU =  0.703814
+    class Road         accuracy = 0.372859, IoU =  0.297650
+	
+deeplab job 35 on new de dataset
+
+accuracy[0.729255855]
+miou_1.0[0.551601768]
+
+0_Unlabelled_acc[0.824812293]
+0_Unlabelled_iou[0.628949761]
+1_Building_acc[0.578529179]
+1_Building_iou[0.465286791]
+2_Wood_acc[0.898047924]
+2_Wood_iou[0.732859433]
+3_Water_acc[0.78695792]
+3_Water_iou[0.748144925]
+4_Road_acc[0.22220166]
+4_Road_iou[0.182767823]
+
+
+
+segnet job 36 on new de dataset
+
+acc:  0.7211549799369447
+mean IU:  0.5712626795125375
+    class Unlabelled   accuracy = 0.648046, IoU =  0.558847
+    class Building     accuracy = 0.762970, IoU =  0.556103
+    class Wood         accuracy = 0.902755, IoU =  0.721070
+    class Water        accuracy = 0.866285, IoU =  0.706340
+    class Road         accuracy = 0.539888, IoU =  0.313955

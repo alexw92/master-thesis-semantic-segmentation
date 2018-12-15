@@ -1,0 +1,25 @@
+sbatch -p dmir --gres=gpu:1 run2.sh -e /scratch/tensorflow/venv_base\
+ -s ./master/code/Segmentation_Models/deeplab/train.py\
+ -r master/code/requirements.txt\
+ -n True -i "deeplab_detop14,500k_lr0,0001"\
+ -p ./master/code/Segmentation_Models/deeplab\
+ -a "--logtostderr\
+    --training_number_of_steps=90000\
+    --train_split="train"\
+    --model_variant="xception_65"\
+    --atrous_rates=6\
+    --atrous_rates=12\
+    --atrous_rates=18\
+    --output_stride=16\
+    --decoder_output_stride=4\
+    --train_crop_size=600\
+    --train_crop_size=600\
+    --train_batch_size=1\
+    --initialize_last_layer=False\
+    --last_layers_contain_logits_only=True\
+    --fine_tune_batch_norm=False\
+    --base_learning_rate=0.001\
+    --dataset="world_tiny2k"\
+    --train_logdir=./master/code/Segmentation_Models/ICNet/model/deeplabv3+_detop14_lr=0,001\
+    --tf_initial_checkpoint=./master/code/Segmentation_Models/ICNet/model/model.ckpt-30358\
+    --dataset_dir="G:\Tensorflow_Models\research\deeplab\datasets\deeplab_tiny_world2k\tfrecord""

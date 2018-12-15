@@ -1,0 +1,15 @@
+25_5.png gt_data/GT_25_5.png
+19_10.png gt_data/GT_19_10.png
+25_11.png gt_data/GT_25_11.png
+6_11.png gt_data/GT_6_11.png
+9_2.png gt_data/GT_9_2.png
+6_5.png gt_data/GT_6_5.png
+31_4.png gt_data/GT_31_4.png
+10_6.png gt_data/GT_10_6.png
+1_1.png gt_data/GT_1_1.png
+0_6.png gt_data/GT_0_6.png
+14_10.png gt_data/GT_14_10.png
+10_10.png gt_data/GT_10_10.png
+32_12.png gt_data/GT_32_12.png
+20_3.png gt_data/GT_20_3.png
+27_2.png gt_data/GT_27_2.png

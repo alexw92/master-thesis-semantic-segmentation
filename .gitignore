@@ -22,3 +22,21 @@ ANN_DATA
 # ignore some fasta files
 fasta_hp1.txt
 fasta_hp2.txt
+
+# shape files
+**/.cpg
+**/.dbf
+**/.shp
+**/.shx
+
+# nnet models (add explicitically if required)
+*.h5
+
+LSTM\ language\ model
+TF_Experiments
+
+# deeplab graph
+/Segmentation_Models/deeplab/*.pbtxt
+
+# Final submission
+Submission/

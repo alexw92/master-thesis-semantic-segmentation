@@ -1,0 +1,17 @@
+#SegNet 28.06.2018
+
+de_top14 test set (old test set, no r)
+
+acc:  0.6627108095238096
+mean IU:  0.49183091944268015
+
+de_top14 r test set 
+
+acc:  0.6561061653116531
+mean IU:  0.47448763095213414
+
+eu_top25 r test set (1460)
+
+acc:  0.5780774980974125
+mean IU:  0.435415584567374
+

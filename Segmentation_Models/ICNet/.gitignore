@@ -1,0 +1,11 @@
+ade20k_model
+cityscapes
+model/cityscape
+model.ckpt-*
+checkpoint
+*.pyc
+__pycache__
+input/osmtests
+output/osmtests
+input
+output

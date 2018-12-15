@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ICNet_inference" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="C:\Wichtige Progs\Python\python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Segmentation_Models/ICNet" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="Masterarbeit" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Segmentation_Models/ICNet/inference.py" />
+    <option name="PARAMETERS" value="--model=others --model_path=&quot;G:\!!!!slurm trained models\Osm_nores_Trained_Models\icnet_osm_nores_models\detop15_nores_lr=e_3&quot; --img-path=&quot;./input/lol&quot; --save-dir=&quot;G:\!!!!slurm trained models\Osm_nores_Trained_Models\icnet_osm_nores_models\detop15_nores_lr=e_3\results&quot; --gt_dir=&quot;G:\Datasets\FINAL_DATASETS\de_top15_cropped\gt_no_residential&quot; --dataset=osm_nores" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>

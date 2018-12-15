@@ -1,0 +1,96 @@
+
+
+G:\!!!!slurm trained models\Vaihingen_Trained_Models
+
+# icnet mit vaihingen
+
+- wenige steps (1000 von geladenem model das 2600 auf kaggle dataset trainiert hatte)
+- mit vaihingen weights
+- batchsize = 1
+
+## trainset
+
+Restored model parameters from C:\Uni\Masterstudium\ma-werthmann\code\Segmentation_Models\ICNet\model\mymodel\vaihingen_weights_model\model.ckpt-3500
+evaluation: 100%|¦¦¦¦¦¦¦¦¦¦| 264/264 [00:17<00:00, 14.79it/s]
+mIoU: 0.6149847507476807
+
+## testset
+
+evaluation:   0%|          | 0/15 [00:00<?, ?it/s]Restored model parameters from C:\Uni\Masterstudium\ma-werthmann\code\Segmentation_Models\ICNet\model\mymodel\vaihingen_weights_model\model.ckpt-3500
+evaluation: 100%|¦¦¦¦¦¦¦¦¦¦| 15/15 [00:03<00:00,  4.21it/s]
+mIoU: 0.494309663772583
+
+
+# segnet
+sie sollte beim laden des trainierten models bei mind. 30% liegen!
+- mit weights
+
+ 
+ 
+ 
+# deeplab
+ mal kurz etwas trainiert
+ - mit gewichten 
+ - ohne batchnorm
+ - batchsize 1
+ - lr = 0.0001
+ - loss zu Beginn 1.600 dann nach 5k iterationen zu ~ 0.6
+ 
+ - ergebnisse sehen ganz okay aus (schlechte auto prediction) aber bei dem setting ist das eig noch alles top
+ - jetzt müsste man einen intensiveren run machen mit höherer batchsize und batchnorm
+ 
+runs laufend:
+
+Segnet: 80k its, maxrun=10h, batchsize=5, lr=0.0001
+- last model 169676:
+- eval auf test set: acc:  0.7513068518518519, mean IU:  0.45442723816392644
+
+						    class Impervious_surfaces accuracy = 0.768153, IoU =  0.684863
+							class Buildings    accuracy = 0.956324, IoU =  0.760599
+							class Low vegetation accuracy = 0.329560, IoU =  0.323473
+							class Tree         accuracy = 0.973082, IoU =  0.599002
+							class Car          accuracy = 0.440020, IoU =  0.358626
+							class Clutter      accuracy = 0.000000, IoU =  0.000000
+							
+- eval auf train set: acc:  0.7836956123737374  mean IU:  0.5444161403511157
+
+
+- best model 169468:
+- eval auf test set: acc:  0.7255583333333333 mean IU:  0.43213131474481187
+- eval auf train set: acc:  0.7509194023569024, mean IU:  0.5155746376761842
+
+
+ICNet: 80k its, maxrun=15h, batchsize=14, bn, lr=0.001
+- last model model.ckpt-13459:
+- eval auf test set: mIoU: 0.5341335535049438	
+
+							class Impervious_surfaces accuracy = 0.862005, IoU =  0.690897
+							class Buildings    accuracy = 0.860948, IoU =  0.812879
+							class Low vegetation accuracy = 0.754424, IoU =  0.582972
+							class Tree         accuracy = 0.791113, IoU =  0.692145
+							class Car          accuracy = 0.614554, IoU =  0.425908
+							class Clutter      accuracy = 0.000000, IoU =  0.000000					
+- eval auf train set: mIoU: 0.7554994112701752 OVERFIT stop earlier!
+
+
+
+ICNet: 80k its, maxrun=15h, batchsize=14, bn, lr=0.0001
+- last model model.ckpt-26292: (schon stark overfittet, eventuell früheres model probieren)
+- eval auf test set: mIoU: 0.47408461570739746
+- eval auf train set: mIoU: 0.6445679068565369
+
+Deeplab: 80k its, batchsize=16, bn, lr=0.0001 
+- eval auf val set: miou_1.0[0.458158731]
+- eval auf train set: miou_1.0[0.473889977]
+
+Deeplab: 80k its, batchsize=16, bn, lr=0.001  
+- eval auf val set : miou_1.0[0.471673727]
+
+class Impervious_surfaces accuracy = 0.860767, IoU =  0.740786
+class Buildings    accuracy = 0.907851, IoU =  0.801857
+class Low vegetation accuracy = 0.614536, IoU =  0.533972
+class Tree         accuracy = 0.874481, IoU =  0.669138
+class Car          accuracy = 0.000000, IoU =  0.000000
+class Clutter      accuracy = 0.000000, IoU =  nan
+							
+- eval auf train set: miou_1.0[0.518995583]

@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="deeplab_calc_iou" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="C:\Wichtige Progs\Python\python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Segmentation_Models/deeplab" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="Masterarbeit" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Segmentation_Models/deeplab/get_iou_per_class_old.py" />
+    <option name="PARAMETERS" value="&quot;G:\!!!!slurm trained models\Osm_nores_Trained_Models\deeplab_osmnores_models\detop15_nores_lr=e-3_300k_bsize14_nw\results&quot; de_top15_no_res 703 5" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>

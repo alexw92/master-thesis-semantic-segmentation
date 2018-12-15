@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SegNet_train" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="C:\Wichtige Progs\Python\python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Segmentation_Models/SegNet" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="Masterarbeit" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Segmentation_Models/SegNet/main.py" />
+    <option name="PARAMETERS" value="--batch_size=1 --datadir=G:\Datasets\DSTL_Challenge_Dataset --test_dir=./list/kaggle_dstl_test_list.txt --finetune=G:/ConvNet_Models/segnet_test_restore --log_dir=G:/ConvNet_Models/segnet_test_kaggle --output_dir=./output --train_dir=./list/kaggle_dstl_test_list.txt --val_dir=./list/kaggle_dstl_val_list.txt --num_class=11 --dataset=kaggle_dstl --not_restore_last=True" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>

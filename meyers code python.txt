@@ -1,2 +1,0 @@
-https://github.com/benfulton/Algorithmic-Alley/blob/master/AlgorithmicAlley/SuffixArrays/sa.py
-https://algs4.cs.princeton.edu/63suffix/LongestCommonSubstring.java.html

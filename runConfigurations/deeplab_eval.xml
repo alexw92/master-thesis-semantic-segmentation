@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="deeplab_eval" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="C:\Wichtige Progs\Python\python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Segmentation_Models/deeplab" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="Masterarbeit" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Segmentation_Models/deeplab/eval.py" />
+    <option name="PARAMETERS" value="--checkpoint_dir=&quot;C:\Users\Alex\Desktop\detop15_100_reducedbgweight&quot; --dataset_dir=&quot;G:\Datasets\deeplab_de_top15_cropped_nores\tfrecord&quot; --eval_logdir=. --model_variant=&quot;mobilenet_v2&quot; --dataset=&quot;de_top15_nores&quot; --train_crop_size=609 --train_crop_size=609 --eval_split=val --batch_size=2 --output_stride=16 \ --decoder_output_stride=4 \" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>

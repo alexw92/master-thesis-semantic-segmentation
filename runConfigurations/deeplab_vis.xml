@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="deeplab_vis" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Segmentation_Models/deeplab" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="tgs_salt_identification_challengedata" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Segmentation_Models/deeplab/vis.py" />
+    <option name="PARAMETERS" value="--checkpoint_dir=&quot;G:\!!!!slurm trained models\Osm_nores_Trained_Models\deeplab_osmnores_models\detop15_nores_lr=e-3_300k_bsize14_nw&quot; --dataset_dir=&quot;G:\Datasets\deeplab_de_top15_2&quot; --vis_logdir=. --vis_split=val --colormap_type=osm_nores --dataset=de_top15_nores --vis_crop_size=600 --vis_crop_size=600 --model_variant=&quot;mobilenet_v2&quot; --output_stride=16 --decoder_output_stride=4 --fine_tune_batch_norm=False --save_dir=&quot;G:\!!!!slurm trained models\Osm_nores_Trained_Models\deeplab_osmnores_models\detop15_nores_lr=e-3_300k_bsize14_nw\results2&quot;" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>

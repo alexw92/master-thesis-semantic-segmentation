@@ -1,0 +1,49 @@
+# weights without residential area (set to other)
+
+## detop14
+
+class probability:
+0: 0.478619
+1: 0.145275
+2: 0.240364
+3: 0.024450
+4: 0.111292
+
+median frequency balancing:
+0: 0.303529
+1: 1.000000
+2: 0.604396
+3: 5.941638
+4: 1.305352
+
+## world2k
+
+class probability:
+0: 0.567171
+1: 0.092874
+2: 0.195732
+3: 0.028889
+4: 0.115335
+
+median frequency balancing:
+0: 0.203351
+1: 1.241845
+2: 0.589249
+3: 3.992340
+4: 1.000000
+
+## eutop25
+
+class probability:
+0: 0.435045
+1: 0.174230
+2: 0.227204
+3: 0.033770
+4: 0.129751
+
+median frequency balancing:
+0: 0.400486
+1: 1.000000
+2: 0.766842
+3: 5.159342
+4: 1.342801
