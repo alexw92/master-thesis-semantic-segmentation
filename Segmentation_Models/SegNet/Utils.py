@@ -179,6 +179,69 @@ def writeImage(image, filename, dataset='osm'):
     im.save(filename)
 
 
+def predToLabelledImg(image, dataset='osm'):
+    """ store label data to colored image """
+    # OSM Colors"detop15_nores", "eutop25_nores", "worldtiny2k_nores"
+    if dataset == 'osm':
+        Unlabelled = [0, 0, 0]
+        Building = [213, 131, 7]
+        Wood = [0, 153, 0]
+        Water = [0, 0, 204]
+        Road = [76, 0, 153]
+        Residential = [255, 255, 102]
+        label_colours = np.array([Unlabelled, Building, Wood, Water, Road, Residential])
+    elif dataset == 'vaihingen':
+        Impervious_surfaces = [76, 0, 153]
+        Buildings = [213, 131, 7]
+        vegetation = [5, 120, 5]
+        Tree = [0, 153, 0]
+        Car = [255, 255, 102]
+        Clutter = [200, 0, 0]
+        label_colours = np.array([Impervious_surfaces,
+        Buildings, vegetation, Tree,
+        Car, Clutter])
+    else:
+        Unlabelled = [0, 0, 0]
+        Building = [213, 131, 7]
+        Wood = [0, 153, 0]
+        Water = [0, 0, 204]
+        Road = [76, 0, 153]
+        Residential = [255, 255, 102]
+        label_colours = np.array([Unlabelled, Building, Wood, Water, Road, Residential])
+    # CamVid Colors
+    # Sky = [128,128,128]
+    # Building = [128,0,0]
+    # Pole = [192,192,128]
+    # Road_marking = [255,69,0]
+    # Road = [128,64,128]
+    # Pavement = [60,40,222]
+    # Tree = [128,128,0]
+    # SignSymbol = [192,128,128]
+    # Fence = [64,64,128]
+    # Car = [64,0,128]
+    # Pedestrian = [64,64,0]
+    # Bicyclist = [0,128,192]
+    # Unlabelled = [0,0,0]
+
+    r = image.copy()
+    g = image.copy()
+    b = image.copy()
+    for l in range(0, 6):
+        r[image == l] = label_colours[l, 0]
+        g[image == l] = label_colours[l, 1]
+        b[image == l] = label_colours[l, 2]
+    rgb = np.zeros((1, image.shape[0], image.shape[1], 3))
+    if len(np.shape(r))>2:
+        r = np.squeeze(r,2)
+        g = np.squeeze(g, 2)
+        b = np.squeeze(b, 2)
+    rgb[0, :, :, 0] = r / 1.0
+    rgb[0, :, :, 1] = g / 1.0
+    rgb[0, :, :, 2] = b / 1.0
+#    im = Image.fromarray(np.uint8(rgb))
+    return np.uint8(rgb)
+
+
 def storeImageQueue(data, labels, step):
     """ data and labels are all numpy arrays """
     for i in range(len(data)):
