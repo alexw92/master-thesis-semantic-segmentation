@@ -144,6 +144,29 @@ def main(unused_argv):
     semantic_predictions = _resize_label(semantic_predictions, image_size)
     semantic_predictions = tf.identity(semantic_predictions, name=_OUTPUT_NAME)
 
+    export_path= "lol123"
+    print('Exporting trained model to', export_path)
+    builder = tf.saved_model.builder.SavedModelBuilder(export_path)
+    # Creates the TensorInfo protobuf objects that encapsulates the input/output tensors
+    tensor_info_input = tf.saved_model.utils.build_tensor_info(image)
+    # output tensor info
+    tensor_info_output = tf.saved_model.utils.build_tensor_info(semantic_predictions)
+
+    prediction_signature = (
+        tf.saved_model.signature_def_utils.build_signature_def(
+            inputs={'images': tensor_info_input},
+            outputs={'segmentation_map': tensor_info_output},
+            method_name=tf.saved_model.signature_constants.PREDICT_METHOD_NAME))
+
+    tf.get_default_graph().as_graph_def(add_shapes=True)
+    with tf.Session() as sess:
+        builder.add_meta_graph_and_variables(
+            sess, [tf.saved_model.tag_constants.SERVING],
+            signature_def_map={
+                'predict_images':
+                    prediction_signature,
+            })
+    builder.save(as_text=True)
     saver = tf.train.Saver(tf.model_variables())
 
     tf.gfile.MakeDirs(os.path.dirname(FLAGS.export_path))
