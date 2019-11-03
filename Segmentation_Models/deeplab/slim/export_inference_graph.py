@@ -59,8 +59,8 @@ from __future__ import print_function
 import tensorflow as tf
 
 from tensorflow.python.platform import gfile
-from datasets import dataset_factory
-from nets import nets_factory
+from deeplab.slim.datasets import dataset_factory
+from deeplab.slim.nets import nets_factory
 
 
 slim = tf.contrib.slim

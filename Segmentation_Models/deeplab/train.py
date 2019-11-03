@@ -27,7 +27,7 @@ from deeplab import model
 from deeplab.datasets import segmentation_dataset
 from deeplab.utils import input_generator
 from deeplab.utils import train_utils
-from deployment import model_deploy
+from deeplab.slim.deployment import model_deploy
 import sys
 import os
 #sys.path.append("C:/Uni/Masterstudium/ma-werthmann/code/Segmentation_Models/deeplab/slim") add slim to path
@@ -464,6 +464,7 @@ def main(unused_argv):
         summary_op=summary_op,
         save_summaries_secs=FLAGS.save_summaries_secs,
         save_interval_secs=FLAGS.save_interval_secs)
+
 
 
 if __name__ == '__main__':
