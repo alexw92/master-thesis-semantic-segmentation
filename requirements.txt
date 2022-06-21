@@ -1,6 +1,6 @@
 
 matplotlib==2.1.0
-numpy==1.14.2
+numpy==1.22.0
 Fiona==1.7.10
 geojson==2.3.0
 Shapely==1.6.2
