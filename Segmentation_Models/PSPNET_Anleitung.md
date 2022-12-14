@@ -107,10 +107,10 @@ The checkpoint has been created.
 
 **Antwort:** Er ging runter, wenn auch sehr langsam.
 Die LR-Policy, die verwendet wurde sieht man hier
-![LR-Policy](./PSPNet/plots_imgs/LR_Poly_Base_0_001_mom_0.9.png)
+![LR-Policy](./PSPNet/plot_imgs/LR_Poly_Base_0_001_mom_0.9.png)
 
 Hier ist die Learning-Curve vom ersten run mit 10000 iterations (~12.5 epochs, wegen batchsize=2)
-![LR-Curve-Firstrun](./PSPNet/plots_imgs/LC_pspnet_firstrun_10000.png)
+![LR-Curve-Firstrun](./PSPNet/plot_imgs/LC_pspnet_firstrun_10000.png)
 
 Hier der Plot vom Training mit 100000 images (wieder von scratch).
 Parameter waren bei beiden runs gleich:
@@ -124,6 +124,6 @@ WEIGHT_DECAY = 0.0001
 
 Zu Beachten ist, dass die Anzahl der images sehr klein war (1600) und kein Pretraining
 und kein Class-Weighting vorgenommen wurde
-![LR-Curve-Secrun](./PSPNet/plots_imgs/LC_pspnet_secrun_100000.png)
+![LR-Curve-Secrun](./PSPNet/plot_imgs/LC_pspnet_secrun_100000.png)
 
 

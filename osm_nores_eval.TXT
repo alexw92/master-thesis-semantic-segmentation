@@ -37,8 +37,8 @@ class Road         accuracy = 0.391840, IoU =  0.304924
 	
 	Wichtig: Obwohl die IOU bei den weights nicht bedeutend besser ist, sind 
 	die Bilder besser predicted bzgl der Nicht-Background Features.
-	Shapes von Straßen und Gebäuden sind wesentlich besser erkennbar als ohne Gewichte!
-	Es zeigt sich hier dass die reine IOU über alle Klassen nicht die beste Metrik ist 
+	Shapes von StraÃŸen und GebÃ¤uden sind wesentlich besser erkennbar als ohne Gewichte!
+	Es zeigt sich hier dass die reine IOU Ã¼ber alle Klassen nicht die beste Metrik ist 
 	und die IoU der einzelnen Klassen betrachtet werden sollte.
 
 # icnet (fail 6 statt 5 klassen angegeben)
