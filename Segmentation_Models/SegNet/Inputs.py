@@ -1,4 +1,5 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from tensorflow.python.framework import ops
 from tensorflow.python.framework import dtypes
 import os, sys
@@ -94,6 +95,8 @@ def get_dataset_params(dataset):
 
 def _generate_image_and_label_batch(image, label, min_queue_examples,
                                     batch_size, shuffle):
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
     """Construct a queued batch of images and labels.
 
     Args:
@@ -150,6 +153,8 @@ def CamVid_reader_seq(filename_queue, seq_length):
 
 
 def CamVid_reader(filename_queue, datadir):
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
     image_filename = filename_queue[0]
     label_filename = filename_queue[1]
 
@@ -178,6 +183,8 @@ def get_filename_list(path):
 
 
 def OSMInputs(image_filenames, label_filenames, batch_size, datadir, dataset):
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
     if 'detop15' in dataset:
         data = osm_topde15
     elif 'worldtiny2k' in dataset:

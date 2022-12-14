@@ -1,6 +1,8 @@
-import tensorflow as tf
-from tensorflow.python.framework import ops
-from tensorflow.python.framework import dtypes
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
+# from tensorflow.python.framework import ops
+# from tensorflow.python.framework import dtypes
 
 import os, sys
 import numpy as np
@@ -11,11 +13,11 @@ from math import ceil
 from tqdm import trange, tqdm
 from scipy import misc
 
-from tensorflow.python.framework.test_util import gpu_device_name
-from tensorflow.python.ops import gen_nn_ops
+# from tensorflow.python.framework.test_util import gpu_device_name
+# from tensorflow.python.ops import gen_nn_ops
 # modules
-from Utils import _variable_with_weight_decay, _variable_on_cpu, _add_loss_summaries, \
-    _activation_summary, print_hist_summery, get_hist, per_class_acc, writeImage, get_certainity, predToLabelledImg
+from Utils import _variable_with_weight_decay, _variable_on_cpu, _add_loss_summaries, _activation_summary, \
+    print_hist_summery, get_hist, per_class_acc, writeImage, get_certainity
 from Inputs import *
 
 # Constants describing the training process.
@@ -135,6 +137,8 @@ def cal_loss(num_class, logits, labels, use_weights):
 
 
 def conv_layer_with_bn(inputT, shape, train_phase, activation=True, name=None):
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
     # shape = [filter_height, filter_width, in_channels, out_channels]
     in_channel = shape[2]
     out_channel = shape[3]
@@ -188,11 +192,13 @@ def deconv_layer(inputT, f_shape, output_shape, stride=2, name=None):
 
 def batch_norm_layer(inputT, is_training, scope):
     return tf.cond(is_training,
-                   lambda: tf.contrib.layers.batch_norm(inputT, is_training=True,
-                                                        center=False, updates_collections=None, scope=scope + "_bn"),
-                   lambda: tf.contrib.layers.batch_norm(inputT, is_training=False,
-                                                        updates_collections=None, center=False, scope=scope + "_bn",
-                                                        reuse=True))
+                   #  lambda: tf.contrib.layers.batch_norm(inputT, is_training=True,
+                   #                    center=False, updates_collections=None, scope=scope+"_bn"),
+                   lambda: tf.keras.layers.LayerNormalization(name=scope + "_bn", center=False, dtype=tf.float32)(
+                       inputT),
+                   # return tf.contrib.layers.layer_norm(
+                   #     inputs=input_tensor, begin_norm_axis=-1, begin_params_axis=-1, scope=name)
+                   lambda: tf.keras.layers.LayerNormalization(name=scope + "_bn", axis=-1, dtype=tf.float32)(inputT))
 
 
 def inference(num_class, images, labels, batch_size, phase_train, use_weights):
@@ -601,6 +607,7 @@ def get_dataset_classnames(dataset):
 
 
 def training(FLAGS, is_finetune=False):
+    import tensorflow.compat.v1 as tf
     max_steps = FLAGS.max_steps
     batch_size = FLAGS.batch_size
     train_dir = FLAGS.log_dir  # /tmp3/first350/TensorFlow/Logs
@@ -690,6 +697,7 @@ def training(FLAGS, is_finetune=False):
         # Build a Graph that computes the logits predictions from the inference model.
         loss, eval_prediction = inference(FLAGS.num_class, train_data_node, train_labels_node, batch_size, phase_train,
                                           use_weights)
+
         # Build a Graph that trains the model with one batch of examples and updates the model parameters.
         train_op = train(loss, global_step, lr)
 
@@ -786,28 +794,6 @@ def training(FLAGS, is_finetune=False):
                     # eval current training batch pre-class accuracy
                     pred = sess.run(eval_prediction, feed_dict=feed_dict)
                     per_class_acc(pred, label_batch, dataset=dataset)
-                    # generate image and send it to event file
-                    argmax_t = tf.argmax(pred, axis=3)
-                    argmax = sess.run(argmax_t)
-                    sat = image_batch[0][:][:][:]
-                    sat = np.expand_dims(sat, axis=0)
-                    im = predToLabelledImg(argmax[0])
-                    gt = predToLabelledImg(label_batch[0])
-                    # concat images to a single 4D vector to get all images in single line in tensorboard
-                    sat_pred_gt = np.concatenate((sat, im, gt),0)
-                    sat_pred_gt_summary = tf.summary.image('sat_pred_gt', tf.convert_to_tensor(sat_pred_gt))
-                    sat_pred_gt_summary = sess.run(sat_pred_gt_summary)
-                    # img_sum_pred = tf.summary.image('pred img', tf.convert_to_tensor(im))
-                    # img_sum_pred = sess.run(img_sum_pred)
-                    # img_sum_gt = tf.summary.image('gt img', tf.convert_to_tensor(gt))
-                    # img_sum_sat = tf.summary.image('satellite img', tf.convert_to_tensor(sat))
-                    # img_sum_gt = sess.run(img_sum_gt)
-                    # img_sum_sat = sess.run(img_sum_sat)
-                    # debug line
-                    # writeImage(argmax[0], str(step)+"_labelled.png", "osm")
-                    #summary_writer.add_summary(img_sum_pred, step)
-                   # summary_writer.add_summary(img_sum_gt, step)
-                    summary_writer.add_summary(sat_pred_gt_summary, step)
 
                 if step % EPOCH_ITER * EPOCHS_UNTIL_VAL == 0:
                     print("start validating.....")

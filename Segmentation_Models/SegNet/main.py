@@ -1,8 +1,9 @@
-import tensorflow as tf
 import model
 import sys
 import argparse
 import os
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 
 # FLAGS = tf.app.flags.FLAGS
