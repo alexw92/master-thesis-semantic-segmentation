@@ -18,16 +18,17 @@ See model.py for more details and usage.
 """
 
 import six
-import tensorflow as tf
-from tensorflow.contrib.slim.python.slim.learning import train_step
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+from tf_slim.learning import train_step
 import os
 print(os.environ.get('PYTHONPATH', ''))
-from deeplab import common
-from deeplab import model
-from deeplab.datasets import segmentation_dataset
-from deeplab.utils import input_generator
-from deeplab.utils import train_utils
-from deeplab.slim.deployment import model_deploy
+import common
+import model
+from datasets import segmentation_dataset
+from utils import input_generator
+from utils import train_utils
+from slim.deployment import model_deploy
 import sys
 import os
 #sys.path.append("C:/Uni/Masterstudium/ma-werthmann/code/Segmentation_Models/deeplab/slim") add slim to path
