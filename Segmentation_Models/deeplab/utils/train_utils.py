@@ -16,10 +16,10 @@
 
 import six
 
-import tensorflow as tf
-from deeplab.core import preprocess_utils
+import tensorflow.compat.v1 as tf
+from core import preprocess_utils
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 def add_softmax_cross_entropy_loss_for_each_scale(scales_to_logits,

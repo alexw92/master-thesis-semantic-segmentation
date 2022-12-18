@@ -51,10 +51,9 @@ Liang-Chieh Chen*, George Papandreou*, Iasonas Kokkinos, Kevin Murphy,
 Alan L. Yuille (* equal contribution)
 (https://arxiv.org/abs/1412.7062)
 """
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from core import feature_extractor
-
-slim = tf.contrib.slim
+import tf_slim as slim
 
 LOGITS_SCOPE_NAME = 'logits'
 MERGED_LOGITS_SCOPE = 'merged_logits'

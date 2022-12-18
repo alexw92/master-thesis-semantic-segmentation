@@ -15,16 +15,16 @@
 
 """Extracts features for different models."""
 import functools
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
-import resnet_v1_beta
-import xception
+from core import resnet_v1_beta
+from core import xception
 from tf_slim.nets import resnet_utils
 # apparently not officially included in production version of tf-slim
-from tf_slim.nets.mobilenet import mobilenet_v2
+from core.slim.nets.mobilenet import mobilenet_v2
 
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 # Default end point for MobileNetv2.
 _MOBILENET_V2_FINAL_ENDPOINT = 'layer_18'

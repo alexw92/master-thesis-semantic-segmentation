@@ -33,7 +33,7 @@ import sys
 import os
 #sys.path.append("C:/Uni/Masterstudium/ma-werthmann/code/Segmentation_Models/deeplab/slim") add slim to path
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 prefetch_queue = slim.prefetch_queue
 

@@ -14,11 +14,11 @@
 # ==============================================================================
 """Wrapper for providing semantic segmentation data."""
 
-import tensorflow as tf
-from deeplab import common
-from deeplab import input_preprocess
+import tensorflow.compat.v1 as tf
+import common
+import input_preprocess
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 dataset_data_provider = slim.dataset_data_provider
 

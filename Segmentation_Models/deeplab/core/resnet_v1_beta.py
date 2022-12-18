@@ -27,11 +27,11 @@ from __future__ import division
 from __future__ import print_function
 
 import functools
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
-from tensorflow.contrib.slim.nets import resnet_utils
+from tf_slim.nets import resnet_utils
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 _DEFAULT_MULTI_GRID = [1, 1, 1]
 
