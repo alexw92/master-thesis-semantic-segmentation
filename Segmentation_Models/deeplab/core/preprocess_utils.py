@@ -14,7 +14,7 @@
 # ==============================================================================
 
 """Utility functions related to preprocessing inputs."""
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 def flip_dim(tensor_list, prob=0.5, dim=1):
