@@ -1,3 +1,28 @@
+# WIP
+
+### Adding iou and accuracy to tensorboard for monitoring for deeplab training
+
+Adding just tensors to summary like this apparently does not work:
+```python
+accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
+                                            tf.to_int32(labels_val), name="accuracy")
+iou,conf_mat = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="accuracy")
+# Merge all summaries together.
+summaries |= set(
+    tf.get_collection(tf.GraphKeys.SUMMARIES, first_clone_scope))
+
+summary_acc = tf.summary.tensor_summary('val_acc', accuracy_validation)
+summary_iou = tf.summary.tensor_summary('val_iou', iou)
+summaries.add(summary_acc)
+summaries.add(summary_iou)
+summary_op = tf.summary.merge(list(summaries))
+```
+
+```
+W1223 15:04:45.235898 22556 plugin_event_accumulator.py:386] This summary with tag 'val_acc' is oddly not associated with a plugin.
+W1223 15:04:45.240903 22556 plugin_event_accumulator.py:386] This summary with tag 'val_iou' is oddly not associated with a plugin.
+```
+
 # Deeplab training
 
 If the error ```error: Can't find libdevice directory ${CUDA_DIR}/nvvm/libdevice``` occurs:
