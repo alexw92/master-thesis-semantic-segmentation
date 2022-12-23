@@ -83,7 +83,9 @@ flags.DEFINE_boolean('save_summaries_images', False,
 flags.DEFINE_enum('learning_policy', 'poly', ['poly', 'step'],
                   'Learning rate policy for training.')
 
-flags.DEFINE_multi_float('classweights', [0.975644, 1.025603, 0.601745, 6.600600, 1.328684, 0.454776],
+#flags.DEFINE_multi_float('classweights', [0.975644, 1.025603, 0.601745, 6.600600, 1.328684, 0.454776],
+#                         'Class weights to mitigate class imbalance')
+flags.DEFINE_multi_float('classweights', [1.0, 1.0, 1.0, 1.0, 1.0],
                          'Class weights to mitigate class imbalance')
 
 # Use 0.007 when training on PASCAL augmented training set, train_aug. When
