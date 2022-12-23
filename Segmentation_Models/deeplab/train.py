@@ -420,10 +420,11 @@ def main(unused_argv):
     #    tf.equal(labels, dataset.ignore_label), tf.zeros_like(labels), labels)
     accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
                                                 tf.to_int32(labels_val), name="accuracy")
-    iou,conf_mat = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="iou")
+    iou, iou_update_op = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="iou")
     summaries.add(tf.summary.scalar('accuracy', accuracy_validation))
-    print_iou = tf.print("iou:", iou," conf_mat", conf_mat,
-             output_stream="file://K:/!!!!slurm trained models/test_train_mobilenet_eu_bn18/log_iou.txt")
+    summaries.add(tf.summary.scalar('iou', iou))
+    #print_iou = tf.print("iou:", iou," conf_mat", conf_mat,
+    #         output_stream="file://K:/!!!!slurm trained models/test_train_mobilenet_eu_bn18/log_iou.txt")
     # Merge all summaries together.
     summaries |= set(
         tf.get_collection(tf.GraphKeys.SUMMARIES, first_clone_scope))
@@ -440,8 +441,7 @@ def main(unused_argv):
         if train_step_fn.step % FLAGS.validation_check == 0:
             # throws OutOfRange error after some time
             accuracy = session.run(train_step_fn.accuracy_validation)
-            iou = session.run(train_step_fn.iou)
-            session.run(train_step_fn.print_iou)
+            iou,_ = session.run([train_step_fn.iou, train_step_fn.iou_update])
             print('Step %s - Loss: %.2f Accuracy: %.2f%%, IoU: %.2f'% (
             str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100, iou))
 
@@ -455,7 +455,7 @@ def main(unused_argv):
     train_step_fn.step = 0
     train_step_fn.accuracy_validation = accuracy_validation
     train_step_fn.iou = iou
-    train_step_fn.print_iou = print_iou
+    train_step_fn.iou_update = iou_update_op
 
     # Start the training.
     slim.learning.train(

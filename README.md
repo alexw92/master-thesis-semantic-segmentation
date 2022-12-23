@@ -1,6 +1,8 @@
 # WIP
 
 ### Adding iou and accuracy to tensorboard for monitoring for deeplab training
+*Accuracy:* *done*
+*IoU:* *done* (don't forget to run update tensor, not just iou - otherwise it will stay 0 forever)
 
 Adding just tensors to summary like this apparently does not work:
 ```python
