@@ -32,6 +32,13 @@ Don't forget to restart Pycharm after creating the environment variable!
 --tf_initial_checkpoint="K:\!!!!slurm trained models\Pretrained weights\deeplab\deeplabv3_mnv2_cityscapes_train/model.ckpt"
 ```
 
+## Tensorboard monitoring
+
+Use ```tensorboard --logdir .\test_train_mobilenet\ --host 0.0.0.0``` to monitor training.
+ 
+Go to Url to access Tensorboard dashboard: ```http://localhost:6006/```
+
+
 # Datasets erzeugen
 
 - 13 größte städte in dtl. (nach berlin, ist ja schon gedownloaded) hinzugefügt
