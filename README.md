@@ -10,6 +10,28 @@ where this directory contains the path ```nvvm/libdevice``` (copied from cuda di
 
 Don't forget to restart Pycharm after creating the environment variable!
 
+## Working params for train run on de_top15 with mobilenet
+
+```
+--logtostderr
+--training_number_of_steps=90000
+--train_split="train"
+--model_variant="mobilenet_v2"
+--output_stride=16
+--decoder_output_stride=4
+--train_crop_size=600
+--train_crop_size=600
+--train_batch_size=1
+--initialize_last_layer=False
+--last_layers_contain_logits_only=True
+--train_batch_size=8
+--dataset="de_top15"
+--fine_tune_batch_norm=False
+--train_logdir="K:/!!!!slurm trained models/test_train_mobilenet"
+--dataset_dir="K:/FINAL_DATASETS/deeplab_de_top15_2"
+--tf_initial_checkpoint="K:\!!!!slurm trained models\Pretrained weights\deeplab\deeplabv3_mnv2_cityscapes_train/model.ckpt"
+```
+
 # Datasets erzeugen
 
 - 13 größte städte in dtl. (nach berlin, ist ja schon gedownloaded) hinzugefügt
