@@ -72,7 +72,7 @@ flags.DEFINE_integer('save_interval_secs', 1200,
                      'How often, in seconds, we save the model to disk.')
 
 flags.DEFINE_integer('save_summaries_secs', 600,
-                     'How often, in seconds, we compute the summaries.')
+                     'How often, in seconds, we compute the summaries (readable by Tensorboard).')
 
 flags.DEFINE_boolean('save_summaries_images', False,
                      'Save sample inputs, labels, and semantic predictions as '
