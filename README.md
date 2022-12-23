@@ -32,6 +32,35 @@ Don't forget to restart Pycharm after creating the environment variable!
 --tf_initial_checkpoint="K:\!!!!slurm trained models\Pretrained weights\deeplab\deeplabv3_mnv2_cityscapes_train/model.ckpt"
 ```
 
+Use this to train on eutop25 without residential area but with weights:
+
+```
+--logtostderr
+--training_number_of_steps=900000
+--train_split="train"
+--model_variant="mobilenet_v2"
+--output_stride=16
+--decoder_output_stride=4
+--train_crop_size=600
+--train_crop_size=600
+--initialize_last_layer=False
+--save_summaries_images=True
+--last_layers_contain_logits_only=True
+--train_batch_size=4
+--dataset="eu_top25_nores"
+--fine_tune_batch_norm=False
+--base_learning_rate=0.0001
+--validation_check=500
+--classweights=0.303529
+--classweights=1.000000
+--classweights=0.604396
+--classweights=5.941638
+--classweights=1.305352
+--train_logdir="K:/!!!!slurm trained models/test_train_mobilenet_eu_classweights"
+--dataset_dir="K:\nores_datasets\deeplab_eu_top25_cropped_nores/tfrecord"
+--tf_initial_checkpoint="K:\!!!!slurm trained models\Pretrained weights\deeplab\deeplabv3_mnv2_cityscapes_train\model.ckpt"
+```
+
 ## Tensorboard monitoring
 
 Use ```tensorboard --logdir .\test_train_mobilenet\ --host 0.0.0.0``` to monitor training.
