@@ -1,3 +1,15 @@
+# Deeplab training
+
+If the error ```error: Can't find libdevice directory ${CUDA_DIR}/nvvm/libdevice``` occurs:
+
+Export the environment var *XLA_FLAGS* pointing to:
+
+```--xla_gpu_cuda_data_dir=C:\Users\Fistus\miniconda3\envs\code\Library```
+
+where this directory contains the path ```nvvm/libdevice``` (copied from cuda directory)!
+
+Don't forget to restart Pycharm after creating the environment variable!
+
 # Datasets erzeugen
 
 - 13 größte städte in dtl. (nach berlin, ist ja schon gedownloaded) hinzugefügt
