@@ -420,15 +420,12 @@ def main(unused_argv):
     #    tf.equal(labels, dataset.ignore_label), tf.zeros_like(labels), labels)
     accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
                                                 tf.to_int32(labels_val), name="accuracy")
-    iou,conf_mat = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="accuracy")
+    iou,conf_mat = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="iou", metrics_collections="metrics")
+    summaries.add(tf.summary.scalar('accuracy', accuracy_validation))
     # Merge all summaries together.
     summaries |= set(
         tf.get_collection(tf.GraphKeys.SUMMARIES, first_clone_scope))
 
-    summary_acc = tf.summary.tensor_summary('val_acc', accuracy_validation)
-    summary_iou = tf.summary.tensor_summary('val_iou', iou)
-    summaries.add(summary_acc)
-    summaries.add(summary_iou)
     summary_op = tf.summary.merge(list(summaries))
 
     #iou,conf_mat = tf.metrics.mean_iou(labels_val, predictions_val, num_classes=6)
