@@ -71,7 +71,7 @@ flags.DEFINE_integer('log_steps', 10,
 flags.DEFINE_integer('save_interval_secs', 1200,
                      'How often, in seconds, we save the model to disk.')
 
-flags.DEFINE_integer('save_summaries_secs', 600,
+flags.DEFINE_integer('save_summaries_secs', 300,
                      'How often, in seconds, we compute the summaries (readable by Tensorboard).')
 
 flags.DEFINE_boolean('save_summaries_images', False,
@@ -180,7 +180,7 @@ flags.DEFINE_string('val_split', 'val',
 
 flags.DEFINE_string('dataset_dir', None, 'Where the dataset reside.')
 
-flags.DEFINE_integer('validation_check', 50, 'How much steps until validation')
+flags.DEFINE_integer('validation_check', 100, 'How much steps until validation')
 
 
 def _build_deeplab(inputs_queue, outputs_to_num_classes, ignore_label):
@@ -392,12 +392,9 @@ def main(unused_argv):
 
     # Add the summaries from the first clone. These contain the summaries
     # created by model_fn and either optimize_clones() or _gather_clone_loss().
-    summaries |= set(
-        tf.get_collection(tf.GraphKeys.SUMMARIES, first_clone_scope))
 
     # Merge all summaries together.
     summary_op = tf.summary.merge(list(summaries))
-
     # Soft placement allows placing on CPU ops without GPU implementation.
     session_config = tf.ConfigProto(
         allow_soft_placement=True, log_device_placement=False)
@@ -420,8 +417,19 @@ def main(unused_argv):
     #labels = tf.where(
     #    tf.equal(labels, dataset.ignore_label), tf.zeros_like(labels), labels)
     accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
-                                                tf.to_int32(labels_val))
-    iou,conf_mat = tf.metrics.mean_iou(labels_val, predictions_val, num_classes=6)
+                                                tf.to_int32(labels_val), name="accuracy")
+    iou,conf_mat = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="accuracy")
+    # Merge all summaries together.
+    summaries |= set(
+        tf.get_collection(tf.GraphKeys.SUMMARIES, first_clone_scope))
+
+    summary_acc = tf.summary.tensor_summary('val_acc', accuracy_validation)
+    summary_iou = tf.summary.tensor_summary('val_iou', iou)
+    summaries.add(summary_acc)
+    summaries.add(summary_iou)
+    summary_op = tf.summary.merge(list(summaries))
+
+    #iou,conf_mat = tf.metrics.mean_iou(labels_val, predictions_val, num_classes=6)
     #sess.run(tf.local_variables_initializer())
 
 
@@ -429,11 +437,11 @@ def main(unused_argv):
         total_loss, should_stop = train_step(session, *args, **kwargs)
 
         if train_step_fn.step % FLAGS.validation_check == 0:
-            pass
             # throws OutOfRange error after some time
-         #   accuracy = session.run(train_step_fn.accuracy_validation)
-          #  print('Step %s - Loss: %.2f Accuracy: %.2f%%' % (
-          #  str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100))
+            accuracy = session.run(train_step_fn.accuracy_validation)
+            iou = session.run(train_step_fn.iou)
+            print('Step %s - Loss: %.2f Accuracy: %.2f%%, IoU: %.2f'% (
+            str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100, iou))
 
      #   if train_step_fn.step == (FLAGS.max_steps - 1):
      #       accuracy = session.run(accuracy_test)
@@ -444,6 +452,7 @@ def main(unused_argv):
 
     train_step_fn.step = 0
     train_step_fn.accuracy_validation = accuracy_validation
+    train_step_fn.iou = iou
 
     # Start the training.
     slim.learning.train(
