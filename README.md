@@ -2,9 +2,10 @@
 
 ### Adding iou and accuracy to tensorboard for monitoring for deeplab training
 *Accuracy:* *done*
+
 *IoU:* *done* (don't forget to run update tensor, not just iou - otherwise it will stay 0 forever)
 
-Adding just tensors to summary like this apparently does not work:
+Adding just tensors to summary like this did not work:
 ```python
 accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
                                             tf.to_int32(labels_val), name="accuracy")
@@ -23,6 +24,16 @@ summary_op = tf.summary.merge(list(summaries))
 ```
 W1223 15:04:45.235898 22556 plugin_event_accumulator.py:386] This summary with tag 'val_acc' is oddly not associated with a plugin.
 W1223 15:04:45.240903 22556 plugin_event_accumulator.py:386] This summary with tag 'val_iou' is oddly not associated with a plugin.
+```
+
+One needs to run the tensors in the step function and add not the tensors but tf.scalar which are executed later:
+
+```python
+accuracy_validation = slim.metrics.accuracy(tf.to_int32(predictions_val),
+                                            tf.to_int32(labels_val), name="accuracy")
+iou, iou_update_op = slim.metrics.streaming_mean_iou(tf.to_int32(predictions_val),tf.to_int32(labels_val), num_classes=5, name="iou")
+summaries.add(tf.summary.scalar('accuracy', accuracy_validation))
+summaries.add(tf.summary.scalar('iou', iou))
 ```
 
 # Deeplab training
