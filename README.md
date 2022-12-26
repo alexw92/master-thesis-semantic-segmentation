@@ -1,5 +1,143 @@
 # WIP
 
+### Training in Deeplabv3 stops after 8k-20k steps sometimes if training is repeated
+
+```
+INFO:tensorflow:Caught OutOfRangeError. Stopping Training. Graph execution error:
+
+Detected at node 'batch_1' defined at (most recent call last):
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+      tf.app.run()
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+      _run_main(main, args)
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+      sys.exit(main(argv))
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+      samples_val = input_generator.get(
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+      return tf.train.batch(
+Node: 'batch_1'
+Detected at node 'batch_1' defined at (most recent call last):
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+      tf.app.run()
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+      _run_main(main, args)
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+      sys.exit(main(argv))
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+      samples_val = input_generator.get(
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+      return tf.train.batch(
+Node: 'batch_1'
+2 root error(s) found.
+  (0) OUT_OF_RANGE: PaddingFIFOQueue '_5_batch_1/padding_fifo_queue' is closed and has insufficient elements (requested 18, current size 0)
+	 [[{{node batch_1}}]]
+	 [[batch_1/_2171]]
+  (1) OUT_OF_RANGE: PaddingFIFOQueue '_5_batch_1/padding_fifo_queue' is closed and has insufficient elements (requested 18, current size 0)
+	 [[{{node batch_1}}]]
+0 successful operations.
+0 derived errors ignored.
+
+Original stack trace for 'batch_1':
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+    tf.app.run()
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\platform\app.py", line 36, in run
+    _run(main=main, argv=argv, flags_parser=_parse_flags_tolerate_undef)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+    _run_main(main, args)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+    sys.exit(main(argv))
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+    samples_val = input_generator.get(
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+    return tf.train.batch(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\util\deprecation.py", line 357, in new_func
+    return func(*args, **kwargs)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\training\input.py", line 1006, in batch
+    return _batch(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\training\input.py", line 784, in _batch
+    dequeued = queue.dequeue_up_to(batch_size, name=name)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\ops\data_flow_ops.py", line 533, in dequeue_up_to
+    ret = gen_data_flow_ops.queue_dequeue_up_to_v2(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\ops\gen_data_flow_ops.py", line 3737, in queue_dequeue_up_to_v2
+    _, _, _op, _outputs = _op_def_library._apply_op_helper(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\framework\op_def_library.py", line 797, in _apply_op_helper
+    op = g._create_op_internal(op_type_name, inputs, dtypes=None,
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\framework\ops.py", line 3800, in _create_op_internal
+    ret = Operation(
+
+I1226 02:16:37.282644 24784 learning.py:775] Caught OutOfRangeError. Stopping Training. Graph execution error:
+
+Detected at node 'batch_1' defined at (most recent call last):
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+      tf.app.run()
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+      _run_main(main, args)
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+      sys.exit(main(argv))
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+      samples_val = input_generator.get(
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+      return tf.train.batch(
+Node: 'batch_1'
+Detected at node 'batch_1' defined at (most recent call last):
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+      tf.app.run()
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+      _run_main(main, args)
+    File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+      sys.exit(main(argv))
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+      samples_val = input_generator.get(
+    File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+      return tf.train.batch(
+Node: 'batch_1'
+2 root error(s) found.
+  (0) OUT_OF_RANGE: PaddingFIFOQueue '_5_batch_1/padding_fifo_queue' is closed and has insufficient elements (requested 18, current size 0)
+	 [[{{node batch_1}}]]
+	 [[batch_1/_2171]]
+  (1) OUT_OF_RANGE: PaddingFIFOQueue '_5_batch_1/padding_fifo_queue' is closed and has insufficient elements (requested 18, current size 0)
+	 [[{{node batch_1}}]]
+0 successful operations.
+0 derived errors ignored.
+
+Original stack trace for 'batch_1':
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 487, in <module>
+    tf.app.run()
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\platform\app.py", line 36, in run
+    _run(main=main, argv=argv, flags_parser=_parse_flags_tolerate_undef)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 308, in run
+    _run_main(main, args)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\absl\app.py", line 254, in _run_main
+    sys.exit(main(argv))
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\train.py", line 296, in main
+    samples_val = input_generator.get(
+  File "Z:\IdeaRepos\masterarbeit\Segmentation_Models\deeplab\utils\input_generator.py", line 162, in get
+    return tf.train.batch(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\util\deprecation.py", line 357, in new_func
+    return func(*args, **kwargs)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\training\input.py", line 1006, in batch
+    return _batch(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\training\input.py", line 784, in _batch
+    dequeued = queue.dequeue_up_to(batch_size, name=name)
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\ops\data_flow_ops.py", line 533, in dequeue_up_to
+    ret = gen_data_flow_ops.queue_dequeue_up_to_v2(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\ops\gen_data_flow_ops.py", line 3737, in queue_dequeue_up_to_v2
+    _, _, _op, _outputs = _op_def_library._apply_op_helper(
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\framework\op_def_library.py", line 797, in _apply_op_helper
+    op = g._create_op_internal(op_type_name, inputs, dtypes=None,
+  File "C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\framework\ops.py", line 3800, in _create_op_internal
+    ret = Operation(
+
+INFO:tensorflow:Finished training! Saving model to disk.
+I1226 02:16:37.289651 24784 learning.py:777] Finished training! Saving model to disk.
+C:\Users\Fistus\miniconda3\envs\code\lib\site-packages\tensorflow\python\summary\writer\writer.py:438: UserWarning: Attempting to use a closed FileWriter. The operation will be a noop unless the FileWriter is explicitly reopened.
+  warnings.warn("Attempting to use a closed FileWriter. "
+
+Process finished with exit code 0
+
+```
+
 ### Adding iou and accuracy to tensorboard for monitoring for deeplab training
 *Accuracy:* *done*
 

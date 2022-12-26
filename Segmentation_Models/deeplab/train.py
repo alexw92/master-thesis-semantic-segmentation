@@ -130,7 +130,7 @@ flags.DEFINE_boolean('upsample_logits', True,
 
 # Settings for fine-tuning the network.
 
-flags.DEFINE_string('tf_initial_checkpoint', None,
+flags.DEFINE_string('tf_initial_checkpoint', "None",
                     'The initial checkpoint in tensorflow format.')
 
 # Set to False if one does not want to re-use the trained classifier weights.
